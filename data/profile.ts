@@ -3,6 +3,8 @@ export const profile = {
   role: "Founder & CEO",
   company: "Rise Infotech",
 
+  image: "/assets/instructor.png",
+
   headline:
     "Transforming Businesses Through SAP Innovation & Enterprise Excellence",
 
