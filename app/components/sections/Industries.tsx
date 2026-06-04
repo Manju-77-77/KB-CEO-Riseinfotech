@@ -28,7 +28,7 @@ const industries = [
       "Supporting procurement, inventory and production management processes.",
   },
   {
-    title: "Food & Bakery",
+    title: "Food & Beverages",
     description:
       "End-to-end SAP consulting for manufacturing and distribution environments.",
   },
@@ -38,7 +38,7 @@ export default function Industries() {
   return (
     <section
       id="industries"
-      className="relative overflow-hidden bg-white py-20 md:py-24 lg:py-28"
+      className="relative overflow-hidden bg-white py-14 md:py-16 lg:py-20"
     >
       {/* Background Glow */}
       <div

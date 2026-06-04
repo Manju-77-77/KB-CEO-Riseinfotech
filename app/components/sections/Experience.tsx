@@ -35,7 +35,8 @@ export default function TrustedExperience() {
       aria-labelledby="experience-heading"
       itemScope
       itemType="https://schema.org/ItemList"
-      className="relative overflow-hidden bg-slate-50 py-20 md:py-24 lg:py-28"
+      className="relative overflow-hidden bg-slate-50 py-14 md:py-16 lg:py-20
+      "
     >
       {/* Background Glow */}
       <div

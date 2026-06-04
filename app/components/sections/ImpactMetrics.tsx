@@ -32,9 +32,9 @@ export default function ImpactMetrics() {
   return (
     <section
       id="achievements"
-      className="relative overflow-hidden py-20 md:py-24 lg:py-28"
+      className="relative overflow-hidden py-14 md:py-16 lg:py-20"
     >
-      {/* Background */}
+      {/* Premium Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-900 to-cyan-900" />
 
       {/* Glow Effects */}
@@ -72,14 +72,16 @@ export default function ImpactMetrics() {
 
         </div>
 
-        {/* Metrics Grid */}
+        {/* Metrics */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
-          {metrics.map((metric) => (
+          {metrics.map((metric, index) => (
             <div
               key={metric.label}
               className="
                 group
+                relative
+                overflow-hidden
                 rounded-3xl
                 border
                 border-white/10
@@ -94,6 +96,12 @@ export default function ImpactMetrics() {
                 hover:bg-white/15
               "
             >
+              {/* Number Badge */}
+              <div className="absolute right-0 top-0 flex h-12 w-12 items-center justify-center rounded-bl-2xl bg-white/10 text-xs font-bold text-blue-200">
+                {String(index + 1).padStart(2, "0")}
+              </div>
+
+              {/* Metric */}
               <h3 className="bg-gradient-to-r from-cyan-300 to-blue-200 bg-clip-text text-5xl font-bold text-transparent">
                 {metric.value}
               </h3>
@@ -102,9 +110,12 @@ export default function ImpactMetrics() {
                 {metric.label}
               </h4>
 
-              <p className="mt-3 text-sm leading-relaxed text-blue-100/70">
+              <div className="mx-auto mt-4 h-px w-20 bg-gradient-to-r from-cyan-300 to-transparent" />
+
+              <p className="mt-4 text-sm leading-relaxed text-blue-100/70">
                 {metric.description}
               </p>
+
             </div>
           ))}
 

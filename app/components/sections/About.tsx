@@ -1,4 +1,3 @@
-
 "use client";
 
 export default function About() {
@@ -12,6 +11,11 @@ export default function About() {
       year: "2015",
       title: "SAP Career Begins",
       desc: "Entered the SAP ecosystem and started working on enterprise business solutions.",
+    },
+    {
+      year: "2018",
+      title: "TCS",
+      desc: "Worked as SAP Consultant delivering SAP implementation, support, and business process optimization solutions for enterprise clients.",
     },
     {
       year: "2022",
@@ -33,15 +37,11 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-white py-20 md:py-24 lg:py-28"
+      className="relative bg-white py-10 md:py-12 lg:py-16"
     >
-      {/* Background Glow */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute right-0 top-20 h-[400px] w-[400px] rounded-full bg-blue-100 blur-[120px]" />
-      </div>
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-10">
 
-      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-10">
-        <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
 
           {/* LEFT CONTENT */}
           <div>
@@ -50,14 +50,14 @@ export default function About() {
               Executive Profile
             </span>
 
-            <h2 className="mt-6 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-5xl xl:text-6xl">
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-5xl">
               Driving Enterprise
               <span className="block bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
                 SAP Transformation
               </span>
             </h2>
 
-            <p className="mt-8 text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg">
               Kumaresh Bidari is an SAP S/4HANA Consultant,
               Corporate Trainer and Founder & CEO of Rise
               Infotech with nearly a decade of experience
@@ -65,7 +65,7 @@ export default function About() {
               industries.
             </p>
 
-            <p className="mt-6 text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
               Having worked with leading organizations like
               TCS, IBM and NTT DATA, he has successfully
               contributed to SAP implementations, global
@@ -73,7 +73,7 @@ export default function About() {
               projects across multiple domains.
             </p>
 
-            <p className="mt-6 text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
               Today, through Rise Infotech, he is focused on
               helping businesses maximize SAP investments
               while empowering professionals through
@@ -81,10 +81,10 @@ export default function About() {
             </p>
 
             {/* Highlights */}
-            <div className="mt-10 grid grid-cols-2 gap-4">
+            <div className="mt-6 grid grid-cols-2 gap-4">
 
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-lg shadow-slate-100 transition-all duration-300 hover:-translate-y-1">
-                <h3 className="text-3xl font-bold text-blue-600">
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-2xl font-bold text-blue-600">
                   10+
                 </h3>
 
@@ -93,8 +93,8 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-lg shadow-slate-100 transition-all duration-300 hover:-translate-y-1">
-                <h3 className="text-3xl font-bold text-blue-600">
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-2xl font-bold text-blue-600">
                   200+
                 </h3>
 
@@ -113,31 +113,31 @@ export default function About() {
             {/* Vertical Line */}
             <div className="absolute left-5 top-0 hidden h-full w-[2px] bg-gradient-to-b from-blue-600 via-cyan-500 to-transparent md:block" />
 
-            <div className="space-y-8 md:space-y-10">
+            <div className="space-y-5 md:space-y-6">
 
-              {timeline.map((item) => (
+              {timeline.map((item, index) => (
                 <div
-                  key={item.year}
+                  key={`${item.year}-${index}`}
                   className="relative md:pl-16"
                 >
                   {/* Desktop Dot */}
-                  <div className="absolute left-0 top-2 hidden h-10 w-10 items-center justify-center rounded-full border border-blue-200 bg-gradient-to-r from-blue-600 to-cyan-500 text-sm font-bold text-white shadow-lg shadow-blue-200 md:flex">
+                  <div className="absolute left-0 top-2 hidden h-10 w-10 items-center justify-center rounded-full border border-blue-200 bg-gradient-to-r from-blue-600 to-cyan-500 text-xs font-bold text-white shadow-md md:flex">
                     {item.year}
                   </div>
 
                   {/* Mobile Year */}
-                  <span className="mb-3 inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600 md:hidden">
+                  <span className="mb-2 inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600 md:hidden">
                     {item.year}
                   </span>
 
-                  {/* Timeline Card */}
-                  <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-lg shadow-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200">
+                  {/* Card */}
+                  <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-md">
 
-                    <h3 className="text-xl font-semibold text-slate-900 sm:text-2xl">
+                    <h3 className="text-lg font-semibold text-slate-900 sm:text-xl">
                       {item.title}
                     </h3>
 
-                    <p className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">
                       {item.desc}
                     </p>
 
@@ -151,8 +151,8 @@ export default function About() {
           </div>
 
         </div>
+
       </div>
     </section>
   );
 }
-
