@@ -1,30 +1,21 @@
-
 "use client";
 
 const metrics = [
   {
     value: "10+",
     label: "Years Experience",
-    description:
-      "Enterprise SAP consulting and transformation projects.",
   },
   {
     value: "200+",
     label: "Successful Placements",
-    description:
-      "Professionals placed across leading organizations.",
   },
   {
     value: "100+",
     label: "Students Trained",
-    description:
-      "Industry-focused SAP training and mentorship.",
   },
   {
     value: "50+",
     label: "Enterprise Clients",
-    description:
-      "Businesses supported through SAP consulting services.",
   },
 ];
 
@@ -32,90 +23,67 @@ export default function ImpactMetrics() {
   return (
     <section
       id="achievements"
-      className="relative overflow-hidden py-14 md:py-16 lg:py-20"
+      className="relative overflow-hidden py-12 md:py-14"
     >
-      {/* Premium Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-950 via-blue-900 to-cyan-900" />
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-950 via-blue-900 to-cyan-900" />
 
-      {/* Glow Effects */}
+      {/* Glow */}
       <div
-        className="absolute left-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-500/20 blur-[140px]"
+        className="absolute left-0 top-0 h-[400px] w-[400px] rounded-full bg-blue-500/20 blur-[120px]"
         aria-hidden="true"
       />
 
       <div
-        className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-cyan-500/20 blur-[140px]"
+        className="absolute right-0 bottom-0 h-[400px] w-[400px] rounded-full bg-cyan-500/20 blur-[120px]"
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-10">
+      <div className="relative mx-auto max-w-[1300px] px-5 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="mx-auto mb-16 max-w-3xl text-center">
+        <div className="mx-auto mb-10 max-w-2xl text-center">
 
-          <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-100 sm:text-sm">
+          <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-100">
             Impact & Achievements
           </span>
 
-          <h2 className="mt-6 text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
-            Delivering Results That
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
+            Delivering Measurable
             <span className="block bg-gradient-to-r from-cyan-300 to-blue-200 bg-clip-text text-transparent">
-              Create Lasting Impact
+              Business Impact
             </span>
           </h2>
-
-          <p className="mt-5 text-base leading-relaxed text-blue-100/80 sm:text-lg">
-            A proven track record of enterprise consulting,
-            professional development, and successful digital
-            transformation initiatives.
-          </p>
 
         </div>
 
         {/* Metrics */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
-          {metrics.map((metric, index) => (
+          {metrics.map((metric) => (
             <div
               key={metric.label}
               className="
-                group
-                relative
-                overflow-hidden
-                rounded-3xl
+                rounded-2xl
                 border
                 border-white/10
                 bg-white/10
-                p-8
+                p-6
                 text-center
                 backdrop-blur-xl
                 transition-all
                 duration-300
-                hover:-translate-y-2
-                hover:border-white/20
+                hover:-translate-y-1
                 hover:bg-white/15
               "
             >
-              {/* Number Badge */}
-              <div className="absolute right-0 top-0 flex h-12 w-12 items-center justify-center rounded-bl-2xl bg-white/10 text-xs font-bold text-blue-200">
-                {String(index + 1).padStart(2, "0")}
-              </div>
-
-              {/* Metric */}
-              <h3 className="bg-gradient-to-r from-cyan-300 to-blue-200 bg-clip-text text-5xl font-bold text-transparent">
+              <h3 className="bg-gradient-to-r from-cyan-300 to-blue-200 bg-clip-text text-4xl font-bold text-transparent">
                 {metric.value}
               </h3>
 
-              <h4 className="mt-4 text-xl font-semibold text-white">
+              <p className="mt-2 text-sm font-medium text-white">
                 {metric.label}
-              </h4>
-
-              <div className="mx-auto mt-4 h-px w-20 bg-gradient-to-r from-cyan-300 to-transparent" />
-
-              <p className="mt-4 text-sm leading-relaxed text-blue-100/70">
-                {metric.description}
               </p>
-
             </div>
           ))}
 
@@ -125,4 +93,3 @@ export default function ImpactMetrics() {
     </section>
   );
 }
-

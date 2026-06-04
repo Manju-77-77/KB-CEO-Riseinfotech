@@ -9,6 +9,7 @@ import Services from "./components/sections/Services";
 import ImpactMetrics from "./components/sections/ImpactMetrics";
 import Showcase from "./components/sections/Showcase";
 import Credentials from "./components/sections/Credentials";
+import Reels from "./components/sections/reels";
 export default function Home() {
   return (
     <main>
@@ -16,6 +17,7 @@ export default function Home() {
       <Hero />
       <Experience />
       <About />
+      <Reels />
       <Expertise />
       <Industries />
       <Services />

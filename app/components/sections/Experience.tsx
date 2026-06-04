@@ -1,4 +1,6 @@
+
 "use client";
+
 import Image from "next/image";
 
 const companies = [
@@ -35,12 +37,11 @@ export default function TrustedExperience() {
       aria-labelledby="experience-heading"
       itemScope
       itemType="https://schema.org/ItemList"
-      className="relative overflow-hidden bg-slate-50 py-14 md:py-16 lg:py-20
-      "
+      className="relative overflow-hidden bg-slate-50 py-10 md:py-12 lg:py-16"
     >
-      {/* Background Glow */}
+      {/* Subtle Background Effect */}
       <div
-        className="pointer-events-none absolute left-0 top-1/2 h-[500px] w-[500px] -translate-y-1/2 opacity-20"
+        className="pointer-events-none absolute left-0 top-1/2 h-[350px] w-[350px] -translate-y-1/2 opacity-10"
         style={{
           background:
             "radial-gradient(circle, #dbeafe 0%, transparent 70%)",
@@ -48,10 +49,10 @@ export default function TrustedExperience() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-10">
+      <div className="relative mx-auto max-w-[1500px] px-5 sm:px-6 lg:px-10">
 
         {/* Header */}
-        <header className="mx-auto mb-14 max-w-3xl text-center md:mb-16">
+        <header className="mx-auto mb-10 max-w-3xl text-center md:mb-12">
 
           <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-600 sm:text-sm">
             Professional Journey
@@ -59,7 +60,7 @@ export default function TrustedExperience() {
 
           <h2
             id="experience-heading"
-            className="mt-6 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-5xl"
+            className="mt-4 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-5xl"
           >
             Trusted Experience Across
             <span className="block bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
@@ -67,7 +68,7 @@ export default function TrustedExperience() {
             </span>
           </h2>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
             Nearly a decade of SAP consulting, enterprise
             implementations, corporate training, and digital
             transformation experience across globally recognized
@@ -78,7 +79,7 @@ export default function TrustedExperience() {
 
         {/* Cards */}
         <ul
-          className="grid list-none gap-6 p-0 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4"
           aria-label="Companies worked with"
         >
           {companies.map((company, index) => (
@@ -94,24 +95,23 @@ export default function TrustedExperience() {
                   relative
                   h-full
                   overflow-hidden
-                  rounded-3xl
+                  rounded-2xl
                   border
                   border-slate-200
                   bg-white
-                  p-6
-                  shadow-lg
-                  shadow-slate-100
+                  p-5
+                  shadow-sm
                   transition-all
                   duration-300
-                  hover:-translate-y-2
+                  hover:-translate-y-1
                   hover:border-blue-200
-                  hover:shadow-xl
-                  hover:shadow-blue-100
-                  sm:p-8
+                  hover:shadow-lg
+                  hover:shadow-blue-100/50
+                  sm:p-6
                 "
                 aria-label={`${company.fullName} — ${company.role}`}
               >
-                {/* Hover Accent */}
+                {/* Hover Background */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-transparent to-cyan-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                 <div className="relative z-10">
@@ -122,14 +122,14 @@ export default function TrustedExperience() {
                   />
 
                   {/* Logo */}
-                  <div className="mb-8 flex h-16 items-center justify-center">
+                  <div className="mb-5 flex h-14 items-center justify-center">
 
                     <Image
                       src={company.logo}
                       alt={`${company.fullName} logo`}
                       width={140}
                       height={60}
-                      className="h-auto max-h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                      className="h-auto max-h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                       itemProp="logo"
                     />
 
@@ -138,9 +138,9 @@ export default function TrustedExperience() {
                   {/* Divider */}
                   <div className="h-px w-full bg-gradient-to-r from-blue-500 via-blue-200 to-transparent" />
 
-                  {/* Company */}
+                  {/* Company Name */}
                   <h3
-                    className="mt-6 text-lg font-bold text-slate-900"
+                    className="mt-4 text-lg font-bold text-slate-900"
                     itemProp="name"
                   >
                     {company.name}
