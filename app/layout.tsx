@@ -53,6 +53,15 @@ export const metadata: Metadata = {
 
   publisher: "Rise Infotech",
 
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  alternates: {
+    canonical: "https://kumareshbidari.com",
+  },
+
   openGraph: {
     title:
       "Kumaresh Bidari | Founder & CEO | SAP Consultant",
@@ -89,15 +98,6 @@ export const metadata: Metadata = {
 
     images: ["/og-image.jpg"],
   },
-
-  robots: {
-    index: true,
-    follow: true,
-  },
-
-  alternates: {
-    canonical: "https://kumareshbidari.com",
-  },
 };
 
 export default function RootLayout({
@@ -110,7 +110,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#050816] text-white">
+      <body className="min-h-full bg-slate-50 text-slate-900">
         {children}
       </body>
     </html>

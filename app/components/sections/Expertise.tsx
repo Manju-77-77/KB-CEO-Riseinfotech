@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useRef, useEffect, useState } from "react";
@@ -6,50 +7,42 @@ const expertise = [
   {
     title: "SAP S/4HANA",
     description: "On-Premise, Private Cloud & Public Cloud implementations.",
-    icon: "⬡",
-    accent: "#3a6cff",
+    accent: "#2563eb",
   },
   {
     title: "SAP MM",
     description: "Procurement, inventory and material management expertise.",
-    icon: "◈",
-    accent: "#00d2c8",
+    accent: "#06b6d4",
   },
   {
     title: "SAP Fiori",
     description: "Modern SAP user experiences and application delivery.",
-    icon: "◎",
-    accent: "#7a9bff",
+    accent: "#3b82f6",
   },
   {
-    title: "SAP SolMan",
+    title: "SAP Solution Manager",
     description: "Application lifecycle management and support operations.",
-    icon: "⬡",
-    accent: "#3a6cff",
+    accent: "#2563eb",
   },
   {
     title: "Global Rollouts",
-    description: "Enterprise-scale SAP deployments across regions.",
-    icon: "◈",
-    accent: "#00d2c8",
+    description: "Enterprise-scale SAP deployments across multiple regions.",
+    accent: "#06b6d4",
   },
   {
     title: "Data Migration",
     description: "LSMW, LTMC and SAP Migration Cockpit expertise.",
-    icon: "◎",
-    accent: "#7a9bff",
+    accent: "#3b82f6",
   },
   {
     title: "AMS Support",
-    description: "Application maintenance and post-go-live support.",
-    icon: "⬡",
-    accent: "#3a6cff",
+    description: "Application maintenance and post-go-live support services.",
+    accent: "#2563eb",
   },
   {
     title: "SAP Training",
-    description: "Corporate training and placement-focused programs.",
-    icon: "◈",
-    accent: "#00d2c8",
+    description: "Corporate training and placement-focused learning programs.",
+    accent: "#06b6d4",
   },
 ];
 
@@ -66,78 +59,107 @@ function ExpertiseCard({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
       { threshold: 0.15 }
     );
+
     observer.observe(el);
+
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div
+    <article
       ref={ref}
-      className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.06]"
+      itemScope
+      itemType="https://schema.org/Service"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(20px)",
-        transition: `opacity 0.5s ease ${index * 60}ms, transform 0.5s ease ${index * 60}ms`,
+        transition: `all 0.5s ease ${index * 70}ms`,
       }}
-      itemScope
-      itemType="https://schema.org/Service"
+      className="
+        group
+        relative
+        overflow-hidden
+        rounded-3xl
+        border
+        border-slate-200
+        bg-white
+        p-6
+        shadow-lg
+        shadow-slate-100
+        transition-all
+        duration-300
+        hover:-translate-y-2
+        hover:border-blue-200
+        hover:shadow-xl
+        hover:shadow-blue-100
+      "
     >
-      {/* Subtle top accent line */}
+      {/* Top Accent Line */}
       <div
-        className="absolute left-0 top-0 h-[2px] w-0 rounded-full transition-all duration-500 group-hover:w-full"
-        style={{ background: `linear-gradient(90deg, ${item.accent}, transparent)` }}
-        aria-hidden="true"
+        className="absolute left-0 top-0 h-[3px] w-0 transition-all duration-500 group-hover:w-full"
+        style={{
+          background: `linear-gradient(90deg, ${item.accent}, transparent)`,
+        }}
       />
 
-      {/* Corner glow on hover */}
+      {/* Glow */}
       <div
-        className="absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: `${item.accent}22` }}
-        aria-hidden="true"
+        className="absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `${item.accent}20`,
+        }}
       />
 
       <div className="relative z-10">
-        {/* Number badge */}
+
+        {/* Number */}
         <div
-          className="mb-4 inline-flex h-8 w-8 items-center justify-center rounded-lg text-[11px] font-semibold"
+          className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold"
           style={{
-            background: `${item.accent}18`,
-            border: `1px solid ${item.accent}30`,
+            background: `${item.accent}12`,
+            border: `1px solid ${item.accent}25`,
             color: item.accent,
           }}
-          aria-hidden="true"
         >
           {String(index + 1).padStart(2, "0")}
         </div>
 
         {/* Title */}
         <h3
-          className="mb-3 text-[15px] font-semibold leading-snug text-white"
           itemProp="name"
+          className="text-lg font-semibold text-slate-900"
         >
           {item.title}
         </h3>
 
         {/* Divider */}
         <div
-          className="mb-3 h-px w-8 rounded-full transition-all duration-300 group-hover:w-full"
-          style={{ background: `linear-gradient(90deg, ${item.accent}80, transparent)` }}
-          aria-hidden="true"
+          className="mt-4 h-[2px] w-10 rounded-full transition-all duration-300 group-hover:w-20"
+          style={{
+            background: `linear-gradient(90deg, ${item.accent}, transparent)`,
+          }}
         />
 
         {/* Description */}
         <p
-          className="text-[13px] leading-relaxed text-gray-500 transition-colors duration-300 group-hover:text-gray-400"
           itemProp="description"
+          className="mt-4 text-sm leading-relaxed text-slate-600"
         >
           {item.description}
         </p>
+
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -148,53 +170,56 @@ export default function Expertise() {
       aria-labelledby="expertise-heading"
       itemScope
       itemType="https://schema.org/ItemList"
-      className="relative bg-[#03061a] py-14 md:py-16 lg:py-20"
+      className="relative overflow-hidden bg-white py-20 md:py-24 lg:py-28"
     >
-      {/* Subtle background glow */}
+      {/* Background Glow */}
       <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.04]"
-        style={{ background: "radial-gradient(circle, #3a6cff 0%, transparent 70%)" }}
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 opacity-20"
+        style={{
+          background:
+            "radial-gradient(circle, #dbeafe 0%, transparent 70%)",
+        }}
         aria-hidden="true"
       />
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-10">
 
         {/* Header */}
-        <header className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
+        <header className="mx-auto mb-14 max-w-3xl text-center">
 
-          <div className="mb-5 flex items-center justify-center gap-3">
-            <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#5580ff]" aria-hidden="true" />
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#7a9bff]">
-              Core Expertise
-            </span>
-            <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#5580ff]" aria-hidden="true" />
-          </div>
+          <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-600">
+            Core Expertise
+          </span>
 
           <h2
             id="expertise-heading"
-            className="text-[clamp(1.6rem,3.5vw,2.6rem)] font-bold leading-tight tracking-tight text-white"
+            className="mt-6 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-5xl"
           >
-            Enterprise SAP Solutions &amp;
-            <span className="block bg-gradient-to-r from-[#5580ff] to-[#00d2c8] bg-clip-text text-transparent">
+            Enterprise SAP Solutions &
+            <span className="block bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               Digital Transformation
             </span>
           </h2>
 
-          <p className="mt-4 text-[13px] leading-relaxed text-gray-500 sm:text-sm">
-            Enterprise-grade SAP consulting, implementation and training
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+            Enterprise-grade SAP consulting, implementation,
+            migration, training, and digital transformation
             services across industries worldwide.
           </p>
 
         </header>
 
-        {/* Cards grid */}
+        {/* Cards */}
         <ul
-          className="grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid list-none gap-6 p-0 sm:grid-cols-2 lg:grid-cols-4"
           aria-label="SAP expertise areas"
         >
           {expertise.map((item, index) => (
             <li key={item.title} itemProp="itemListElement">
-              <ExpertiseCard item={item} index={index} />
+              <ExpertiseCard
+                item={item}
+                index={index}
+              />
             </li>
           ))}
         </ul>
@@ -203,3 +228,4 @@ export default function Expertise() {
     </section>
   );
 }
+
