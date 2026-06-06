@@ -3,19 +3,19 @@
 const metrics = [
   {
     value: "10+",
-    label: "Years Experience",
+    label: "Years SAP Consulting",
   },
   {
-    value: "200+",
-    label: "Successful Placements",
+    value: "5+",
+    label: "Years Training Experience",
   },
   {
-    value: "100+",
-    label: "Students Trained",
+    value: "6+",
+    label: "Industries Served",
   },
   {
-    value: "50+",
-    label: "Enterprise Clients",
+    value: "SAP",
+    label: "S/4HANA Expertise",
   },
 ];
 

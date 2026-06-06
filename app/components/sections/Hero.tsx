@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -11,7 +10,8 @@ export default function Hero() {
       aria-label="Hero Section"
       className="relative overflow-hidden bg-white text-slate-900"
     >
-      <div className="mx-auto flex min-h-[90vh] max-w-[1400px] items-center px-5 py-16 sm:px-6 lg:px-10 lg:py-24">
+      <div className="mx-auto flex min-h-[90vh] max-w-[1400px] items-center px-5 pt-32 pb-16 sm:px-6 lg:px-10 lg:pt-24 lg:pb-24">
+
         <div className="grid w-full items-center gap-10 lg:grid-cols-[55%_45%]">
 
           {/* LEFT CONTENT */}
@@ -91,68 +91,161 @@ export default function Hero() {
           </div>
 
           {/* RIGHT CONTENT */}
-          <div className="relative flex items-center justify-center">
+       {/* RIGHT CONTENT */}
+<div className="relative flex items-center justify-center">
 
-            {/* Image */}
-            <div className="relative h-[350px] w-[260px] overflow-hidden rounded-[28px] sm:h-[450px] sm:w-[340px] lg:h-[560px] lg:w-[420px]">
-              <Image
-                src={profile.image}
-                alt={`${profile.name} - Founder & CEO of Rise Infotech`}
-                fill
-                priority
-                sizes="(max-width:640px) 260px, (max-width:1024px) 340px, 420px"
-                className="object-cover"
-              />
-            </div>
+  {/* Image */}
+  <div
+    className="
+      relative
+      h-[280px]
+      w-[210px]
+      overflow-hidden
+      rounded-[24px]
+      sm:h-[420px]
+      sm:w-[320px]
+      sm:rounded-[28px]
+      lg:h-[560px]
+      lg:w-[420px]
+    "
+  >
+    <Image
+      src={profile.image}
+      alt={`${profile.name} - Founder & CEO of Rise Infotech`}
+      fill
+      priority
+      sizes="(max-width:640px) 210px, (max-width:1024px) 320px, 420px"
+      className="object-cover"
+    />
+  </div>
 
-            {/* Card 1 */}
-            <div className="absolute -left-10 top-16 hidden rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-xl lg:block">
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-                Industry Experience
-              </p>
+  {/* Card 1 */}
+  <div
+    className="
+      absolute
+      left-2
+      top-2
+      z-10
+      rounded-xl
+      border
+      border-slate-200
+      bg-white
+      px-3
+      py-2
+      shadow-lg
 
-              <h3 className="mt-1 text-xl font-bold text-slate-900">
-                10+ Years
-              </h3>
+      sm:left-4
+      sm:top-8
+      sm:px-4
+      sm:py-3
 
-              <p className="mt-1 text-sm text-slate-600">
-                SAP Consulting
-              </p>
-            </div>
+      lg:-left-10
+      lg:top-16
+      lg:rounded-2xl
+      lg:px-6
+      lg:py-5
+      lg:shadow-xl
+    "
+  >
+    <p className="text-[9px] font-medium uppercase tracking-wide text-slate-500 sm:text-[10px] lg:text-xs">
+      Industry Experience
+    </p>
 
-            {/* Card 2 */}
-            <div className="absolute -right-10 top-1/2 hidden -translate-y-1/2 rounded-2xl border border-slate-200 bg-white px-6 py-5 shadow-xl lg:block">
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-                Training Experience
-              </p>
+    <h3 className="mt-1 text-base font-bold text-slate-900 sm:text-lg lg:text-xl">
+      10+ Years
+    </h3>
 
-              <h3 className="mt-1 text-xl font-bold text-slate-900">
-                5+ Years
-              </h3>
+    <p className="mt-1 text-[10px] text-slate-600 sm:text-xs lg:text-sm">
+      SAP Consulting
+    </p>
+  </div>
 
-              <p className="mt-1 text-sm text-slate-600">
-                SAP MM Training
-              </p>
-            </div>
+  {/* Card 2 */}
+  <div
+    className="
+      absolute
+      right-2
+      top-[38%]
+      z-10
+      rounded-xl
+      border
+      border-slate-200
+      bg-white
+      px-3
+      py-2
+      shadow-lg
 
-            {/* Card 3 */}
-            <div className="absolute -right-6 bottom-16 hidden rounded-2xl border border-blue-100 bg-blue-50 px-6 py-5 shadow-xl lg:block">
-              <p className="text-xs font-medium uppercase tracking-wide text-blue-600">
-                Expertise
-              </p>
+      sm:right-4
+      sm:px-4
+      sm:py-3
 
-              <h3 className="mt-1 text-xl font-bold text-slate-900">
-                SAP S/4HANA
-              </h3>
+      lg:-right-10
+      lg:top-1/2
+      lg:-translate-y-1/2
+      lg:rounded-2xl
+      lg:px-6
+      lg:py-5
+      lg:shadow-xl
+    "
+  >
+    <p className="text-[9px] font-medium uppercase tracking-wide text-slate-500 sm:text-[10px] lg:text-xs">
+      Training Experience
+    </p>
 
-              <p className="mt-1 text-sm text-slate-600">
-                Certified Expert
-              </p>
-            </div>
+    <h3 className="mt-1 text-base font-bold text-slate-900 sm:text-lg lg:text-xl">
+      5+ Years
+    </h3>
 
-          </div>
+    <p className="mt-1 text-[10px] text-slate-600 sm:text-xs lg:text-sm">
+      SAP MM Training
+    </p>
+  </div>
+
+  {/* Card 3 */}
+  <div
+    className="
+      absolute
+      right-2
+      bottom-2
+      z-10
+      rounded-xl
+      border
+      border-blue-100
+      bg-blue-50
+      px-3
+      py-2
+      shadow-lg
+
+      sm:right-6
+      sm:bottom-8
+      sm:px-4
+      sm:py-3
+
+      lg:-right-6
+      lg:bottom-16
+      lg:rounded-2xl
+      lg:px-6
+      lg:py-5
+      lg:shadow-xl
+    "
+  >
+    <p className="text-[9px] font-medium uppercase tracking-wide text-blue-600 sm:text-[10px] lg:text-xs">
+      Expertise
+    </p>
+
+    <h3 className="mt-1 text-base font-bold text-slate-900 sm:text-lg lg:text-xl">
+      SAP S/4HANA
+    </h3>
+
+    <p className="mt-1 text-[10px] text-slate-600 sm:text-xs lg:text-sm">
+      Certified Expert
+    </p>
+  </div>
+
+</div>
 
         </div>
+
       </div>
     </section>
   );

@@ -129,25 +129,60 @@ export default function Footer() {
                 <span>Bengaluru, Karnataka, India</span>
               </div>
 
-              <a
-                href="https://www.linkedin.com/in/kumaresh-bidari074"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-slate-400 transition hover:text-blue-400"
-              >
-                <FaLinkedin size={18} />
-                <span>LinkedIn Profile</span>
-              </a>
+            </div>
 
-              <a
-                href="https://www.instagram.com/kumaresh.bidari/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-slate-400 transition hover:text-pink-500"
-              >
-                <FaInstagram size={18} />
-                <span>Instagram Profile</span>
-              </a>
+            {/* Social Links */}
+            <div className="mt-8">
+
+              <p className="mb-4 text-sm font-medium uppercase tracking-wider text-slate-500">
+                Connect
+              </p>
+
+              <div className="flex items-center gap-4">
+
+                <a
+                  href="https://www.linkedin.com/in/kumaresh-bidari074"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="
+                    flex h-12 w-12 items-center justify-center
+                    rounded-xl
+                    border border-slate-700
+                    bg-slate-900
+                    text-[#0A66C2]
+                    transition-all duration-300
+                    hover:-translate-y-1
+                    hover:border-[#0A66C2]
+                    hover:shadow-lg
+                    hover:shadow-[#0A66C2]/20
+                  "
+                >
+                  <FaLinkedin size={24} />
+                </a>
+
+                <a
+                  href="https://www.instagram.com/kumaresh.bidari/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="
+                    flex h-12 w-12 items-center justify-center
+                    rounded-xl
+                    border border-slate-700
+                    bg-slate-900
+                    text-[#E1306C]
+                    transition-all duration-300
+                    hover:-translate-y-1
+                    hover:border-[#E1306C]
+                    hover:shadow-lg
+                    hover:shadow-[#E1306C]/20
+                  "
+                >
+                  <FaInstagram size={24} />
+                </a>
+
+              </div>
 
             </div>
 
