@@ -72,7 +72,7 @@ export default function InstagramInsights() {
           </p>
 
           <a
-            href="https://www.instagram.com/kumaresh_bidari074/"
+            href="https://www.instagram.com/kumaresh_bidari/"
             target="_blank"
             rel="noopener noreferrer"
             className="

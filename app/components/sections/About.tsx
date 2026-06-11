@@ -81,7 +81,7 @@ export default function About() {
               successful SAP careers through Rise Infotech.
             </p>
 
-            {/* STATS */}
+            {/* STATS
             <div className="mt-6 flex gap-4">
 
               <div className="flex-1 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
@@ -102,7 +102,7 @@ export default function About() {
                 </p>
               </div>
 
-            </div>
+            </div> */}
 
           
           </div>

@@ -4,41 +4,32 @@ const services = [
   {
     title: "SAP Consulting",
     description:
-      "End-to-end SAP consulting services helping organizations optimize operations, accelerate transformation, and maximize ROI from SAP investments.",
-    features: [
-      "SAP S/4HANA Implementation",
-      "Migration & Upgrades",
+      "Helping enterprises accelerate digital transformation with end-to-end SAP solutions.",
+    highlights: [
+      "S/4HANA Implementation",
       "Global Rollouts",
       "AMS Support",
-      "Cutover Planning",
     ],
-    
   },
   {
     title: "Corporate Training",
     description:
-      "Industry-focused SAP training programs designed to build practical expertise through real-world scenarios and project-based learning.",
-    features: [
+      "Industry-focused training programs designed around practical scenarios and projects.",
+    highlights: [
       "SAP MM",
       "SAP FICO",
-      "SAP SD",
-      "SAP ABAP",
       "Real-Time Projects",
     ],
-
   },
   {
-    title: "Career & Placement Support",
+    title: "Career Support",
     description:
-      "Comprehensive career acceleration services helping SAP professionals secure opportunities with leading organizations.",
-    features: [
+      "Helping SAP professionals build successful careers with expert guidance.",
+    highlights: [
       "Resume Building",
       "Mock Interviews",
-      "Career Guidance",
-      "Certification Support",
       "Placement Assistance",
     ],
-   
   },
 ];
 
@@ -46,118 +37,116 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative bg-slate-50 py-12 md:py-14"
+      className="relative bg-slate-50 py-14 md:py-16"
     >
       <div className="mx-auto max-w-[1300px] px-5 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="mx-auto mb-10 max-w-2xl text-center">
+        <div className="mx-auto mb-12 max-w-3xl text-center">
 
           <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-600">
             Services
           </span>
 
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="mt-5 text-3xl font-bold text-slate-900 sm:text-4xl">
             SAP Consulting &
             <span className="block bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               Professional Development
             </span>
           </h2>
 
-          <p className="mt-4 text-base leading-relaxed text-slate-600">
+          <p className="mt-5 text-base leading-relaxed text-slate-600">
             Helping enterprises achieve digital transformation and
-            professionals build successful SAP careers through
-            consulting, training, and placement support.
+            professionals build successful SAP careers through consulting,
+            training, and career support.
           </p>
 
         </div>
 
-        {/* Services Grid */}
-        <div className="grid gap-5 lg:grid-cols-3">
+        {/* Cards */}
+        <div className="grid gap-6 lg:grid-cols-3">
 
           {services.map((service, index) => (
             <article
               key={service.title}
               className="
+                group
+                flex
                 h-full
-                rounded-2xl
+                flex-col
+                rounded-3xl
                 border
                 border-slate-200
                 bg-white
-                p-6
-                shadow-sm
+                p-7
+                shadow-md
                 transition-all
                 duration-300
-                hover:-translate-y-1
-                hover:border-blue-200
-                hover:shadow-md
+                hover:-translate-y-2
+                hover:border-blue-400
+                hover:shadow-2xl
+                hover:shadow-slate-900/15
               "
             >
-              {/* Top */}
-              <div className="mb-5 flex items-center justify-between">
 
-               
-
-                <span className="text-sm font-semibold text-blue-600">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
+              {/* Number */}
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-sm font-bold text-blue-600">
+                {String(index + 1).padStart(2, "0")}
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-bold text-slate-900">
+              <h3 className="text-2xl font-bold text-slate-900">
                 {service.title}
               </h3>
-
-              {/* Divider */}
-              <div className="mt-3 h-px w-full bg-gradient-to-r from-blue-500 via-blue-200 to-transparent" />
 
               {/* Description */}
               <p className="mt-4 text-sm leading-relaxed text-slate-600">
                 {service.description}
               </p>
 
-              {/* Features */}
-              <ul className="mt-5 space-y-2">
+              {/* Highlights */}
+              <div className="mt-6 space-y-3">
 
-                {service.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-center gap-3 text-sm text-slate-700"
+                {service.highlights.map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-3 text-sm font-medium text-slate-700"
                   >
-                    <span className="h-2 w-2 rounded-full bg-blue-600" />
-                    {feature}
-                  </li>
+                    <div className="h-2.5 w-2.5 rounded-full bg-blue-600" />
+                    {item}
+                  </div>
                 ))}
 
-              </ul>
+              </div>
 
-              {/* CTA Button */}
+              {/* CTA */}
               <a
-                href="https://enroll.riseinfotech.in/"
+                href="https://www.riseinfotech.in/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Learn more about ${service.title}`}
                 className="
-                  mt-6
+                  mt-8
                   inline-flex
-                  w-full
                   items-center
                   justify-center
                   rounded-xl
-                  bg-blue-600
+                  border
+                  border-blue-200
+                  bg-blue-50
                   px-5
                   py-3
                   text-sm
-                  font-medium
-                  text-white
+                  font-semibold
+                  text-blue-700
                   transition-all
                   duration-300
-                  hover:bg-blue-700
+                  hover:bg-blue-600
+                  hover:text-white
                   hover:shadow-lg
+                  hover:shadow-blue-200
                 "
               >
-                Learn More
+                Visit Website
               </a>
 
             </article>
