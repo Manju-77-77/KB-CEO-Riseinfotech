@@ -28,15 +28,20 @@ return ( <header className="fixed top-0 z-50 w-full"> <div className="mx-auto ma
       >
       
 
-        <div>
-          <h2 className="text-sm font-bold text-slate-900 sm:text-base">
-            Kumaresh Bidari
-          </h2>
+      <div>
+  <h2 className="text-base font-extrabold tracking-tight sm:text-lg">
+    <span className="text-blue-900">
+      Kumaresh
+    </span>{" "}
+    <span className="text-blue-900">
+      Bidari
+    </span>
+  </h2>
 
-          <p className="text-xs text-slate-500">
-            Founder & CEO
-          </p>
-        </div>
+  <p className="text-xs font-medium uppercase tracking-wider text-blue-600">
+    Founder & CEO
+  </p>
+</div>
       </Link>
 
       {/* Desktop Navigation */}
@@ -48,9 +53,9 @@ return ( <header className="fixed top-0 z-50 w-full"> <div className="mx-auto ma
             href={item.href}
             className="
               relative
-              text-sm
+              text-md
               font-medium
-              text-slate-600
+              text-black-600
               transition-colors
               duration-300
               hover:text-blue-600
