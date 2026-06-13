@@ -26,8 +26,6 @@ return ( <header className="fixed top-0 z-50 w-full"> <div className="mx-auto ma
         href="/"
         className="flex items-center gap-3"
       >
-      
-
       <div>
   <h2 className="text-base font-extrabold tracking-tight sm:text-lg">
     <span className="text-blue-900">
