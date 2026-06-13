@@ -22,25 +22,26 @@ return ( <header className="fixed top-0 z-50 w-full"> <div className="mx-auto ma
     <div className="mt-4 flex items-center justify-between rounded-2xl border border-slate-200/80 bg-white/95 px-4 py-3 shadow-md backdrop-blur-md lg:px-6">
 
       {/* Logo */}
-      <Link
-        href="/"
-        className="flex items-center gap-3"
-      >
-      <div>
-  <h2 className="text-base font-extrabold tracking-tight sm:text-lg">
-    <span className="text-blue-900">
-      Kumaresh
-    </span>{" "}
-    <span className="text-blue-900">
-      Bidari
-    </span>
-  </h2>
+    <div
+  className="flex items-center gap-3 cursor-pointer"
+  onClick={() => {
+    document.getElementById("hero")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }}
+>
+  <div>
+    <h2 className="text-base font-extrabold tracking-tight sm:text-lg">
+      <span className="text-blue-900">Kumaresh</span>{" "}
+      <span className="text-blue-900">Bidari</span>
+    </h2>
 
-  <p className="text-xs font-medium uppercase tracking-wider text-blue-600">
-    Founder & CEO
-  </p>
+    <p className="text-xs font-medium uppercase tracking-wider text-blue-600">
+      Founder & CEO
+    </p>
+  </div>
 </div>
-      </Link>
 
       {/* Desktop Navigation */}
       <nav className="hidden items-center gap-6 xl:gap-8 lg:flex">
