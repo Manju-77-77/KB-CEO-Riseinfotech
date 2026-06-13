@@ -24,11 +24,11 @@ export default function Hero() {
       <div className="h-[3px] w-full bg-gradient-to-r from-blue-600 to-cyan-500" />
 
       {/* Glow */}
-      <motion.div
+      {/* <motion.div
         animate={{ x: [0, 40, 0], y: [0, -40, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-100 opacity-40 blur-[120px]"
-      />
+      /> */}
 
       <div className="relative mx-auto max-w-7xl px-5 pb-16 pt-24 sm:px-6 lg:px-8">
         <div className="grid items-start gap-14 lg:grid-cols-2">
@@ -138,7 +138,7 @@ export default function Hero() {
                 style={{ aspectRatio: "4 / 3" }}
               >
                 {/* Corner glow */}
-                <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-blue-200/40 blur-[60px]" />
+                <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white blur-[60px]" />
 
                 <Image
                   src="/assets/instructor.png"
