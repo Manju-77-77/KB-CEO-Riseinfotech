@@ -134,7 +134,7 @@ export default function Hero() {
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-full overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-b from-slate-50 to-blue-50 shadow-xl"
+                className="relative w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl"
                 style={{ aspectRatio: "4 / 3" }}
               >
                 {/* Corner glow */}
