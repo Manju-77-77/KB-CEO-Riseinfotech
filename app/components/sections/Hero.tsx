@@ -1,242 +1,197 @@
 "use client";
 
 import Image from "next/image";
-import { profile } from "@/data/profile";
+import { motion } from "framer-motion";
+
+const credentials = ["TCS", "IBM", "NTT DATA", "SAP Expert"];
+
+const expertise = [
+  "SAP MM",
+  "SAP S/4HANA",
+  "Cutover Planning",
+  "AMS Support",
+  "Corporate Training",
+  "Global Rollouts",
+];
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      aria-label="Hero Section"
       className="relative overflow-hidden bg-white text-slate-900"
     >
-      <div className="mx-auto max-w-[1400px] px-4 pt-28 pb-12 sm:px-6 md:pt-32 lg:px-10 lg:pt-24 lg:pb-24">
+      {/* Top Bar */}
+      <div className="h-[3px] w-full bg-gradient-to-r from-blue-600 to-cyan-500" />
 
-        <div className="grid items-center gap-10 lg:grid-cols-[55%_45%]">
+      {/* Glow */}
+      <motion.div
+        animate={{ x: [0, 40, 0], y: [0, -40, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-100 opacity-40 blur-[120px]"
+      />
 
-          {/* LEFT CONTENT */}
-          <div className="order-1">
+      <div className="relative mx-auto max-w-7xl px-5 pb-16 pt-24 sm:px-6 lg:px-8">
+        <div className="grid items-start gap-14 lg:grid-cols-2">
 
-            {/* Badge */}
-            <div className="mb-5 inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-2">
-              <span className="text-xs font-medium text-blue-600 sm:text-sm">
-                Founder & CEO - Rise Infotech
+          {/* LEFT */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Eyebrow */}
+            <div className="mb-6 flex items-center gap-3">
+              <div className="h-[2px] w-8 rounded-full bg-blue-600" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600">
+                Founder &amp; CEO · Rise Infotech
               </span>
             </div>
 
             {/* Name */}
-            <h1 className="mb-3 max-w-[700px] text-3xl font-extrabold leading-tight text-slate-900 sm:text-5xl md:text-6xl">
-              Kumaresh{" "}
-              <span className="text-blue-700">
-                Bidari
-              </span>
+            <h1 className="font-black leading-[0.92] text-slate-900 text-5xl sm:text-6xl lg:text-7xl">
+              Kumaresh
+              <span className="block text-blue-600">Bidari</span>
             </h1>
 
-            {/* Designation */}
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.12em] text-blue-600 sm:text-sm">
-              SAP S/4HANA Consultant • Corporate Trainer • Enterprise
-              Transformation Leader
+            {/* Divider */}
+            <div className="my-7 h-px bg-gradient-to-r from-blue-600 to-slate-200" />
+
+            {/* Role */}
+            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">
+              SAP S/4HANA Consultant · Corporate Trainer
             </p>
 
             {/* Headline */}
-            <h2 className="mb-5 max-w-[750px] text-xl font-bold leading-tight sm:text-3xl md:text-4xl">
-              <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                Helping Enterprises Accelerate Growth Through SAP S/4HANA
-                Transformation
+            <h2 className="mt-7 max-w-xl text-3xl font-bold leading-tight text-slate-800 sm:text-4xl">
+              Helping Enterprises Accelerate Growth Through
+              <span className="block bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                SAP S/4HANA Transformation
               </span>
             </h2>
 
             {/* Description */}
-            <p className="max-w-[650px] text-sm leading-relaxed text-slate-600 sm:text-lg">
+            <p className="mt-6 max-w-xl text-base leading-8 text-slate-600">
               SAP S/4HANA Consultant with 10+ years of experience delivering
-              enterprise implementations, global rollouts, digital
-              transformation initiatives, and corporate training programs
-              across leading organizations including TCS, IBM, and NTT DATA.
+              enterprise implementations, digital transformation initiatives and
+              global rollouts across TCS, IBM and NTT DATA.
             </p>
 
-            {/* CTA */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+           
+ {/* Buttons */}
+<div className="mt-10 flex flex-wrap gap-4">
 
-              <a
-                href="https://enroll.riseinfotech.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  rounded-xl
-                  bg-blue-600
-                  px-6
-                  py-3
-                  text-center
-                  font-semibold
-                  text-white
-                  shadow-lg
-                  transition-all
-                  duration-300
-                  hover:bg-blue-700
-                  sm:px-8
-                  sm:py-4
-                "
-              >
-                Schedule Consultation
-              </a>
+  {/* Schedule Consultation → Rise Infotech enrollment */}
+  <a
+    href="https://enroll.riseinfotech.in/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="rounded-xl bg-blue-600 px-7 py-4 font-semibold text-white
+      shadow-lg transition-all duration-300 hover:-translate-y-1
+      hover:bg-blue-700 hover:shadow-blue-200"
+  >
+    Schedule Consultation
+  </a>
 
-              <a
-                href="#about"
-                className="
-                  rounded-xl
-                  border
-                  border-slate-300
-                  bg-white
-                  px-6
-                  py-3
-                  text-center
-                  font-semibold
-                  text-slate-900
-                  transition-all
-                  duration-300
-                  hover:bg-slate-50
-                  sm:px-8
-                  sm:py-4
-                "
-              >
-                View Journey
-              </a>
+  {/* View Journey → scrolls to #about section */}
+  <a
+    href="#about"
+    className="rounded-xl border border-slate-300 px-7 py-4 font-medium
+      text-slate-700 transition-all duration-300 hover:-translate-y-1
+      hover:border-slate-400"
+  >
+    View Journey
+  </a>
 
+</div>
+
+            {/* Credentials */}
+            <div className="mt-10 grid grid-cols-2 gap-3">
+              {credentials.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 transition-all duration-300 hover:border-blue-200 hover:bg-blue-50"
+                >
+                  <div className="h-2 w-2 rounded-full bg-blue-600" />
+                  <span className="text-sm font-semibold text-slate-600">
+                    {item}
+                  </span>
+                </div>
+              ))}
             </div>
+          </motion.div>
 
-          </div>
+          {/* RIGHT */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center lg:justify-end"
+          >
+            <div className="w-full max-w-[420px]">
 
-          {/* RIGHT CONTENT */}
-          <div className="order-2 flex flex-col items-center lg:items-end">
-
-            {/* Image */}
-            <div
-              className="
-                relative
-                mt-8
-                h-[260px]
-                w-[200px]
-                overflow-hidden
-                rounded-[24px]
-                shadow-2xl
-
-                sm:h-[420px]
-                sm:w-[320px]
-
-                lg:mt-0
-                lg:h-[560px]
-                lg:w-[420px]
-              "
-            >
-              <Image
-                src={profile.image}
-                alt={profile.name}
-                fill
-                priority
-                className="object-cover"
-              />
-            </div>
-
-            {/* Highlights */}
-            <div className="mt-6 grid w-full max-w-[320px] grid-cols-3 gap-2 sm:max-w-[420px] sm:gap-3">
-
-              {/* Card 1 */}
-              <div
-                className="
-                  group
-                  rounded-xl
-                  border
-                  border-slate-200
-                  bg-white
-                  p-3
-                  sm:p-4
-                  text-center
-                  shadow-sm
-                  transition-all
-                  duration-300
-                  hover:-translate-y-1
-                  hover:border-blue-500
-                  hover:bg-blue-50
-                  hover:shadow-lg
-                  hover:shadow-blue-100
-                "
+              {/* Image Card — fixed aspect ratio so it never collapses */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative w-full overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-b from-slate-50 to-blue-50 shadow-xl"
+                style={{ aspectRatio: "4 / 3" }}
               >
-                <h3 className="text-base font-bold text-slate-900 transition-colors duration-300 group-hover:text-blue-600 sm:text-xl">
-                  10+
-                </h3>
+                {/* Corner glow */}
+                <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-blue-200/40 blur-[60px]" />
 
-                <p className="mt-1 text-[10px] text-slate-500 transition-colors duration-300 group-hover:text-blue-700 sm:text-xs">
-                  Years Experience
-                </p>
+                <Image
+                  src="/assets/instructor.png"
+                  alt="Kumaresh Bidari"
+                  fill
+                  priority
+                  quality={100}
+                  className="object-contain object-bottom"
+                />
+              </motion.div>
+
+              {/* Stats */}
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                {[
+                  { value: "10+", label: "Years" },
+                  { value: "50+", label: "Projects" },
+                  { value: "SAP", label: "Expert" },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md"
+                  >
+                    <h3 className="text-2xl font-bold text-blue-600">
+                      {stat.value}
+                    </h3>
+                    <p className="mt-1 text-xs text-slate-500">{stat.label}</p>
+                  </div>
+                ))}
               </div>
 
-              {/* Card 2 */}
-              <div
-                className="
-                  group
-                  rounded-xl
-                  border
-                  border-slate-200
-                  bg-white
-                  p-3
-                  sm:p-4
-                  text-center
-                  shadow-sm
-                  transition-all
-                  duration-300
-                  hover:-translate-y-1
-                  hover:border-blue-500
-                  hover:bg-blue-50
-                  hover:shadow-lg
-                  hover:shadow-blue-100
-                "
-              >
-                <h3 className="text-base font-bold text-slate-900 transition-colors duration-300 group-hover:text-blue-600 sm:text-xl">
-                  Global
-                </h3>
-
-                <p className="mt-1 text-[10px] text-slate-500 transition-colors duration-300 group-hover:text-blue-700 sm:text-xs">
-                  Rollouts
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div
-                className="
-                  group
-                  rounded-xl
-                  border
-                  border-blue-100
-                  bg-gradient-to-br
-                  from-blue-50
-                  to-cyan-50
-                  p-3
-                  sm:p-4
-                  text-center
-                  shadow-sm
-                  transition-all
-                  duration-300
-                  hover:-translate-y-1
-                  hover:border-blue-600
-                  hover:shadow-lg
-                  hover:shadow-blue-200
-                "
-              >
-                <h3 className="text-base font-bold text-blue-700 transition-all duration-300 group-hover:scale-110 sm:text-xl">
-                  SAP
-                </h3>
-
-                <p className="mt-1 text-[10px] text-slate-600 transition-colors duration-300 group-hover:text-blue-700 sm:text-xs">
-                  S/4HANA Expert
-                </p>
+              {/* Core Expertise */}
+              <div className="mt-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="h-[2px] w-6 bg-blue-600" />
+                  <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700">
+                    Core Expertise
+                  </h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {expertise.map((item) => (
+                    <div
+                      key={item}
+                      className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-medium text-slate-600 transition-all duration-300 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
 
             </div>
-
-          </div>
+          </motion.div>
 
         </div>
-
       </div>
     </section>
   );

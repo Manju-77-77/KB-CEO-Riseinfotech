@@ -26,7 +26,7 @@ const companies = [
     name: "Rise Infotech",
     fullName: "Rise Infotech",
     role: "Founder & CEO",
-    logo: "/assets/logor.png",
+    logo: "/assets/riseinfo.jpeg",
   },
 ];
 
