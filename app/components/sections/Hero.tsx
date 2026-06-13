@@ -78,16 +78,17 @@ export default function Hero() {
 
            
  {/* Buttons */}
-<div className="mt-10 flex flex-wrap gap-4">
+<div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+
 
   {/* Schedule Consultation → Rise Infotech enrollment */}
   <a
     href="https://enroll.riseinfotech.in/"
     target="_blank"
     rel="noopener noreferrer"
-    className="rounded-xl bg-blue-600 px-7 py-4 font-semibold text-white
-      shadow-lg transition-all duration-300 hover:-translate-y-1
-      hover:bg-blue-700 hover:shadow-blue-200"
+     className="w-full rounded-xl bg-blue-600 px-7 py-4 text-center font-semibold
+      text-white shadow-lg transition-all duration-300 hover:-translate-y-1
+      hover:bg-blue-700 hover:shadow-blue-200 sm:w-auto"
   >
     Schedule Consultation
   </a>
@@ -95,9 +96,9 @@ export default function Hero() {
   {/* View Journey → scrolls to #about section */}
   <a
     href="#about"
-    className="rounded-xl border border-slate-300 px-7 py-4 font-medium
-      text-slate-700 transition-all duration-300 hover:-translate-y-1
-      hover:border-slate-400"
+   className="w-full rounded-xl border border-slate-300 px-7 py-4 text-center
+      font-medium text-slate-700 transition-all duration-300 hover:-translate-y-1
+      hover:border-slate-400 sm:w-auto"
   >
     View Journey
   </a>
