@@ -58,7 +58,7 @@ export default function About() {
             <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
 
               <Image
-                src="/assets/rise1.jpeg"
+                src=""
                 alt="Kumaresh Bidari at Rise Infotech"
                 width={800}
                 height={500}

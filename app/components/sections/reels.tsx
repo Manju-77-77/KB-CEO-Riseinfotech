@@ -8,28 +8,28 @@ const reels = [
     title: "SAP Career Guidance",
     description:
       "Insights on building a successful SAP career and industry opportunities.",
-    image: "/assets/reel1.png",
+    image: "",
     link: "https://www.instagram.com/reel/DYEEtnfRCp6/",
   },
   {
     title: "Enterprise Transformation",
     description:
       "Understanding SAP implementation and digital transformation strategies.",
-    image: "/assets/reel2.png",
+    image: "",
     link: "https://www.instagram.com/reel/DVfU1fEDYr-/",
   },
   {
     title: "Industry Insights",
     description:
       "Real-world consulting experience and SAP best practices.",
-    image: "/assets/reel3.png",
+    image: "",
     link: "https://www.instagram.com/reel/DTdUd41DPD3/",
   },
   {
     title: "Leadership & Growth",
     description:
       "Professional growth, leadership mindset and business insights.",
-    image: "/assets/reel4.png",
+    image: "",
     link: "https://www.instagram.com/reel/DO6lflxlEgq/",
   },
 ];
