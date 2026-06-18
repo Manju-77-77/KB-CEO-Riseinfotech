@@ -9,7 +9,6 @@ const companies = [
     fullName: "Tata Consultancy Services",
     role: "SAP MM Senior Consultant",
     logo: "/assets/tcs.png",
-    year: "2012 – 2016",
     accent: "from-cyan-400 to-blue-500",
   },
   {
@@ -17,7 +16,6 @@ const companies = [
     fullName: "IBM Corporation",
     role: "Advisory Consultant",
     logo: "/assets/ibm.png",
-    year: "2016 – 2019",
     accent: "from-blue-400 to-blue-600",
   },
   {
@@ -25,7 +23,6 @@ const companies = [
     fullName: "NTT DATA Services",
     role: "Lead Consultant",
     logo: "/assets/nttdata.png",
-    year: "2019 – 2021",
     accent: "from-blue-500 to-indigo-600",
   },
   {
@@ -33,7 +30,6 @@ const companies = [
     fullName: "Rise Infotech",
     role: "Founder & CEO",
     logo: "/assets/riseinfo.jpeg",
-    year: "2021 – Present",
     accent: "from-sky-400 to-blue-700",
   },
 ];
@@ -130,13 +126,7 @@ export default function TrustedExperience() {
                     {company.role}
                   </p>
 
-                  {/* Year Badge */}
-                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-blue-100 bg-blue-50 px-3 py-1">
-                    <span className="h-1 w-1 rounded-full bg-blue-400" />
-                    <span className="text-[11px] font-semibold tracking-wide text-blue-500">
-                      {company.year}
-                    </span>
-                  </div>
+                 
                 </div>
               </article>
             </motion.li>

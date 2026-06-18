@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
@@ -37,10 +35,10 @@ return ( <header className="fixed top-0 z-50 w-full"> <div className="mx-auto ma
       <span className="text-blue-900">Bidari</span>
     </h2>
 
-    <p className="text-xs font-medium uppercase tracking-wider text-blue-600">
+    <p className="text-xs font-medium  tracking-wider text-blue-600">
       Founder & CEO
-    </p>
-  </div>
+ </p>
+  </div>          
 </div>
 
       {/* Desktop Navigation */}
