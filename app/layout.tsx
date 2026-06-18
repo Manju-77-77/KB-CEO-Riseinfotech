@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import WhatsappButton from "./components/sections/WhatsappButton";
 
+<meta name="google-site-verification" content="c-MttQHGvPyriLOVnHwJilbD4dRIiI2zRMLEf5lF5k4" />
+
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
@@ -12,9 +14,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://kumareshbidari.com"),
 
   icons: {
-    icon: "/assets/logo.ico",
-    shortcut: "/assets/logo.ico",
-    apple: "/assets/logo.ico",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 
   title: {
