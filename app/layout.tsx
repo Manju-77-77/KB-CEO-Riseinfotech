@@ -3,8 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import WhatsappButton from "./components/sections/WhatsappButton";
 
-<meta name="google-site-verification" content="c-MttQHGvPyriLOVnHwJilbD4dRIiI2zRMLEf5lF5k4" />
-
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
