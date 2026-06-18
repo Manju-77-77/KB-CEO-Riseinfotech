@@ -69,9 +69,7 @@ export default function About() {
 
 
             <p className="mt-5 text-base leading-relaxed text-slate-600">
-              Kumaresh Bidari is an SAP S/4HANA Consultant, Corporate Trainer
-              and Founder & CEO of Rise Infotech with over a decade of
-              experience delivering enterprise SAP solutions across industries.
+              Kumaresh Bidari is an SAP S/4HANA Consultant, Corporate Trainer, and Founder & CEO of Rise Infotech with 10+ years of industry experience. Having worked with TCS, IBM, and NTT DATA, he has delivered SAP implementations, global rollouts, data migration, and digital transformation projects while mentoring thousands of aspiring SAP professionals.
             </p>
 
             <p className="mt-4 text-base leading-relaxed text-slate-600">

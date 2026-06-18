@@ -1,39 +1,29 @@
-
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import WhatsappButton from "./components/sections/WhatsappButton";
 
-
-
-
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kumareshbidari.com"),
 
   icons: {
-    icon: "/public/assets/logo.ico",
-    shortcut: "/public/assets/logo.ico",
-    apple: "/public/assets/logo.ico",
+    icon: "/assets/logo.ico",
+    shortcut: "/assets/logo.ico",
+    apple: "/assets/logo.ico",
   },
+
   title: {
-    default:
-      "Kumaresh Bidari | Founder & CEO | SAP S/4HANA Consultant",
+    default: "Kumaresh Bidari | Founder & CEO | SAP S/4HANA Consultant",
     template: "%s | Kumaresh Bidari",
   },
 
   description:
-    "Founder & CEO of Rise Infotech. SAP S/4HANA Consultant, Corporate Trainer and Enterprise Transformation Expert with experience at TCS, IBM and NTT DATA.",
+    "Founder & CEO of Rise Infotech. SAP S/4HANA MM Consultant, Corporate Trainer and Enterprise Transformation Expert with experience at TCS, IBM and NTT DATA.",
 
   keywords: [
     "Kumaresh Bidari",
@@ -53,40 +43,22 @@ export const metadata: Metadata = {
     "Enterprise Transformation",
   ],
 
-  authors: [
-    {
-      name: "Kumaresh Bidari",
-    },
-  ],
-
+  authors: [{ name: "Kumaresh Bidari" }],
   creator: "Kumaresh Bidari",
-
   publisher: "Rise Infotech",
 
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 
-  alternates: {
-    canonical: "https://kumareshbidari.com",
-  },
+  alternates: { canonical: "https://kumareshbidari.com" },
 
   openGraph: {
-    title:
-      "Kumaresh Bidari | Founder & CEO | SAP Consultant",
-
+    title: "Kumaresh Bidari | Founder & CEO | SAP Consultant",
     description:
       "Founder & CEO of Rise Infotech helping organizations and professionals achieve excellence through SAP innovation and enterprise transformation.",
-
     url: "https://kumareshbidari.com",
-
     siteName: "Kumaresh Bidari",
-
     locale: "en_IN",
-
     type: "website",
-
     images: [
       {
         url: "/og-image.jpg",
@@ -99,13 +71,9 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-
-    title:
-      "Kumaresh Bidari | Founder & CEO | SAP Consultant",
-
+    title: "Kumaresh Bidari | Founder & CEO | SAP Consultant",
     description:
-      "SAP S/4HANA Consultant, Corporate Trainer and Founder of Rise Infotech.",
-
+      "SAP S/4HANA MM Consultant, Corporate Trainer and Founder of Rise Infotech.",
     images: ["/og-image.jpg"],
   },
 };
@@ -116,15 +84,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full bg-slate-50 text-slate-900">
+    <html lang="en" className="h-full scroll-smooth">
+      <body
+        className={`${inter.className} min-h-full bg-white text-slate-900 antialiased`}
+      >
         {children}
-          <WhatsappButton />
+        <WhatsappButton />
       </body>
     </html>
   );
 }
-

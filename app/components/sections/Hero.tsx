@@ -3,192 +3,162 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const credentials = ["TCS", "IBM", "NTT DATA", "SAP Expert"];
+const companies = ["TCS", "IBM", "NTT DATA", "SAP Expert"];
 
-const expertise = [
-  "SAP MM",
-  "SAP S/4HANA",
-  "Cutover Planning",
-  "AMS Support",
-  "Corporate Training",
-  "Global Rollouts",
+const stats = [
+  { value: "10+", label: "Years in SAP" },
+  { value: "1000+", label: "Professionals Trained" },
+  { value: "3", label: "Global MNCs" },
 ];
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative overflow-hidden bg-white text-slate-900"
+      className="relative overflow-hidden bg-white"
     >
-      {/* Top Bar */}
-      <div className="h-[3px] w-full bg-gradient-to-r from-blue-600 to-cyan-500" />
+      <div className="pointer-events-none absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-50 opacity-50 blur-3xl" />
 
-      {/* Glow */}
-      {/* <motion.div
-        animate={{ x: [0, 40, 0], y: [0, -40, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-blue-100 opacity-40 blur-[120px]"
-      /> */}
+      <div className="relative mx-auto w-full max-w-screen-2xl px-8 pt-16 pb-10 xl:px-16">
+        <div className="grid grid-cols-1 items-stretch gap-0 lg:grid-cols-[1fr_500px] xl:grid-cols-[1fr_560px]">
 
-      <div className="relative mx-auto max-w-7xl px-5 pb-16 pt-24 sm:px-6 lg:px-8">
-        <div className="grid items-start gap-14 lg:grid-cols-2">
-
-          {/* LEFT */}
+          {/* ── LEFT ── */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="flex flex-col justify-center py-6"
           >
-            {/* Eyebrow */}
-            <div className="mb-6 flex items-center gap-3">
-              <div className="h-[2px] w-8 rounded-full bg-blue-600" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-600">
-                Founder &amp; CEO · Rise Infotech
-              </span>
-            </div>
+          
 
-            {/* Name */}
-            <h1 className="font-black leading-[0.92] text-slate-900 text-5xl sm:text-6xl lg:text-7xl">
-              Kumaresh
-              <span className="block text-blue-600">Bidari</span>
+            {/* Name — Dark Navy */}
+            <h1 className="mt-5 text-5xl font-semibold leading-tight tracking-tight text-blue-900 sm:text-6xl xl:text-7xl">
+              Kumaresh Bidari
             </h1>
 
-            {/* Divider */}
-            <div className="my-7 h-px bg-gradient-to-r from-blue-600 to-slate-200" />
-
-            {/* Role */}
-            <p className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">
-              SAP S/4HANA Consultant · Corporate Trainer
-            </p>
+            {/* Role tags */}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {["SAP S/4HANA Consultant", "Corporate Trainer"].map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-md bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-blue-600"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
 
             {/* Headline */}
-            <h2 className="mt-7 max-w-xl text-3xl font-bold leading-tight text-slate-800 sm:text-4xl">
-              Helping Enterprises Accelerate Growth Through
-              <span className="block bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                SAP S/4HANA Transformation
-              </span>
+            <h2 className="mt-7 max-w-xl text-xl font-semibold leading-snug text-slate-700 sm:text-2xl">
+              Helping Enterprises Accelerate Growth Through{" "}
+              <span className="text-blue-600">SAP S/4HANA Transformation</span>
             </h2>
 
             {/* Description */}
-            <p className="mt-6 max-w-xl text-base leading-8 text-slate-600">
-              SAP S/4HANA Consultant with 10+ years of experience delivering
-              enterprise implementations, digital transformation initiatives and
-              global rollouts across TCS, IBM and NTT DATA.
+            <p className="mt-4 max-w-xl text-base leading-[1.85] text-slate-500">
+             Experienced SAP S/4HANA MM Consultant with 10+ years of industry expertise in SAP S/4HANA Implementations, Global Rollouts, Testing, Data Migration, AMS Support, and Digital Transformation Programs. Successfully delivered enterprise SAP projects for global clients while working with TCS, IBM, and NTT DATA. Additionally, with 5+ years of SAP MM training experience, I have mentored aspiring SAP professionals through industry-oriented, real-time project-based training, helping them build successful careers as SAP S/4HANA MM Consultants.
             </p>
 
-           
- {/* Buttons */}
-<div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
-
-
-  {/* Schedule Consultation → Rise Infotech enrollment */}
-  <a
-    href="https://enroll.riseinfotech.in/"
-    target="_blank"
-    rel="noopener noreferrer"
-     className="w-full rounded-xl bg-blue-600 px-7 py-4 text-center font-semibold
-      text-white shadow-lg transition-all duration-300 hover:-translate-y-1
-      hover:bg-blue-700 hover:shadow-blue-200 sm:w-auto"
-  >
-    Schedule Consultation
-  </a>
-
-  {/* View Journey → scrolls to #about section */}
-  <a
-    href="#about"
-   className="w-full rounded-xl border border-slate-300 px-7 py-4 text-center
-      font-medium text-slate-700 transition-all duration-300 hover:-translate-y-1
-      hover:border-slate-400 sm:w-auto"
-  >
-    View Journey
-  </a>
-
-</div>
-
-            {/* Credentials */}
-            <div className="mt-10 grid grid-cols-2 gap-3">
-              {credentials.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 transition-all duration-300 hover:border-blue-200 hover:bg-blue-50"
-                >
-                  <div className="h-2 w-2 rounded-full bg-blue-600" />
-                  <span className="text-sm font-semibold text-slate-600">
-                    {item}
-                  </span>
+            {/* Stats */}
+            <div className="mt-8 flex flex-wrap gap-10 border-t border-slate-100 pt-7">
+              {stats.map(({ value, label }) => (
+                <div key={label}>
+                  <p className="text-2xl font-semibold text-[#0f1e3d]">{value}</p>
+                  <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+                    {label}
+                  </p>
                 </div>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a
+                href="https://enroll.riseinfotech.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-700 px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-800 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-100"
+              >
+                Schedule Consultation
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+              <a
+                href="#about"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-200 px-7 py-3.5 text-sm font-semibold text-slate-600 transition-all duration-300 hover:border-blue-500 hover:text-blue-700"
+              >
+                View Journey
+              </a>
+            </div>
+
+            {/* Companies */}
+            <div className="mt-7 flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-semibold uppercase tracking-widest text-slate-300 mr-1">
+                Experience at
+              </span>
+              {companies.map((company) => (
+                <span
+                  key={company}
+                  className="rounded-full border border-slate-200 px-4 py-1.5 text-xs font-semibold text-slate-500 transition-all duration-300 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700"
+                >
+                  {company}
+                </span>
               ))}
             </div>
           </motion.div>
 
-          {/* RIGHT */}
+          {/* ── RIGHT: Image ── */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center lg:justify-end"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="relative hidden lg:flex items-end justify-center"
           >
-            <div className="w-full max-w-[420px]">
+            <div
+              className="pointer-events-none absolute right-0 top-4 h-32 w-32 opacity-20"
+              style={{
+                backgroundImage: "radial-gradient(circle, #93c5fd 1px, transparent 1px)",
+                backgroundSize: "14px 14px",
+              }}
+            />
 
-              {/* Image Card — fixed aspect ratio so it never collapses */}
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl"
-                style={{ aspectRatio: "4 / 3" }}
-              >
-                {/* Corner glow */}
-                <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white blur-[60px]" />
+            <div className="relative h-full w-full">
+              <div className="absolute bottom-0 right-0 top-8 w-[88%] rounded-3xl bg-blue-50" />
 
+              <div className="relative z-10 flex h-full items-end justify-center">
                 <Image
                   src="/assets/instructor.png"
                   alt="Kumaresh Bidari"
-                  fill
+                  width={500}
+                  height={600}
                   priority
                   quality={100}
-                  className="object-contain object-bottom"
+                  className="relative z-10 max-h-[580px] w-auto object-contain drop-shadow-sm"
                 />
+              </div>
+
+              {/* Floating card — SAP Expertise */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5, duration: 0.35 }}
+                className="absolute left-0 top-16 z-20 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-lg"
+              >
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-blue-400">SAP Expertise</p>
+                <p className="mt-0.5 text-base font-semibold text-[#0f1e3d]">S/4HANA MM</p>
               </motion.div>
 
-              {/* Stats */}
-              <div className="mt-4 grid grid-cols-3 gap-3">
-                {[
-                  { value: "10+", label: "Years" },
-                  { value: "50+", label: "Projects" },
-                  { value: "SAP", label: "Expert" },
-                ].map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md"
-                  >
-                    <h3 className="text-2xl font-bold text-blue-600">
-                      {stat.value}
-                    </h3>
-                    <p className="mt-1 text-xs text-slate-500">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Core Expertise */}
-              <div className="mt-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="h-[2px] w-6 bg-blue-600" />
-                  <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700">
-                    Core Expertise
-                  </h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {expertise.map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-medium text-slate-600 transition-all duration-300 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
+              {/* Floating card — Trained */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.65, duration: 0.35 }}
+                className="absolute bottom-16 right-2 z-20 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-lg"
+              >
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-blue-400">Trained</p>
+                <p className="mt-0.5 text-base font-semibold text-blue-600">1000+ Pros</p>
+              </motion.div>
             </div>
           </motion.div>
 
