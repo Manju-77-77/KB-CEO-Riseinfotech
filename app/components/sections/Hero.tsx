@@ -69,7 +69,7 @@ export default function Hero() {
       />
 
       {/* Glows */}
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[700px] w-[700px] rounded-full bg-blue-100 opacity-40 blur-3xl" />
+      <div className="pointer-events-none absolute -right-40 -top-40 h-[700px] w-[700px] rounded-full  opacity-40 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-20 -left-20 h-[400px] w-[400px] rounded-full bg-sky-50 opacity-60 blur-3xl" />
 
       <div className="relative mx-auto w-full max-w-screen-2xl px-6 pb-20 pt-24 xl:px-20">
@@ -102,8 +102,7 @@ export default function Hero() {
 
             {/* Role */}
             <motion.p
-              variants={fadeUp(0.08)}
-              initial="initial"
+              variants={fadeUp(0.08)}             
               animate="animate"
              className="mt-2 text-xs font-medium tracking-wide text-black sm:text-sm"
             >
@@ -119,10 +118,10 @@ export default function Hero() {
 >
   Helping Enterprises Accelerate Growth Through{" "}
   <span className="relative inline-block">
-    <span className="relative z-10 bg-gradient-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent">
+    <span className="relative z-100 bg-clip-text text-transparent">
       SAP S/4HANA Transformation
     </span>
-    <span className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-blue-500 to-transparent opacity-30" />
+    <span className="absolute -bottom-1 left-0 right-0 h-[3px] " />
   </span>
 </motion.h1>
 
