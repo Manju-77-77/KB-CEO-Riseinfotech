@@ -12,6 +12,10 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kumareshbidari.com"),
+  
+  verification: {
+  google: "c-MttQHGvPyriLOVnHwJilbD4dRIiI2zRMLEf5lF5k4",
+},
 
   icons: {
     icon: "/favicon.ico",
