@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -130,7 +129,7 @@ export default function Hero() {
               variants={fadeUp(0.2)}
               initial="initial"
               animate="animate"
-             className="mt-5 max-w-[850px] text-[14px] leading-[1.8] text-blue-800 sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]"
+             className="mt-5 max-w-[850px] text-[14px] leading-[1.8] text-black sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]"
             >
               Experienced SAP S/4HANA MM Consultant with 10+ years of industry
               expertise in SAP S/4HANA Implementations, Global Rollouts,
@@ -150,7 +149,7 @@ export default function Hero() {
               variants={fadeUp(0.26)}
               initial="initial"
               animate="animate"
-             className="mt-6 grid grid-cols-1 gap-4 border-t border-slate-100 pt-6 sm:grid-cols-3"
+             className="mt-6 grid grid-cols-1 gap-4 border-t border-blue-200 pt-6 sm:grid-cols-3"
             >
               {stats.map(({ value, label }) => (
                 <div
@@ -202,8 +201,6 @@ export default function Hero() {
             animate="animate"
             className="relative mt-14 flex items-end justify-center lg:mt-0"
           >
-            <div className="absolute bottom-0 left-1/2 h-[90%] w-[85%] -translate-x-1/2 rounded-[40px] bg-white" />
-
             <div className="relative z-10">
               <Image
                 src="/assets/instructor.png"
@@ -212,7 +209,7 @@ export default function Hero() {
                 height={700}
                 priority
                 quality={100}
-               className="max-h-[380px] w-auto object-contain sm:max-h-[500px] lg:max-h-[620px] xl:max-h-[680px]"
+               className="max-h-[320px] w-auto object-contain drop-shadow-md sm:max-h-[420px] lg:max-h-[500px] xl:max-h-[540px]"
               />
 
 
@@ -249,4 +246,3 @@ export default function Hero() {
     </section>
   );
 }
-
