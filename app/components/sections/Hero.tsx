@@ -105,22 +105,48 @@ export default function Hero() {
               animate="animate"
              className="mt-2 text-xs font-medium tracking-wide text-black sm:text-sm"
             >
-              SAP S/4HANA MM Consultant • Corporate Trainer
+              SAP S/4HANA Expert  Corporate Trainer
             </motion.p>
 
             {/* Heading */}
-           <motion.h1
+ <motion.h1
   variants={fadeUp(0.14)}
   initial="initial"
   animate="animate"
- className="mt-4 text-[20px] font-bold leading-[1.25] tracking-tight text-[#0f1e3d] sm:text-[24px] md:text-[28px] lg:text-[32px] xl:text-[38px]"
+  className="
+    mt-4
+    text-[20px]
+    font-bold
+    leading-[1.25]
+    tracking-tight
+    text-[#0f1e3d]
+    sm:text-[24px]
+    md:text-[28px]
+    lg:text-[32px]
+    xl:text-[38px]
+  "
 >
   Helping Enterprises Accelerate Growth Through{" "}
+
   <span className="relative inline-block">
-    <span className="relative z-100 bg-clip-text text-transparent">
+    <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 bg-clip-text text-transparent">
       SAP S/4HANA Transformation
     </span>
-    <span className="absolute -bottom-1 left-0 right-0 h-[3px] " />
+
+    {/* Underline */}
+    <span
+      className="
+        absolute
+        -bottom-1
+        left-0
+        h-[3px]
+        w-full
+        rounded-full
+        bg-gradient-to-r
+        from-blue-700
+        to-sky-500
+      "
+    />
   </span>
 </motion.h1>
 
@@ -156,7 +182,7 @@ export default function Hero() {
                   key={label}
                   className="rounded-3xl px-6 py-5 transition-all duration-500 hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-white hover:shadow-xl hover:shadow-blue-100"
                 >
-                  <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 bg-clip-text text-3xl font-bold text-transparent">
+                  <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 bg-clip-text text-2xl font-bold text-transparent">
                     {value}
                   </div>
 

@@ -15,11 +15,7 @@ export const metadata: Metadata = {
   google: "c-MttQHGvPyriLOVnHwJilbD4dRIiI2zRMLEf5lF5k4",
 },
 
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
-  },
+ 
 
   title: {
     default: "Kumaresh Bidari | Founder & CEO | SAP S/4HANA Consultant",

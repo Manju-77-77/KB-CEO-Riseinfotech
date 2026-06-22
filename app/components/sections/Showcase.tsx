@@ -116,24 +116,28 @@ export default function RiseInfotech() {
                 Visit Website
               </a>
 
-              <a
-                href="#contact"
-                className="
-                  rounded-xl
-                  border
-                  border-slate-300
-                  px-7
-                  py-3
-                  text-center
-                  font-semibold
-                  text-slate-900
-                  transition-all
-                  duration-300
-                  hover:bg-slate-50
-                "
-              >
-                Contact Us
-              </a>
+             <a
+  href="https://www.riseinfotech.in/contact"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="
+    rounded-xl
+    border
+    border-slate-300
+    px-7
+    py-3
+    text-center
+    font-semibold
+    text-slate-900
+    transition-all
+    duration-300
+    hover:border-blue-600
+    hover:bg-blue-50
+    hover:text-blue-700
+  "
+>
+  Contact Us
+</a>
 
             </div>
 

@@ -5,32 +5,32 @@ import { FaInstagram, FaPlay } from "react-icons/fa";
 
 const reels = [
   {
-    title: "SAP Career Guidance",
+    title: "SAP MM Career Insights",
     description:
-      "Insights on building a successful SAP career and industry opportunities.",
-    image: "",
-    link: "https://www.instagram.com/reel/DYEEtnfRCp6/",
+      "Learn how to build a successful career in SAP S/4HANA MM with industry-oriented guidance and practical insights.",
+    image: "/assets/reel1.png",
+    link: "https://www.instagram.com/reel/DTj8VBlAL6x/",
   },
   {
-    title: "Enterprise Transformation",
+    title: "SAP Training & Learning",
     description:
-      "Understanding SAP implementation and digital transformation strategies.",
-    image: "",
-    link: "https://www.instagram.com/reel/DVfU1fEDYr-/",
+      "Explore real-time project-based SAP training approaches and professional growth opportunities.",
+    image: "/assets/reel2.png",
+    link: "https://www.instagram.com/reel/DThnqmaDIm3/",
   },
   {
-    title: "Industry Insights",
+    title: "Industry Experience & Consulting",
     description:
-      "Real-world consulting experience and SAP best practices.",
-    image: "",
+      "Gain insights into SAP consulting, implementation projects, and enterprise best practices.",
+    image: "/assets/reel3.png",
     link: "https://www.instagram.com/reel/DTdUd41DPD3/",
   },
   {
-    title: "Leadership & Growth",
+    title: "Leadership & Transformation",
     description:
-      "Professional growth, leadership mindset and business insights.",
-    image: "",
-    link: "https://www.instagram.com/reel/DO6lflxlEgq/",
+      "Thoughts on leadership, digital transformation, and building successful careers in SAP.",
+    image: "/assets/reel4.png",
+    link: "https://www.instagram.com/reel/DTAAkgql877/",
   },
 ];
 

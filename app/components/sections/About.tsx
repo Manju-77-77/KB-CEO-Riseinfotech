@@ -32,16 +32,13 @@ export default function About() {
   ];
 
   return (
-    <section
-      id="about"
-      className="relative bg-white py-12 md:py-16"
-    >
+    <section id="about" className="relative bg-white py-16 md:py-24">
       <div className="mx-auto max-w-[1300px] px-5 sm:px-6 lg:px-8">
 
-        <div className="grid items-start gap-12 lg:grid-cols-[45%_55%]">
+        <div className="grid items-start gap-12 lg:grid-cols-[44%_56%] lg:gap-16">
 
           {/* LEFT CONTENT */}
-          <div>
+          <div className="lg:sticky lg:top-24">
 
             <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-600">
               Executive Profile
@@ -54,74 +51,52 @@ export default function About() {
               </span>
             </h2>
 
-              {/* IMAGE */}
-            <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+            {/* IMAGE */}
+            <div className="relative mt-7 overflow-hidden rounded-3xl border border-slate-200 shadow-[0_20px_45px_-15px_rgba(15,30,61,0.18)]">
+              <div className="relative h-[320px] w-full sm:h-[380px]">
+                <Image
+                  src="/assets/rise1.png"
+                  alt="Kumaresh Bidari at Rise Infotech"
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  className="object-cover object-bottom"
+                />
+                {/* Gradient overlay for caption legibility */}
+                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
 
-              <Image
-                src=""
-                alt="Kumaresh Bidari at Rise Infotech"
-                width={800}
-                height={500}
-                className="h-[260px] w-full object-cover transition-transform duration-500 hover:scale-105"
-              />
-
+                {/* Caption */}
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between px-5 py-4">
+                  <div>
+                    <p className="text-sm font-semibold text-white">Kumaresh Bidari</p>
+                    <p className="text-xs text-white/80">Founder & CEO, Rise Infotech</p>
+                  </div>
+                  
+                </div>
+              </div>
             </div>
 
-
-            <p className="mt-5 text-base leading-relaxed text-slate-600">
-              Kumaresh Bidari is an SAP S/4HANA Consultant, Corporate Trainer, and Founder & CEO of Rise Infotech with 10+ years of industry experience. Having worked with TCS, IBM, and NTT DATA, he has delivered SAP implementations, global rollouts, data migration, and digital transformation projects while mentoring thousands of aspiring SAP professionals.
-            </p>
-
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              Having worked with TCS, IBM and NTT DATA, he has led SAP
-              implementations, global rollouts, migrations and digital
-              transformation initiatives while helping professionals build
-              successful SAP careers through Rise Infotech.
-            </p>
-
-            {/* STATS
-            <div className="mt-6 flex gap-4">
-
-              <div className="flex-1 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                <h3 className="text-2xl font-bold text-blue-600">
-                  10+
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">
-                  Years SAP Consulting
-                </p>
-              </div>
-
-              <div className="flex-1 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                <h3 className="text-2xl font-bold text-blue-600">
-                  200+
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">
-                  Career Placements
-                </p>
-              </div>
-
-            </div> */}
-
-          
+           <p className="mt-6 text-base leading-relaxed text-slate-600">
+  Kumaresh Bidari is an SAP S/4HANA Consultant, Corporate Trainer, and Founder & CEO of Rise Infotech with over 10 years of industry experience. Having worked with leading organizations including TCS, IBM, and NTT DATA, he has successfully delivered SAP implementations, global rollouts, data migration, and digital transformation initiatives while mentoring aspiring SAP professionals through practical, real-time training programs and helping them build successful careers in SAP S/4HANA.
+</p>
           </div>
 
           {/* RIGHT TIMELINE */}
           <div className="relative">
 
             {/* Timeline Line */}
-            <div className="absolute left-4 top-0 hidden h-full w-[2px] bg-slate-200 md:block" />
+            <div className="absolute left-4 top-2 hidden h-[calc(100%-1rem)] w-px bg-gradient-to-b from-blue-200 via-slate-200 to-transparent md:block" />
 
-            <div className="space-y-4">
+            <div className="space-y-5">
 
               {timeline.map((item, index) => (
                 <div
                   key={`${item.year}-${index}`}
-                  className="relative md:pl-14"
+                  className="group relative md:pl-14"
                 >
 
-                  {/* Desktop Year */}
-                  <div className="absolute left-0 top-1 hidden h-8 w-8 items-center justify-center rounded-full border border-blue-200 bg-white text-[10px] font-bold text-blue-600 shadow-sm md:flex">
-                    {item.year}
+                  {/* Desktop Year Node */}
+                  <div className="absolute left-0 top-1.5 z-10 hidden h-8 w-8 items-center justify-center rounded-full border-2 border-blue-200 bg-white text-[10px] font-bold text-blue-600 shadow-sm transition-colors duration-300 group-hover:border-blue-500 group-hover:bg-blue-600 group-hover:text-white md:flex">
+                    {item.year.slice(2)}
                   </div>
 
                   {/* Mobile Year */}
@@ -130,16 +105,19 @@ export default function About() {
                   </span>
 
                   {/* Timeline Card */}
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-md">
-
-                    <h3 className="text-base font-semibold text-slate-900">
-                      {item.title}
-                    </h3>
+                  <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-blue-200 group-hover:shadow-lg group-hover:shadow-blue-100/60">
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="text-base font-semibold text-slate-900">
+                        {item.title}
+                      </h3>
+                      <span className="hidden text-xs font-medium text-blue-500 md:inline">
+                        {item.year}
+                      </span>
+                    </div>
 
                     <p className="mt-2 text-sm leading-relaxed text-slate-600">
                       {item.desc}
                     </p>
-
                   </div>
 
                 </div>
