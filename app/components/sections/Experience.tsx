@@ -95,9 +95,9 @@ export default function TrustedExperience() {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-white to-cyan-50/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                 {/* Watermark number */}
-                <span className="absolute right-4 top-4 select-none text-5xl font-black text-blue-50 transition-colors duration-300 group-hover:text-blue-100">
+                {/* <span className="absolute right-4 top-4 select-none text-5xl font-black text-blue-50 transition-colors duration-300 group-hover:text-blue-100">
                   {String(index + 1).padStart(2, "0")}
-                </span>
+                </span> */}
 
                 <div className="relative z-10 p-6">
                   {/* Logo */}
