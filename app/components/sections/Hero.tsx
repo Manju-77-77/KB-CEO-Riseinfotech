@@ -221,50 +221,99 @@ export default function Hero() {
           </div>
 
           {/* RIGHT */}
-          <motion.div
-            variants={fadeIn(0.2)}
-            initial="initial"
-            animate="animate"
-            className="relative mt-14 flex items-end justify-center lg:mt-0"
-          >
-            <div className="relative z-10">
-              <Image
-                src="/assets/instructor.png"
-                alt="Kumaresh Bidari"
-                width={560}
-                height={700}
-                priority
-                quality={100}
-               className="max-h-[320px] w-auto object-contain drop-shadow-md sm:max-h-[420px] lg:max-h-[500px] xl:max-h-[540px]"
-              />
+    
+{/* RIGHT */}
+<motion.div
+  variants={fadeIn(0.2)}
+  initial="initial"
+  animate="animate"
+  className="relative mt-10 flex flex-col items-center lg:mt-0"
+>
+  {/* Image Container */}
+  <div className="relative flex w-full justify-center">
+
+    {/* Background Glow */}
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl sm:h-[350px] sm:w-[350px]" />
+    </div>
+
+    {/* Image */}
+    <div className="relative z-10 flex justify-center">
+      <Image
+        src="/assets/instructor.png"
+        alt="Kumaresh Bidari"
+        width={560}
+        height={700}
+        priority
+        quality={100}
+        className="
+          mx-auto
+          w-auto
+          max-h-[340px]
+          translate-x-3
+          object-contain
+          drop-shadow-xl
+
+          sm:max-h-[430px]
+          sm:translate-x-0
+
+          lg:max-h-[500px]
+
+          xl:max-h-[540px]
+        "
+      />
+    </div>
+
+  </div>
+
+  {/* Core Expertise */}
+  <motion.div
+    variants={fadeUp(0.35)}
+    initial="initial"
+    animate="animate"
+    className="mt-10 w-full"
+  >
+    <h3 className="mb-4 text-center text-sm font-semibold uppercase tracking-wider text-slate-400 lg:text-left">
+      Core Expertise
+    </h3>
+
+    <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
+      {expertise.map((item) => (
+        <span
+          key={item}
+          className="
+            rounded-full
+            border
+            border-slate-200
+            bg-white
+            px-4
+            py-2
+            text-sm
+            font-medium
+            text-slate-600
+            shadow-sm
+            transition-all
+            duration-500
+            hover:-translate-y-1
+            hover:border-blue-300
+            hover:bg-gradient-to-r
+            hover:from-blue-600
+            hover:to-sky-500
+            hover:text-white
+            hover:shadow-lg
+            hover:shadow-blue-100
+          "
+        >
+          {item}
+        </span>
+      ))}
+    </div>
+  </motion.div>
+
+</motion.div>
 
 
-
-                {/* Core Expertise */}
-            <motion.div
-              variants={fadeUp(0.35)}
-              initial="initial"
-              animate="animate"
-              className="mt-10"
-            >
-              <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-400">
-                Core Expertise
-              </h3>
-
-              <div className="flex flex-wrap gap-3">
-                {expertise.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-600 hover:to-sky-500 hover:text-white hover:shadow-lg hover:shadow-blue-100"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-            </div>
-          </motion.div>
-
+          
           
 
         </div>
