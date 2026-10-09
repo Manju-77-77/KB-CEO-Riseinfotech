@@ -110,7 +110,7 @@ export default function Footer() {
                   size={18}
                   className="mt-1 text-blue-400"
                 />
-                <span>+91 9110421024</span>
+                <span>+91 9110455125</span>
               </div>
 
               <div className="flex items-start gap-3 text-slate-400">
@@ -118,7 +118,7 @@ export default function Footer() {
                   size={18}
                   className="mt-1 text-blue-400"
                 />
-                <span>kumaresh.bidari@gmail.com</span>
+                <span>info@riseinfotech.in</span>
               </div>
 
               <div className="flex items-start gap-3 text-slate-400">
