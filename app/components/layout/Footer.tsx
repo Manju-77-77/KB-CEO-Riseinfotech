@@ -57,19 +57,6 @@ export default function Footer() {
                 About
               </a>
 
-              <a
-                href="#experience"
-                className="text-slate-400 transition hover:text-blue-400"
-              >
-                Experience
-              </a>
-
-              <a
-                href="#expertise"
-                className="text-slate-400 transition hover:text-blue-400"
-              >
-                Expertise
-              </a>
 
               <a
                 href="#services"
@@ -79,10 +66,10 @@ export default function Footer() {
               </a>
 
               <a
-                href="#insights"
+                href="#achievements"
                 className="text-slate-400 transition hover:text-blue-400"
               >
-                Insights
+                Achivements
               </a>
 
               <a

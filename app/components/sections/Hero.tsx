@@ -128,26 +128,11 @@ export default function Hero() {
 >
   Helping Enterprises Accelerate Growth Through{" "}
 
-  <span className="relative inline-block">
     <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 bg-clip-text text-transparent">
       SAP S/4HANA Transformation
     </span>
 
-    {/* Underline */}
-    <span
-      className="
-        absolute
-        -bottom-1
-        left-0
-        h-[3px]
-        w-full
-        rounded-full
-        bg-gradient-to-r
-        from-blue-700
-        to-sky-500
-      "
-    />
-  </span>
+
 </motion.h1>
 
             {/* Description */}
@@ -201,9 +186,7 @@ export default function Hero() {
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
               <a
-                href="https://enroll.riseinfotech.in/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#consultation-form"
                 className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-8 py-4 text-[15px] font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700"
               >
                 Schedule Consultation
