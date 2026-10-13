@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -50,7 +51,7 @@ export default function TrustedExperience() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto mb-14 max-w-3xl text-center"
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-blue-600 shadow-sm shadow-blue-100">
@@ -80,44 +81,56 @@ export default function TrustedExperience() {
           {companies.map((company, index) => (
             <motion.li
               key={company.name}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+                ease: "easeOut",
+              }}
+              whileHover={{
+                y: -6,
+                transition: { duration: 0.25, ease: "easeOut" },
+              }}
             >
-              <article className="group relative h-full overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-md shadow-blue-50 transition-all duration-300 hover:-translate-y-2 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-100/60">
+              <article className="group relative h-full overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-md shadow-blue-50 transition-[border-color,box-shadow] duration-300 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-100/60">
                 {/* Top gradient bar */}
                 <div
                   className={`h-1.5 w-full bg-gradient-to-r ${company.accent}`}
                 />
 
                 {/* Hover background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-white to-cyan-50/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-                {/* Watermark number */}
-                {/* <span className="absolute right-4 top-4 select-none text-5xl font-black text-blue-50 transition-colors duration-300 group-hover:text-blue-100">
-                  {String(index + 1).padStart(2, "0")}
-                </span> */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-50/80 via-white to-cyan-50/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                 <div className="relative z-10 p-6">
-                  {/* Logo */}
+                  {/* Logo - original dimensions and position preserved */}
                   <div className="mb-6 flex h-16 items-center">
-                    <Image
-                      src={company.logo}
-                      alt={`${company.fullName} logo`}
-                      width={180}
-                      height={60}
-                      className="max-h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                    />
+                    <motion.div
+                      whileHover={{ scale: 1.04 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                    >
+                      <Image
+                        src={company.logo}
+                        alt={`${company.fullName} logo`}
+                        width={180}
+                        height={60}
+                        className="max-h-12 w-auto object-contain"
+                      />
+                    </motion.div>
                   </div>
 
                   {/* Divider */}
-                  <div
-                    className={`h-[2px] w-12 rounded-full bg-gradient-to-r ${company.accent} transition-all duration-300 group-hover:w-20`}
+                  <motion.div
+                    className={`h-[2px] rounded-full bg-gradient-to-r ${company.accent}`}
+                    initial={false}
+                    whileHover={{ width: 80 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    style={{ width: 48 }}
                   />
 
                   {/* Company Name */}
-                  <h3 className="mt-4 text-xl font-bold text-[#0f1e3d]">
+                  <h3 className="mt-4 text-xl font-bold text-[#0f1e3d] transition-colors duration-300 group-hover:text-blue-700">
                     {company.name}
                   </h3>
 
@@ -125,9 +138,12 @@ export default function TrustedExperience() {
                   <p className="mt-1.5 text-sm font-medium text-blue-600">
                     {company.role}
                   </p>
-
-                 
                 </div>
+
+                {/* Bottom hover accent */}
+                <div
+                  className={`pointer-events-none absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r ${company.accent} transition-transform duration-300 group-hover:scale-x-100`}
+                />
               </article>
             </motion.li>
           ))}

@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 /* =========================
@@ -105,7 +106,6 @@ body {
 
 .gradient-text {
   background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
-
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -120,4 +120,113 @@ body {
     padding-top: 7rem;
     padding-bottom: 7rem;
   }
+}
+
+/* =========================
+   Timeline: Active Green Circle
+========================= */
+
+.timeline-heartbeat {
+  position: absolute;
+  z-index: 10;
+  animation: timeline-heartbeat-glow 1.4s ease-in-out infinite;
+  will-change: box-shadow;
+}
+
+/* Expanding green ring around the active circle */
+
+.timeline-heartbeat::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  z-index: -1;
+  border: 2px solid rgba(52, 211, 153, 0.8);
+  border-radius: 9999px;
+  background: rgba(110, 231, 183, 0.12);
+  pointer-events: none;
+  animation: timeline-heartbeat-ring 1.4s ease-out infinite;
+}
+
+/* Pulsing glow */
+
+@keyframes timeline-heartbeat-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px rgba(110, 231, 183, 0.18),
+      0 0 12px rgba(52, 211, 153, 0.45);
+  }
+
+  15% {
+    box-shadow:
+      0 0 0 6px rgba(110, 231, 183, 0.3),
+      0 0 22px rgba(52, 211, 153, 0.8);
+  }
+
+  30% {
+    box-shadow:
+      0 0 0 3px rgba(110, 231, 183, 0.18),
+      0 0 12px rgba(52, 211, 153, 0.45);
+  }
+
+  45% {
+    box-shadow:
+      0 0 0 5px rgba(110, 231, 183, 0.24),
+      0 0 18px rgba(52, 211, 153, 0.65);
+  }
+
+  60% {
+    box-shadow:
+      0 0 0 3px rgba(110, 231, 183, 0.18),
+      0 0 12px rgba(52, 211, 153, 0.45);
+  }
+}
+
+/* Expanding and fading ring */
+
+@keyframes timeline-heartbeat-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.85;
+  }
+
+  70%,
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   One-Time Final Card Blink
+========================= */
+
+.timeline-final-blink {
+  animation: timeline-final-blink 450ms ease-in-out 2;
+}
+
+@keyframes timeline-final-blink {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.8);
+  }
+}
+
+/* =========================
+   Reduced Motion Accessibility
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-heartbeat,
+  .timeline-heartbeat::before,
+  .timeline-final-blink {
+    animation: none;
+  }
+}
+html {
+  scroll-padding-top: 160px;
 }

@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
+import emailjs from "@emailjs/browser";
 
 type FormData = {
   name: string;
@@ -21,7 +22,10 @@ const initialForm: FormData = {
 
 export default function ConsultationForm() {
   const [form, setForm] = useState<FormData>(initialForm);
-  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">(
+    "idle"
+  );
 
   const handleChange = (
     event: ChangeEvent<
@@ -34,13 +38,54 @@ export default function ConsultationForm() {
       ...previous,
       [name]: value,
     }));
+
+    if (status !== "idle") {
+      setStatus("idle");
+    }
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // The email and Zoho CRM backend will be connected separately.
-    setSubmitted(true);
+    if (loading) return;
+
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.error(
+        "EmailJS configuration is incomplete. Check your .env.local file."
+      );
+      setStatus("error");
+      return;
+    }
+
+    setLoading(true);
+    setStatus("idle");
+
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: form.name.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          course: form.course,
+          message: form.message.trim(),
+        },
+        { publicKey }
+      );
+
+      setForm(initialForm);
+      setStatus("success");
+    } catch (error) {
+      console.error("EmailJS submission failed:", error);
+      setStatus("error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -116,7 +161,8 @@ export default function ConsultationForm() {
                   onChange={handleChange}
                   placeholder="Enter your full name"
                   required
-                  className="w-full border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  disabled={loading}
+                  className="w-full border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:opacity-60"
                 />
               </div>
 
@@ -137,7 +183,8 @@ export default function ConsultationForm() {
                   onChange={handleChange}
                   placeholder="Enter your email"
                   required
-                  className="w-full border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  disabled={loading}
+                  className="w-full border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:opacity-60"
                 />
               </div>
             </div>
@@ -151,18 +198,36 @@ export default function ConsultationForm() {
                 >
                   Phone Number *
                 </label>
+  
+                  <input
+                    id="consultation-phone"
+                    name="phone"
+                    type="tel"
+                    inputMode="numeric"
+                    autoComplete="tel-national"
+                    value={form.phone}
+                    onChange={(event) => {
+                      const digits = event.target.value
+                        .replace(/\D/g, "")
+                        .slice(0, 10);
 
-                <input
-                  id="consultation-phone"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  value={form.phone}
-                  onChange={handleChange}
-                  placeholder="Enter your phone number"
-                  required
-                  className="w-full border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                />
+                      setForm((previous) => ({
+                        ...previous,
+                        phone: digits,
+                      }));
+
+                      setStatus("idle");
+                    }}
+                    placeholder="Enter 10-digit phone number"
+                    pattern="[0-9]{10}"
+                    minLength={10}
+                    maxLength={10}
+                    title="Please enter exactly 10 digits."
+                    required
+                    disabled={loading}
+                    className="w-full border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:opacity-60"
+                  />
+
               </div>
 
               <div>
@@ -179,7 +244,8 @@ export default function ConsultationForm() {
                   value={form.course}
                   onChange={handleChange}
                   required
-                  className="w-full border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  disabled={loading}
+                  className="w-full border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:opacity-60"
                 >
                   <option value="">Select a course</option>
 
@@ -230,27 +296,39 @@ export default function ConsultationForm() {
                 value={form.message}
                 onChange={handleChange}
                 placeholder="Tell us about your career goals or questions..."
-                className="w-full resize-y border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                disabled={loading}
+                className="w-full resize-y border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:opacity-60"
               />
             </div>
 
             {/* Submit */}
             <button
               type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-700 sm:w-auto"
+              disabled={loading}
+              className="inline-flex w-full items-center justify-center gap-2 bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
-              Book Free Consultation
-              <Send className="h-4 w-4" />
+              {loading ? "Sending..." : "Book Free Consultation"}
+              {!loading && <Send className="h-4 w-4" />}
             </button>
 
-            {submitted && (
+            {/* Submission status */}
+            {status === "success" && (
               <p
                 role="status"
-                className="text-sm leading-6 text-amber-700"
+                className="text-sm leading-6 text-green-700"
               >
-                The form interface is ready, but submissions are not connected
-                yet. No booking has been sent or saved. Email and Zoho CRM
-                integration must be configured before accepting enquiries.
+                Thank you! Your consultation request has been submitted
+                successfully. We will contact you shortly.
+              </p>
+            )}
+
+            {status === "error" && (
+              <p
+                role="alert"
+                className="text-sm leading-6 text-red-700"
+              >
+                We couldn't submit your request. Please try again or contact
+                us directly.
               </p>
             )}
           </form>

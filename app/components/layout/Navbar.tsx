@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Menu, X } from "lucide-react";
@@ -16,27 +17,46 @@ const whatsappLink =
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-
   const pathname = usePathname();
   const router = useRouter();
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
-
     if (!section) return;
 
-    const navbarOffset = 110;
-
+    // Scroll the section to the top of the viewport.
+    // The section's existing top padding keeps its content
+    // below the fixed navbar.
     const sectionPosition =
       section.getBoundingClientRect().top + window.scrollY;
 
     window.scrollTo({
-      top: Math.max(0, sectionPosition - navbarOffset),
+      top: sectionPosition,
       behavior: "smooth",
     });
   };
 
-    const handleLogoClick = (
+  const handleNavClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
+    event.preventDefault();
+    setOpen(false);
+
+    if (pathname === "/") {
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}${window.location.search}#${sectionId}`
+      );
+
+      scrollToSection(sectionId);
+    } else {
+      router.push(`/#${sectionId}`);
+    }
+  };
+
+  const handleLogoClick = (
     event: React.MouseEvent<HTMLAnchorElement>
   ) => {
     event.preventDefault();
@@ -57,11 +77,8 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 w-full bg-white">
-      {/* Navbar outer container */}
       <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
-        {/* Navbar panel */}
         <div className="mt-4 flex min-h-[72px] items-center justify-between gap-6 rounded-2xl border border-slate-200 bg-white px-6 py-3 shadow-md lg:px-8">
-
           {/* Logo */}
           <a
             href="/#hero"
@@ -74,7 +91,6 @@ export default function Navbar() {
                 <span className="text-blue-900">Kumaresh</span>{" "}
                 <span className="text-blue-900">Bidari</span>
               </h2>
-
               <p className="text-xs font-medium tracking-wider text-blue-600">
                 Founder &amp; CEO
               </p>
@@ -87,35 +103,23 @@ export default function Navbar() {
               <a
                 key={item.name}
                 href={item.href}
-                className="
-                  relative shrink-0 whitespace-nowrap
-                  text-md font-medium text-black-600
-                  transition-colors duration-300
-                  hover:text-blue-600
-                  after:absolute after:left-0 after:-bottom-1
-                  after:h-[2px] after:w-0 after:bg-blue-600
-                  after:transition-all after:duration-300
-                  hover:after:w-full
-                "
+                onClick={(event) =>
+                  handleNavClick(event, item.href.slice(1))
+                }
+                className="relative shrink-0 whitespace-nowrap text-md font-medium text-slate-700 transition-colors duration-300 hover:text-blue-600 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-blue-600 after:transition-all after:duration-300 hover:after:w-full"
               >
                 {item.name}
               </a>
             ))}
           </nav>
 
-          {/* Desktop Connect with Me */}
+          {/* Desktop WhatsApp CTA */}
           <div className="hidden shrink-0 lg:block">
             <a
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="
-                inline-flex items-center justify-center whitespace-nowrap
-                rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500
-                px-5 py-3 text-sm font-semibold text-white
-                transition-all duration-300
-                hover:scale-105 hover:shadow-lg hover:shadow-blue-200
-              "
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-200"
             >
               Connect with me
             </a>
@@ -137,35 +141,25 @@ export default function Navbar() {
         {open && (
           <div className="mt-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl lg:hidden">
             <div className="flex flex-col gap-3">
-              {/* Mobile Navigation Links */}
               {navLinks.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="
-                    rounded-lg px-3 py-2 text-sm font-medium
-                    text-slate-700 transition
-                    hover:bg-blue-50 hover:text-blue-600
-                  "
+                  onClick={(event) =>
+                    handleNavClick(event, item.href.slice(1))
+                  }
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-blue-600"
                 >
                   {item.name}
                 </a>
               ))}
 
-              {/* Mobile Connect with Me */}
               <a
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="
-                  mt-2 rounded-xl bg-gradient-to-r
-                  from-blue-600 to-cyan-500 px-5 py-3
-                  text-center text-sm font-semibold text-white
-                  transition-all duration-300
-                  hover:shadow-lg hover:shadow-blue-200
-                "
+                className="mt-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-center text-sm font-semibold text-white transition-all duration-300 hover:shadow-lg hover:shadow-blue-200"
               >
                 Connect with me
               </a>

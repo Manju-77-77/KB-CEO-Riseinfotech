@@ -1,3 +1,4 @@
+
 "use client";
 
 import Experience from "./Experience";
@@ -7,31 +8,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 const timeline = [
-  {
-    year: "2015",
-    title: "SAP Consulting Career",
-    desc: "Started professional journey in SAP consulting, focusing on enterprise solutions, procurement processes, and business transformation.",
-  },
-  {
-    year: "2018",
-    title: "TCS",
-    desc: "Worked as SAP Consultant delivering SAP implementations, support engagements, and business process optimization for enterprise clients.",
-  },
-  {
-    year: "2022",
-    title: "IBM",
-    desc: "Served as Advisory Consultant contributing to SAP transformation programs, solution design, and enterprise modernization initiatives.",
-  },
-  {
-    year: "2024",
-    title: "NTT DATA",
-    desc: "Worked as Lead Consultant driving SAP implementations, global rollout programs, and large-scale enterprise transformation projects.",
-  },
-  {
-    year: "2025",
-    title: "Rise Infotech",
-    desc: "Founded Rise Infotech to empower organizations and professionals through SAP consulting, corporate training, and career development programs.",
-  },
+  { year: "2015", title: "SAP Consulting Career", desc: "Started professional journey in SAP consulting, focusing on enterprise solutions, procurement processes, and business transformation." },
+  { year: "2018", title: "TCS", desc: "Worked as SAP Consultant delivering SAP implementations, support engagements, and business process optimization for enterprise clients." },
+  { year: "2022", title: "IBM", desc: "Served as Advisory Consultant contributing to SAP transformation programs, solution design, and enterprise modernization initiatives." },
+  { year: "2024", title: "NTT DATA", desc: "Worked as Lead Consultant driving SAP implementations, global rollout programs, and large-scale enterprise transformation projects." },
+  { year: "2025", title: "Rise Infotech", desc: "Founded Rise Infotech to empower organizations and professionals through SAP consulting, corporate training, and career development programs." },
 ];
 
 export default function About() {
@@ -40,22 +21,47 @@ export default function About() {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const markerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const frameRef = useRef<number | null>(null);
+  const secondFrameRef = useRef<number | null>(null);
+  const hasReachedFinalRef = useRef(false);
+  const finalBlinkTimeoutRef = useRef<number | null>(null);
 
   const [active, setActive] = useState(0);
-  const [revealed, setRevealed] = useState<boolean[]>(
-    timeline.map(() => false)
-  );
+  const [revealed, setRevealed] = useState<boolean[]>(timeline.map(() => false));
   const [progress, setProgress] = useState(0);
+  const [journeyCompleted, setJourneyCompleted] = useState(false);
+  const [finalCardBlink, setFinalCardBlink] = useState(false);
+  const [lineBounds, setLineBounds] = useState({ top: 16, height: 0 });
+
+  const updateLineBounds = useCallback(() => {
+    const list = listRef.current;
+    const first = markerRefs.current[0];
+    const last = markerRefs.current[timeline.length - 1];
+
+    if (
+      !list || !first || !last ||
+      getComputedStyle(first).display === "none" ||
+      getComputedStyle(last).display === "none"
+    ) return;
+
+    const listTop = list.getBoundingClientRect().top;
+    const firstRect = first.getBoundingClientRect();
+    const lastRect = last.getBoundingClientRect();
+    const firstCenter = firstRect.top + firstRect.height / 2 - listTop;
+    const lastCenter = lastRect.top + lastRect.height / 2 - listTop;
+
+    setLineBounds({
+      top: firstCenter,
+      height: Math.max(0, lastCenter - firstCenter),
+    });
+  }, []);
 
   const updateTimeline = useCallback(() => {
     const section = sectionRef.current;
     const list = listRef.current;
-
     if (!section || !list) return;
 
     const activationPoint = window.innerHeight * 0.43;
     const sectionRect = section.getBoundingClientRect();
-
     let nextActive = 0;
 
     if (sectionRect.top <= activationPoint && sectionRect.bottom > 0) {
@@ -63,57 +69,61 @@ export default function About() {
         if (!item) return;
 
         const marker = markerRefs.current[index];
-        const markerVisible =
-          marker && window.getComputedStyle(marker).display !== "none";
-
+        const markerVisible = !!marker && getComputedStyle(marker).display !== "none";
         const rect = markerVisible
           ? marker!.getBoundingClientRect()
           : item.getBoundingClientRect();
+        const position = markerVisible ? rect.top + rect.height / 2 : rect.top;
 
-        const position = markerVisible
-          ? rect.top + rect.height / 2
-          : rect.top;
-
-        if (position <= activationPoint) {
-          nextActive = index;
-        }
+        if (position <= activationPoint) nextActive = index;
       });
 
-      // Reveal all cards up to the active card.
-      // Revealed cards never fold back or disappear.
-      setRevealed((previous) => {
+      setRevealed(previous => {
         let changed = false;
-
         const next = previous.map((shown, index) => {
           if (index <= nextActive && !shown) {
             changed = true;
             return true;
           }
-
           return shown;
         });
-
         return changed ? next : previous;
       });
     }
 
-    setActive((previous) =>
-      previous === nextActive ? previous : nextActive
-    );
+    if (
+      nextActive === timeline.length - 1 &&
+      !hasReachedFinalRef.current
+    ) {
+      hasReachedFinalRef.current = true;
+      setJourneyCompleted(true);
+      setFinalCardBlink(true);
 
-    // Keep the progress line aligned with the active circle.
-    const marker = markerRefs.current[nextActive];
+      finalBlinkTimeoutRef.current = window.setTimeout(() => {
+        setFinalCardBlink(false);
+        finalBlinkTimeoutRef.current = null;
+      }, 900);
+    }
 
-    if (marker && window.getComputedStyle(marker).display !== "none") {
-      const markerRect = marker.getBoundingClientRect();
+    setActive(previous => previous === nextActive ? previous : nextActive);
+
+    const first = markerRefs.current[0];
+    const current = markerRefs.current[nextActive];
+
+    if (
+      first && current &&
+      getComputedStyle(first).display !== "none" &&
+      getComputedStyle(current).display !== "none"
+    ) {
       const listTop = list.getBoundingClientRect().top;
-      const targetHeight =
-        markerRect.top + markerRect.height / 2 - listTop;
+      const firstRect = first.getBoundingClientRect();
+      const currentRect = current.getBoundingClientRect();
+      const firstCenter = firstRect.top + firstRect.height / 2 - listTop;
+      const currentCenter = currentRect.top + currentRect.height / 2 - listTop;
+      const nextProgress = Math.max(0, currentCenter - firstCenter);
 
-      setProgress((previous) =>
-        Math.abs(previous - targetHeight) > 0.5
-          ? Math.max(0, targetHeight)
-          : previous
+      setProgress(previous =>
+        Math.abs(previous - nextProgress) > 0.5 ? nextProgress : previous
       );
     } else {
       setProgress(0);
@@ -121,18 +131,16 @@ export default function About() {
   }, []);
 
   useEffect(() => {
-    let secondFrame: number | null = null;
-
     const scheduleUpdate = () => {
-      if (frameRef.current !== null) {
-        cancelAnimationFrame(frameRef.current);
-      }
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+      if (secondFrameRef.current !== null) cancelAnimationFrame(secondFrameRef.current);
 
       frameRef.current = requestAnimationFrame(() => {
-        secondFrame = requestAnimationFrame(() => {
+        frameRef.current = null;
+        secondFrameRef.current = requestAnimationFrame(() => {
+          secondFrameRef.current = null;
           updateTimeline();
-          frameRef.current = null;
-          secondFrame = null;
+          updateLineBounds();
         });
       });
     };
@@ -141,13 +149,13 @@ export default function About() {
       if (frameRef.current !== null) return;
 
       frameRef.current = requestAnimationFrame(() => {
-        updateTimeline();
         frameRef.current = null;
+        updateTimeline();
+        updateLineBounds();
       });
     };
 
     scheduleUpdate();
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", scheduleUpdate);
     window.addEventListener("pageshow", scheduleUpdate);
@@ -159,27 +167,42 @@ export default function About() {
       window.removeEventListener("pageshow", scheduleUpdate);
       window.removeEventListener("load", scheduleUpdate);
 
-      if (frameRef.current !== null) {
-        cancelAnimationFrame(frameRef.current);
-      }
-
-      if (secondFrame !== null) {
-        cancelAnimationFrame(secondFrame);
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+      if (secondFrameRef.current !== null) cancelAnimationFrame(secondFrameRef.current);
+      if (finalBlinkTimeoutRef.current !== null) {
+        window.clearTimeout(finalBlinkTimeoutRef.current);
       }
     };
-  }, [updateTimeline]);
+  }, [updateTimeline, updateLineBounds]);
+
+  useEffect(() => {
+    updateLineBounds();
+    const list = listRef.current;
+    if (!list) return;
+
+    const observer = new ResizeObserver(updateLineBounds);
+    observer.observe(list);
+    itemRefs.current.forEach(item => {
+      if (item) observer.observe(item);
+    });
+
+    window.addEventListener("scroll", updateLineBounds, { passive: true });
+    window.addEventListener("resize", updateLineBounds);
+    window.addEventListener("load", updateLineBounds);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", updateLineBounds);
+      window.removeEventListener("resize", updateLineBounds);
+      window.removeEventListener("load", updateLineBounds);
+    };
+  }, [updateLineBounds]);
 
   return (
     <>
-      {/* ABOUT PROFILE AND TIMELINE */}
-      <section
-        id="about"
-        ref={sectionRef}
-        className="relative bg-white py-16 md:py-24"
-      >
+      <section id="about" ref={sectionRef} className="relative bg-white py-16 md:py-24">
         <div className="mx-auto max-w-[1300px] px-5 sm:px-6 lg:px-8">
-          <div className="grid items-start gap-12 lg:grid-cols-[44%_56%] lg:gap-16">
-            {/* LEFT CONTENT */}
+          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
             <div className="lg:sticky lg:top-24">
               <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-600">
                 Executive Profile
@@ -201,16 +224,10 @@ export default function About() {
                     sizes="(min-width: 1024px) 45vw, 100vw"
                     className="object-cover object-bottom"
                   />
-
                   <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-
                   <div className="absolute inset-x-0 bottom-0 px-5 py-4">
-                    <p className="text-sm font-semibold text-white">
-                      Kumaresh Bidari
-                    </p>
-                    <p className="text-xs text-white/80">
-                      Founder &amp; CEO, Rise Infotech
-                    </p>
+                    <p className="text-sm font-semibold text-white">Kumaresh Bidari</p>
+                    <p className="text-xs text-white/80">Founder &amp; CEO, Rise Infotech</p>
                   </div>
                 </div>
               </div>
@@ -228,18 +245,18 @@ export default function About() {
               </p>
             </div>
 
-            {/* RIGHT TIMELINE */}
             <div ref={listRef} className="relative space-y-5">
-              {/* Background timeline */}
-              <div className="absolute bottom-0 left-4 top-0 hidden w-[2px] -translate-x-1/2 rounded-full bg-slate-200/80 md:block" />
-
-              {/* Animated gradient progress line */}
               <div
-                className="absolute left-4 top-0 hidden w-[2px] -translate-x-1/2 overflow-hidden rounded-full md:block"
+                className="absolute left-4 hidden w-[2px] -translate-x-1/2 rounded-full bg-slate-200/80 md:block"
+                style={{ top: `${lineBounds.top}px`, height: `${lineBounds.height}px` }}
+              />
+
+              <div
+                className="absolute left-4 hidden w-[2px] -translate-x-1/2 overflow-hidden rounded-full md:block"
                 style={{
-                  height: `${progress}px`,
-                  transition:
-                    "height 850ms cubic-bezier(0.22, 1, 0.36, 1)",
+                  top: `${lineBounds.top}px`,
+                  height: `${Math.min(progress, lineBounds.height)}px`,
+                  transition: "height 850ms cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
               >
                 <div className="h-full w-full rounded-full bg-gradient-to-b from-blue-600 via-blue-500 to-cyan-400" />
@@ -247,37 +264,32 @@ export default function About() {
 
               {timeline.map((item, index) => {
                 const isActive = active === index;
-                const isRevealed = revealed[index];
+                const isFinalCard = index === timeline.length - 1;
+                const isGreen = journeyCompleted && isFinalCard;
 
                 return (
                   <div
                     key={item.year}
-                    ref={(element) => {
-                      itemRefs.current[index] = element;
-                    }}
+                    ref={element => { itemRefs.current[index] = element; }}
                     className={`group relative transition-[opacity,transform,filter] duration-1000 ease-out motion-reduce:transition-none md:pl-14 ${
-                      isRevealed
+                      revealed[index]
                         ? "translate-y-0 opacity-100 blur-0"
                         : "translate-y-10 opacity-0 blur-[2px]"
                     }`}
                   >
-                    {/* Timeline circle */}
                     <div
-                      ref={(element) => {
-                        markerRefs.current[index] = element;
-                      }}
-                      className={`absolute left-0 top-1.5 z-10 hidden h-8 w-8 items-center justify-center rounded-full border-2 text-[10px] font-bold transition-[background-color,border-color,color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:flex ${
-                        isActive
-                          ? "scale-110 border-blue-600 bg-blue-600 text-white shadow-[0_0_0_5px_rgba(37,99,235,0.10),0_0_18px_rgba(37,99,235,0.28)]"
-                          : isRevealed
-                            ? "scale-100 border-blue-200 bg-white text-blue-600 shadow-sm"
-                            : "scale-100 border-slate-200 bg-white text-slate-400"
+                      ref={element => { markerRefs.current[index] = element; }}
+                      className={`absolute left-0 top-1.5 z-10 hidden h-8 w-8 items-center justify-center rounded-full border-2 text-[10px] font-bold transition-colors duration-300 md:flex ${
+                        isGreen
+                          ? "timeline-heartbeat border-emerald-400 bg-emerald-400 text-white"
+                          : "border-blue-600 bg-blue-600 text-white shadow-sm"
+                      } ${
+                        isFinalCard && finalCardBlink ? "timeline-final-blink" : ""
                       }`}
                     >
                       {item.year.slice(2)}
                     </div>
 
-                    {/* Mobile year */}
                     <span
                       className={`mb-2 inline-flex rounded-full border px-3 py-1 text-xs font-medium transition-colors duration-300 md:hidden ${
                         isActive
@@ -288,7 +300,6 @@ export default function About() {
                       {item.year}
                     </span>
 
-                    {/* Original-size experience card */}
                     <div
                       className={`rounded-2xl border bg-white p-5 transition-[border-color,box-shadow,background-color] duration-500 ease-out ${
                         isActive
@@ -300,12 +311,10 @@ export default function About() {
                         <h3 className="text-base font-semibold text-slate-900">
                           {item.title}
                         </h3>
-
                         <span className="hidden text-xs font-medium text-blue-500 md:inline">
                           {item.year}
                         </span>
                       </div>
-
                       <p className="mt-2 text-sm leading-relaxed text-slate-600">
                         {item.desc}
                       </p>
@@ -318,7 +327,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* INTEGRATED SECTIONS: original components and designs retained */}
       <Experience />
       <Expertise />
       <Industries />
