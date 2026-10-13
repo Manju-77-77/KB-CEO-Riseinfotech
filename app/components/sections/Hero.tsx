@@ -192,12 +192,34 @@ export default function Hero() {
                 Schedule Consultation
               </a>
 
+              
               <a
                 href="#about"
+                onClick={(event) => {
+                  event.preventDefault();
+
+                  const section = document.getElementById("about");
+                  if (!section) return;
+
+                  const sectionPosition =
+                    section.getBoundingClientRect().top + window.scrollY;
+
+                  window.history.replaceState(
+                    null,
+                    "",
+                    `${window.location.pathname}${window.location.search}#about`
+                  );
+
+                  window.scrollTo({
+                    top: sectionPosition,
+                    behavior: "smooth",
+                  });
+                }}
                 className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-8 py-4 text-[15px] font-semibold text-slate-600 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600"
               >
                 View Journey
               </a>
+
             </motion.div>
 
           
