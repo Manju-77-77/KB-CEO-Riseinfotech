@@ -185,14 +185,49 @@ export default function Hero() {
               animate="animate"
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
             >
-              <a
-                href="#consultation-form"
-                className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-8 py-4 text-[15px] font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700"
-              >
-                Schedule Consultation
-              </a>
-
               
+            <a
+              href="/#consultation-form"
+              onClick={(event) => {
+                // If we are not on the homepage, allow normal navigation.
+                if (window.location.pathname !== "/") {
+                  return;
+                }
+
+                const form = document.getElementById("consultation-form");
+
+                if (!form) {
+                  console.error("Consultation form section was not found.");
+                  return;
+                }
+
+                event.preventDefault();
+
+                const navbar = document.querySelector("nav");
+                const navbarHeight = navbar?.getBoundingClientRect().height ?? 0;
+
+                const targetPosition =
+                  form.getBoundingClientRect().top +
+                  window.scrollY -
+                  navbarHeight -
+                  16;
+
+                window.history.replaceState(
+                  null,
+                  "",
+                  `${window.location.pathname}${window.location.search}#consultation-form`
+                );
+
+                window.scrollTo({
+                  top: Math.max(0, targetPosition),
+                  behavior: "smooth",
+                });
+              }}
+              className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-8 py-4 text-[15px] font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700"
+            >
+              Schedule Consultation
+            </a>
+
               <a
                 href="#about"
                 onClick={(event) => {

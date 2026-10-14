@@ -2,6 +2,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const highlights = [
   {
@@ -61,27 +62,31 @@ export default function RiseInfotech() {
               learning, real-world exposure, and industry guidance.
             </p>
 
-            {/* Company highlights */}
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {highlights.map((item, index) => (
-                <div
-                  key={item.title}
-                  className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-100/60"
-                >
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-sm font-bold text-blue-700 transition-colors duration-300 group-hover:bg-blue-600 group-hover:text-white">
-                    0{index + 1}
-                  </div>
+              {/* Company highlights */}
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {highlights.map((item, index) => (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{
+                      duration: 0.6,
+                      delay: index * 0.12,
+                      ease: "easeOut",
+                    }}
+                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_12px_35px_-10px_rgba(37,99,235,0.35)] hover:shadow-blue-500/20"
+                  >
+                    <h3 className="text-base font-semibold text-slate-900 transition-colors duration-300 group-hover:text-blue-700">
+                      {item.title}
+                    </h3>
 
-                  <h3 className="text-base font-semibold text-slate-900 transition-colors duration-300 group-hover:text-blue-700">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-1.5 text-sm leading-6 text-slate-500">
-                    {item.subtitle}
-                  </p>
-                </div>
-              ))}
-            </div>
+                    <p className="mt-1.5 text-sm leading-6 text-slate-500">
+                      {item.subtitle}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
 
             {/* Actions */}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">

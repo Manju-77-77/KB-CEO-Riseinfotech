@@ -48,9 +48,6 @@ export default function Services() {
       <div className="relative mx-auto max-w-[1300px] px-5 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto mb-14 max-w-3xl text-center">
-          <span className="inline-flex rounded-full border border-blue-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700 shadow-sm">
-            Services
-          </span>
 
           <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
             SAP Consulting &
@@ -83,10 +80,6 @@ export default function Services() {
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-cyan-50 text-lg font-bold text-blue-700 transition-all duration-300 group-hover:border-blue-200 group-hover:from-blue-600 group-hover:to-cyan-500 group-hover:text-white">
                   {String(index + 1).padStart(2, "0")}
                 </div>
-
-                <span className="text-xs font-semibold uppercase tracking-[0.15em] text-slate-400">
-                  Service
-                </span>
               </div>
 
               <h3 className="text-2xl font-bold tracking-tight text-slate-900 transition-colors duration-300 group-hover:text-blue-700">

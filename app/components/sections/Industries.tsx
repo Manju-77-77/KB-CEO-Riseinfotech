@@ -1,5 +1,7 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
+
 const industries = [
   {
     title: "Oil & Gas",
@@ -34,6 +36,8 @@ const industries = [
 ];
 
 export default function Industries() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section
       id="industries"
@@ -50,10 +54,17 @@ export default function Industries() {
       />
 
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-10">
-
-        {/* Header */}
-        <div className="mx-auto mb-12 max-w-3xl text-center">
-
+        {/* Header - Original Layout */}
+        <motion.div
+          initial={{ opacity: 0, filter: "blur(5px)" }}
+          whileInView={{ opacity: 1, filter: "blur(0px)" }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{
+            duration: prefersReducedMotion ? 0 : 0.7,
+            ease: "easeOut",
+          }}
+          className="mx-auto mb-12 max-w-3xl text-center"
+        >
           <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-600 sm:text-sm">
             Industries Served
           </span>
@@ -70,15 +81,27 @@ export default function Industries() {
             operations, improve efficiency, and accelerate digital
             transformation through enterprise SAP solutions.
           </p>
+        </motion.div>
 
-        </div>
-
-        {/* Grid */}
+        {/* Grid - Original Dimensions and Spacing */}
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-
           {industries.map((industry, index) => (
-            <article
+            <motion.article
               key={industry.title}
+              initial={{
+                opacity: 0,
+                filter: "blur(4px)",
+              }}
+              whileInView={{
+                opacity: 1,
+                filter: "blur(0px)",
+              }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.6,
+                delay: prefersReducedMotion ? 0 : (index % 3) * 0.12,
+                ease: "easeOut",
+              }}
               className="
                 group
                 relative
@@ -90,44 +113,47 @@ export default function Industries() {
                 p-6
                 shadow-md
                 shadow-slate-100
-                transition-all
-                duration-300
-                hover:-translate-y-2
+                transition-[border-color,box-shadow]
+                duration-500
                 hover:border-blue-400
                 hover:shadow-2xl
-                hover:shadow-slate-900/20
+                hover:shadow-slate-900/15
               "
             >
-              {/* Hover Glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-transparent to-cyan-50/80 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100" />
+              {/* Animated Top Border */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 right-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-blue-600 via-cyan-400 to-blue-300 transition-transform duration-500 ease-out group-hover:scale-x-100 motion-reduce:transform-none"
+              />
+
+              {/* Hover Glow - No Layout Change */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-50/70 via-transparent to-cyan-50/60 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              />
 
               <div className="relative z-10">
-
-                {/* Number */}
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-sm font-bold text-blue-600">
+                {/* Number - Original Dimensions */}
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-sm font-bold text-blue-600 transition-colors duration-300 group-hover:border-blue-200 group-hover:bg-blue-600 group-hover:text-white">
                   {String(index + 1).padStart(2, "0")}
                 </div>
 
-                {/* Title */}
+                {/* Title - Stationary */}
                 <h3 className="text-xl font-bold text-slate-900 transition-colors duration-300 group-hover:text-blue-700">
                   {industry.title}
                 </h3>
 
-                {/* Divider */}
+                {/* Divider - Original Position */}
                 <div className="mt-3 h-px w-full bg-gradient-to-r from-blue-500 via-blue-200 to-transparent" />
 
-                {/* Description */}
+                {/* Description - Stationary */}
                 <p className="mt-4 text-sm leading-relaxed text-slate-600">
                   {industry.description}
                 </p>
-
               </div>
-
-            </article>
+            </motion.article>
           ))}
-
         </div>
-
       </div>
     </section>
   );
