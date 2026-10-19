@@ -352,7 +352,7 @@ export default function Hero() {
                 priority
                 quality={75}
                 sizes="(max-width: 420px) 90vw, (max-width: 768px) 80vw, (max-width: 1024px) 70vw, (max-width: 1280px) 42vw, 500px"
-                className="relative z-10 mx-auto h-auto max-h-[280px] w-auto max-w-full object-contain drop-shadow-[0_12px_24px_rgba(15,23,42,0.10)] min-[390px]:max-h-[320px] sm:max-h-[390px] lg:max-h-[430px] xl:max-h-[470px]"
+                className="relative z-10 mx-auto h-auto max-h-[330px] w-auto max-w-full object-contain drop-shadow-[0_12px_24px_rgba(15,23,42,0.10)] min-[390px]:max-h-[370px] sm:max-h-[440px] lg:max-h-[480px] xl:max-h-[520px]"
               />
             </div>
 
