@@ -185,7 +185,7 @@ export default function Hero() {
               Empowering Enterprises with SAP Solutions. Transforming SAP
               Careers.{" "}
               
-              <span className="mt-2 block w-full whitespace-nowrap text-[clamp(6px,2.1vw,20px)] font-bold leading-tight bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 bg-clip-text text-transparent sm:text-[20px]">
+              <span className="mt-2 block w-full whitespace-nowrap text-[clamp(8px,2.8vw,20px)] font-bold leading-tight bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 bg-clip-text text-transparent sm:text-[20px]">
               SAP S/4HANA Consulting | Corporate Training | Career Mentorship
             </span>
 
