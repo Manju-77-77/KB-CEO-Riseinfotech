@@ -11,8 +11,6 @@ const navLinks = [
   { name: "Rise Infotech", href: "#rise-infotech" },
 ];
 
-const whatsappLink =
-  "https://api.whatsapp.com/send/?phone=919110455125&text=Hi%2C+I%E2%80%99m+interested+in+SAP+training+at+Rise+Infotech.+Please+share+course+details%2C+fees%2C+and+upcoming+batch+timings.&type=phone_number&app_absent=0";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -167,15 +165,17 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <a
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            className="mt-3 flex min-h-11 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-center text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-blue-200"
-          >
-            Connect with me
-          </a>
+          
+            <a
+              href="#consultation-form"
+              onClick={(event) =>
+                handleNavClick(event, "consultation-form")
+              }
+              className="mt-3 flex min-h-11 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-center text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-blue-200"
+            >
+              Connect with me
+            </a>
+
         </div>
       )}
     </header>
