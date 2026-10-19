@@ -1,8 +1,8 @@
-
 "use client";
 
 import { Mail, Phone, MapPin } from "lucide-react";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { SiLinktree } from "react-icons/si";
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
@@ -111,29 +111,31 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Contact */}
+          {/* Contact Information */}
           <div>
             <h3 className="mb-5 text-lg font-semibold text-white">
               Contact Information
             </h3>
 
             <div className="space-y-4">
-              <div className="flex items-start gap-3 text-slate-400">
-                <Phone size={18} className="mt-1 text-blue-400" />
+              <a
+                href="tel:+919110455125"
+                className="flex items-start gap-3 text-slate-400 transition-colors duration-300 hover:text-blue-400"
+              >
+                <Phone size={18} className="mt-1 shrink-0 text-blue-400" />
                 <span>+91 9110455125</span>
-              </div>
+              </a>
+
+              <a
+                href="mailto:info@riseinfotech.in"
+                className="flex items-start gap-3 text-slate-400 transition-colors duration-300 hover:text-blue-400"
+              >
+                <Mail size={18} className="mt-1 shrink-0 text-blue-400" />
+                <span>info@riseinfotech.in</span>
+              </a>
 
               <div className="flex items-start gap-3 text-slate-400">
-                <Mail size={18} className="mt-1 text-blue-400" />
-                <a
-                  href="mailto:info@riseinfotech.in"
-                  className="transition-colors duration-300 hover:text-blue-400">
-                  info@riseinfotech.in
-                </a>
-              </div>
-
-              <div className="flex items-start gap-3 text-slate-400">
-                <MapPin size={18} className="mt-1 text-blue-400" />
+                <MapPin size={18} className="mt-1 shrink-0 text-blue-400" />
                 <span>Bengaluru, Karnataka, India</span>
               </div>
             </div>
@@ -144,25 +146,41 @@ export default function Footer() {
                 Connect
               </p>
 
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-4">
+                {/* LinkedIn */}
                 <a
                   href="https://www.linkedin.com/in/kumaresh-bidari074"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
+                  title="LinkedIn"
                   className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-700 bg-slate-900 text-[#0A66C2] transition-all duration-300 hover:-translate-y-1 hover:border-[#0A66C2] hover:shadow-lg hover:shadow-[#0A66C2]/20"
                 >
                   <FaLinkedin size={24} />
                 </a>
 
+                {/* Instagram */}
                 <a
                   href="https://www.instagram.com/kumaresh.bidari/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
+                  title="Instagram"
                   className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-700 bg-slate-900 text-[#E1306C] transition-all duration-300 hover:-translate-y-1 hover:border-[#E1306C] hover:shadow-lg hover:shadow-[#E1306C]/20"
                 >
                   <FaInstagram size={24} />
+                </a>
+
+                {/* Linktree */}
+                <a
+                  href="https://linktr.ee/Kumaresh.bidari"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Linktree"
+                  title="Linktree"
+                  className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-700 bg-slate-900 text-[#43E660] transition-all duration-300 hover:-translate-y-1 hover:border-[#43E660] hover:shadow-lg hover:shadow-[#43E660]/20"
+                >
+                  <SiLinktree size={23} />
                 </a>
               </div>
             </div>

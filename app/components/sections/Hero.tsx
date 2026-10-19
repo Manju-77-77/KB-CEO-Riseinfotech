@@ -1,12 +1,22 @@
+
 "use client";
 
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
+import {
+  motion,
+  type Variants,
+  useInView,
+  useMotionValue,
+  animate,
+} from "framer-motion";
+import { Play } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const stats = [
-  { value: "10+", label: "Years of Experience" },
-  { value: "12+", label: "Enterprise Projects" },
-  { value: "SAP S/4HANA", label: "Expert" },
+  { value: 10, suffix: "+", label: "Years of Industry Experience" },
+  { value: 5, suffix: "+", label: "Years of SAP MM Training Experience" },
+  { value: 12, suffix: "+", label: "SAP Enterprise Projects" },
+  { value: 1000, suffix: "+", label: "Students Trained" },
 ];
 
 const expertise = [
@@ -20,160 +30,208 @@ const expertise = [
 ];
 
 const fadeUp = (delay = 0): Variants => ({
-  initial: {
-    opacity: 0,
-    y: 24,
-  },
+  initial: { opacity: 0, y: 18 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.65,
-      ease: "easeOut",
-      delay,
-    },
+    transition: { duration: 0.6, ease: "easeOut", delay },
   },
 });
 
 const fadeIn = (delay = 0): Variants => ({
-  initial: {
-    opacity: 0,
-    scale: 0.94,
-  },
+  initial: { opacity: 0, scale: 0.98 },
   animate: {
     opacity: 1,
     scale: 1,
-    transition: {
-      duration: 0.55,
-      ease: "easeOut",
-      delay,
-    },
+    transition: { duration: 0.65, ease: "easeOut", delay },
   },
 });
+
+function AnimatedCounter({
+  value,
+  suffix,
+}: {
+  value: number;
+  suffix: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const motionValue = useMotionValue(0);
+  const [displayValue, setDisplayValue] = useState("0");
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const controls = animate(motionValue, value, {
+      duration: value >= 1000 ? 2 : 1.4,
+      ease: "easeOut",
+      onUpdate: (latest) => {
+        setDisplayValue(Math.round(latest).toLocaleString("en-US"));
+      },
+    });
+
+    return () => controls.stop();
+  }, [isInView, motionValue, value]);
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {displayValue}
+      {suffix}
+    </span>
+  );
+}
 
 export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative overflow-hidden bg-white"
+      className="relative isolate overflow-hidden bg-gradient-to-b from-white via-white to-[#f8fbff]"
     >
-      {/* Background */}
+      {/* Background texture */}
       <div
+        aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage:
-            "radial-gradient(circle, white 1px, transparent 1px)",
+            "radial-gradient(circle, rgba(37,99,235,0.5) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />
 
-      {/* Glows */}
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[700px] w-[700px] rounded-full  opacity-40 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-[400px] w-[400px] rounded-full bg-sky-50 opacity-60 blur-3xl" />
+      {/* Seamless navbar transition */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white via-white/80 to-transparent sm:h-40"
+      />
 
-      <div className="relative mx-auto w-full max-w-screen-2xl px-6 pb-20 pt-24 xl:px-20">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-[1fr_520px] xl:grid-cols-[1fr_580px]">
+      {/* Background glows */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-blue-100/50 blur-3xl sm:h-[600px] sm:w-[600px]"
+      />
 
-          {/* LEFT */}
-          <div className="flex flex-col">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-24 -left-20 h-[350px] w-[350px] rounded-full bg-cyan-50/70 blur-3xl"
+      />
 
-            {/* Badge */}
-            {/* <motion.div
+      {/* Main container */}
+      <div className="relative mx-auto w-full max-w-[1380px] px-5 pb-8 pt-20 sm:px-7 sm:pb-10 sm:pt-24 lg:px-10 lg:pb-12 lg:pt-28 xl:px-12">
+        <div className="grid grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] lg:gap-8 xl:gap-10">
+          {/* Left: Introduction */}
+          <div className="relative z-10 flex min-w-0 flex-col">
+            <motion.h2
               variants={fadeUp(0)}
               initial="initial"
               animate="animate"
+              className="mt-2 text-3xl font-bold tracking-tight text-blue-600 sm:text-4xl lg:text-5xl"
             >
-              <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] uppercase text-blue-600">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-                Trusted SAP S/4HANA Expertise
-              </span>
-            </motion.div> */}
+              Kumaresh Bidari
+            </motion.h2>
 
-            {/* Name */}
-            <motion.h2
-              variants={fadeUp(0.05)}
-              initial="initial"
-              animate="animate"
-            className="mt-5 text-3xl font-bold text-blue-500 sm:text-4xl lg:text-5xl"
-            >
-              Kumaresh Bidari   
-            </motion.h2>         
-
-            {/* Role */}
-            <motion.p
-              variants={fadeUp(0.08)}             
-              animate="animate"
-             className="mt-2 text-xs font-medium tracking-wide text-black sm:text-sm"
-            >
-              SAP S/4HANA Expert  Corporate Trainer
-            </motion.p>
-
-            {/* Heading */}
- <motion.h1
-  variants={fadeUp(0.14)}
-  initial="initial"
-  animate="animate"
-  className="
-    mt-4
-    text-[20px]
-    font-bold
-    leading-[1.25]
-    tracking-tight
-    text-[#0f1e3d]
-    sm:text-[24px]
-    md:text-[28px]
-    lg:text-[32px]
-    xl:text-[38px]
-  "
->
-  Helping Enterprises Accelerate Growth Through{" "}
-
-    <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 bg-clip-text text-transparent">
-      SAP S/4HANA Transformation
-    </span>
-
-
-</motion.h1>
-
-            {/* Description */}
-            <motion.p
-              variants={fadeUp(0.2)}
-              initial="initial"
-              animate="animate"
-             className="mt-5 max-w-[850px] text-[14px] leading-[1.8] text-black sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]"
-            >
-              Experienced SAP S/4HANA MM Consultant with 10+ years of industry
-              expertise in SAP S/4HANA Implementations, Global Rollouts,
-              Testing, Data Migration, AMS Support, and Digital Transformation
-              Programs. Successfully delivered enterprise SAP projects for
-              global clients while working with TCS, IBM, and NTT DATA.
-              <br />
-              <br />
-              Additionally, with 5+ years of SAP MM training experience, I have
-              mentored aspiring SAP professionals through industry-oriented,
-              real-time project-based training, helping them build successful
-              careers as SAP S/4HANA MM Consultants.
-            </motion.p>
-
-            {/* Stats */}
+            {/* Animated professional titles */}
             <motion.div
-              variants={fadeUp(0.26)}
+              variants={fadeUp(0.06)}
               initial="initial"
               animate="animate"
-             className="mt-6 grid grid-cols-1 gap-4 border-t border-blue-200 pt-6 sm:grid-cols-3"
+              className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium leading-6 tracking-wide text-slate-700 sm:text-sm md:text-base"
             >
-              {stats.map(({ value, label }) => (
+              <span className="inline-flex items-center gap-1.5">
+                <motion.span
+                  animate={{ x: [0, 3, 0], opacity: [0.7, 1, 0.7] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="inline-flex"
+                  aria-hidden="true"
+                >
+                  <Play className="h-3 w-3 fill-blue-600 text-blue-600" />
+                </motion.span>
+                SAP S/4HANA Expert
+              </span>
+
+              <span className="text-slate-300" aria-hidden="true">
+                |
+              </span>
+
+              <span className="inline-flex items-center gap-1.5">
+                <motion.span
+                  animate={{ x: [0, 3, 0], opacity: [0.7, 1, 0.7] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.3,
+                  }}
+                  className="inline-flex"
+                  aria-hidden="true"
+                >
+                  <Play className="h-3 w-3 fill-blue-600 text-blue-600" />
+                </motion.span>
+                Corporate Trainer
+              </span>
+            </motion.div>
+
+            {/* Main heading: consistent font size */}
+            <motion.h1
+              variants={fadeUp(0.12)}
+              initial="initial"
+              animate="animate"
+              className="mt-4 max-w-2xl text-[23.5px] font-bold leading-[1.25] tracking-tight text-[#0f1e3d] min-[390px]:text-[26.5px] sm:text-[29.4px] md:text-[31.4px] xl:text-[37.2px]"
+            >
+              Empowering Enterprises with SAP Solutions. Transforming SAP
+              Careers.{" "}
+              <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                SAP S/4HANA Consulting | Corporate Training | Career Mentorship
+              </span>
+            </motion.h1>
+
+            {/* Original description */}
+            <motion.div
+              variants={fadeUp(0.18)}
+              initial="initial"
+              animate="animate"
+              className="mt-4 max-w-2xl space-y-3 text-sm leading-7 text-slate-600 sm:text-[15px] md:text-base"
+            >
+              <p>
+                Experienced SAP S/4HANA MM Consultant with 10+ years of industry
+                expertise in SAP S/4HANA Implementations, Global Rollouts,
+                Testing, Data Migration, AMS Support, and Digital Transformation
+                Programs. Successfully delivered enterprise SAP projects for
+                global clients while working with TCS, IBM, and NTT DATA.
+              </p>
+
+              <p>
+                Additionally, with 5+ years of SAP MM training experience, I have
+                mentored aspiring SAP professionals through industry-oriented,
+                real-time project-based training, helping them build successful
+                careers as SAP S/4HANA MM Consultants.
+              </p>
+            </motion.div>
+
+            {/* Four animated statistics in one row */}
+            <motion.div
+              variants={fadeUp(0.24)}
+              initial="initial"
+              animate="animate"
+              className="mt-5 grid grid-cols-4 border-y border-slate-200/80 py-3 sm:py-4"
+            >
+              {stats.map(({ value, suffix, label }, index) => (
                 <div
                   key={label}
-                  className="rounded-3xl px-6 py-5 transition-all duration-500 hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-50 hover:to-white hover:shadow-xl hover:shadow-blue-100"
+                  className={`min-w-0 px-1.5 py-2 sm:px-3 ${
+                    index !== 0 ? "border-l border-slate-200" : ""
+                  }`}
                 >
-                  <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-sky-500 bg-clip-text text-2xl font-bold text-transparent">
-                    {value}
-                  </div>
+                  <p className="bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-center text-base font-bold leading-tight text-transparent min-[390px]:text-lg sm:text-xl">
+                    <AnimatedCounter value={value} suffix={suffix} />
+                  </p>
 
-                  <div className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-center text-[9px] leading-4 text-slate-500 min-[390px]:text-[10px] sm:text-xs">
                     {label}
-                  </div>
+                  </p>
                 </div>
               ))}
             </motion.div>
@@ -183,50 +241,58 @@ export default function Hero() {
               variants={fadeUp(0.3)}
               initial="initial"
               animate="animate"
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+              className="mt-5 flex flex-col gap-3 min-[420px]:flex-row min-[420px]:flex-wrap sm:mt-6"
             >
-              
-            <a
-              href="/#consultation-form"
-              onClick={(event) => {
-                // If we are not on the homepage, allow normal navigation.
-                if (window.location.pathname !== "/") {
-                  return;
-                }
+              <a
+                href="/#consultation-form"
+                onClick={(event) => {
+                  if (window.location.pathname !== "/") return;
 
-                const form = document.getElementById("consultation-form");
+                  const form = document.getElementById("consultation-form");
+                  if (!form) return;
 
-                if (!form) {
-                  console.error("Consultation form section was not found.");
-                  return;
-                }
+                  event.preventDefault();
 
-                event.preventDefault();
+                  const header = document.querySelector("header");
+                  const headerHeight =
+                    header?.getBoundingClientRect().height ?? 0;
 
-                const navbar = document.querySelector("nav");
-                const navbarHeight = navbar?.getBoundingClientRect().height ?? 0;
+                  const targetPosition =
+                    form.getBoundingClientRect().top +
+                    window.scrollY -
+                    headerHeight -
+                    16;
 
-                const targetPosition =
-                  form.getBoundingClientRect().top +
-                  window.scrollY -
-                  navbarHeight -
-                  16;
+                  window.history.replaceState(
+                    null,
+                    "",
+                    `${window.location.pathname}${window.location.search}#consultation-form`
+                  );
 
-                window.history.replaceState(
-                  null,
-                  "",
-                  `${window.location.pathname}${window.location.search}#consultation-form`
-                );
+                  window.scrollTo({
+                    top: Math.max(0, targetPosition),
+                    behavior: "smooth",
+                  });
+                }}
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-600/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 min-[420px]:w-auto sm:px-6 sm:text-[15px]"
+              >
+                Schedule Consultation
 
-                window.scrollTo({
-                  top: Math.max(0, targetPosition),
-                  behavior: "smooth",
-                });
-              }}
-              className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-8 py-4 text-[15px] font-semibold text-white shadow-lg shadow-blue-200 transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700"
-            >
-              Schedule Consultation
-            </a>
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  className="h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M4 10h12m-5-5 5 5-5 5"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
 
               <a
                 href="#about"
@@ -236,8 +302,15 @@ export default function Hero() {
                   const section = document.getElementById("about");
                   if (!section) return;
 
+                  const header = document.querySelector("header");
+                  const headerHeight =
+                    header?.getBoundingClientRect().height ?? 0;
+
                   const sectionPosition =
-                    section.getBoundingClientRect().top + window.scrollY;
+                    section.getBoundingClientRect().top +
+                    window.scrollY -
+                    headerHeight -
+                    12;
 
                   window.history.replaceState(
                     null,
@@ -246,116 +319,66 @@ export default function Hero() {
                   );
 
                   window.scrollTo({
-                    top: sectionPosition,
+                    top: Math.max(0, sectionPosition),
                     behavior: "smooth",
                   });
                 }}
-                className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-8 py-4 text-[15px] font-semibold text-slate-600 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-slate-200 bg-white/80 px-5 py-3 text-sm font-semibold text-slate-700 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 min-[420px]:w-auto sm:px-6 sm:text-[15px]"
               >
                 View Journey
               </a>
-
             </motion.div>
-
-          
           </div>
 
-          {/* RIGHT */}
-    
-{/* RIGHT */}
-<motion.div
-  variants={fadeIn(0.2)}
-  initial="initial"
-  animate="animate"
-  className="relative mt-10 flex flex-col items-center lg:mt-0"
->
-  {/* Image Container */}
-  <div className="relative flex w-full justify-center">
+          {/* Right: Portrait and expertise */}
+          <motion.div
+            variants={fadeIn(0.18)}
+            initial="initial"
+            animate="animate"
+            className="relative mx-auto mt-3 flex w-full max-w-[480px] min-w-0 flex-col items-center sm:mt-5 lg:mt-0 lg:max-w-none"
+          >
+            {/* Portrait background glow */}
+            <div className="relative flex w-full items-center justify-center">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-[230px] w-[230px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-100/80 to-cyan-100/60 blur-3xl min-[390px]:h-[270px] min-[390px]:w-[270px] sm:h-[340px] sm:w-[340px] lg:h-[300px] lg:w-[300px] xl:h-[380px] xl:w-[380px]"
+              />
 
-    {/* Background Glow */}
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="h-[280px] w-[280px] rounded-full bg-blue-100/70 blur-3xl sm:h-[350px] sm:w-[350px]" />
-    </div>
+              <Image
+                src="/assets/instructor.png"
+                alt="Kumaresh Bidari"
+                width={560}
+                height={700}
+                priority
+                quality={75}
+                sizes="(max-width: 420px) 90vw, (max-width: 768px) 80vw, (max-width: 1024px) 70vw, (max-width: 1280px) 42vw, 500px"
+                className="relative z-10 mx-auto h-auto max-h-[280px] w-auto max-w-full object-contain drop-shadow-[0_12px_24px_rgba(15,23,42,0.10)] min-[390px]:max-h-[320px] sm:max-h-[390px] lg:max-h-[430px] xl:max-h-[470px]"
+              />
+            </div>
 
-    {/* Image */}
-    <div className="relative z-10 flex justify-center">
-      <Image
-        src="/assets/instructor.png"
-        alt="Kumaresh Bidari"
-        width={560}
-        height={700}
-        priority
-        quality={100}
-        className="
-          mx-auto
-          w-auto
-          max-h-[340px]
-          translate-x-3
-          object-contain
-          drop-shadow-xl
+            {/* Core expertise */}
+            <motion.div
+              variants={fadeUp(0.32)}
+              initial="initial"
+              animate="animate"
+              className="mt-4 w-full sm:mt-5"
+            >
+              <h3 className="mb-3 text-center text-sm font-semibold uppercase tracking-wider text-slate-400 lg:text-left">
+                Core Expertise
+              </h3>
 
-          sm:max-h-[430px]
-          sm:translate-x-0
-
-          lg:max-h-[500px]
-
-          xl:max-h-[540px]
-        "
-      />
-    </div>
-
-  </div>
-
-  {/* Core Expertise */}
-  <motion.div
-    variants={fadeUp(0.35)}
-    initial="initial"
-    animate="animate"
-    className="mt-10 w-full"
-  >
-    <h3 className="mb-4 text-center text-sm font-semibold uppercase tracking-wider text-slate-400 lg:text-left">
-      Core Expertise
-    </h3>
-
-    <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
-      {expertise.map((item) => (
-        <span
-          key={item}
-          className="
-            rounded-full
-            border
-            border-slate-200
-            bg-white
-            px-4
-            py-2
-            text-sm
-            font-medium
-            text-slate-600
-            shadow-sm
-            transition-all
-            duration-500
-            hover:-translate-y-1
-            hover:border-blue-300
-            hover:bg-gradient-to-r
-            hover:from-blue-600
-            hover:to-sky-500
-            hover:text-white
-            hover:shadow-lg
-            hover:shadow-blue-100
-          "
-        >
-          {item}
-        </span>
-      ))}
-    </div>
-  </motion.div>
-
-</motion.div>
-
-
-          
-          
-
+              <div className="flex flex-wrap justify-center gap-2 lg:justify-start">
+                {expertise.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-slate-200 bg-white/90 px-3 py-1.5 text-xs font-medium leading-5 text-slate-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-600 hover:to-cyan-500 hover:text-white hover:shadow-md hover:shadow-blue-500/20 sm:px-4 sm:py-2 sm:text-sm"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

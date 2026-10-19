@@ -48,7 +48,6 @@ export default function Services() {
       <div className="relative mx-auto max-w-[1300px] px-5 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mx-auto mb-14 max-w-3xl text-center">
-
           <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
             SAP Consulting &
             <span className="mt-1 block bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
@@ -124,13 +123,12 @@ export default function Services() {
               </ul>
 
               <div className="mt-auto pt-8">
+                {/* Navigate to the dedicated Services & Booking page */}
                 <a
-                  href="https://www.riseinfotech.in/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/services"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-5 py-3.5 text-sm font-semibold text-blue-700 transition-all duration-300 hover:border-blue-600 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-200/60"
                 >
-                  Visit Website
+                  Book a Session
                   <svg
                     viewBox="0 0 20 20"
                     fill="none"

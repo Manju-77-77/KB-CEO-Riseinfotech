@@ -29,10 +29,6 @@
    Base Styles
 ========================= */
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -227,6 +223,22 @@ body {
     animation: none;
   }
 }
+
+
 html {
-  scroll-padding-top: 160px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+/* Keep the timeline stationary when its animation is complete */
+.timeline-animation-complete,
+.timeline-animation-complete * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Prevent the timeline line from animating after completion */
+.timeline-animation-complete .timeline-line {
+  height: 100%;
+  transform: none;
 }
