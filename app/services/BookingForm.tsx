@@ -323,10 +323,17 @@ export default function BookingForm() {
             </p>
           )}
 
-          <p className="mt-2 text-center text-xs leading-4 text-slate-500">
-            Your session is not confirmed until availability
-            is verified.
-          </p>
+          <div
+            role="status"
+            className="mt-4 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 px-4 py-4 text-center"
+          >
+            <p className="text-lg font-bold leading-snug text-blue-800 sm:text-xl">
+              Booking is not open yet.
+            </p>
+            <p className="mt-1 text-base font-medium leading-relaxed text-slate-700 sm:text-lg">
+              Reservations will be available soon.
+            </p>
+          </div>
         </div>
       </form>
     </section>

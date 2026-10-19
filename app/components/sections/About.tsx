@@ -436,22 +436,23 @@ export default function About() {
 
             {/* PROFESSIONAL JOURNEY TIMELINE */}
             <div ref={listRef} className="relative space-y-5">
-              {/* Animated timeline progress line */}
+              {/* Timeline track stays visible; blue progress moves over it */}
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute left-4 top-0 hidden w-[3px] -translate-x-1/2 overflow-hidden rounded-full md:block"
+                className="pointer-events-none absolute left-4 top-0 hidden w-[3px] -translate-x-1/2 overflow-hidden rounded-full bg-slate-200 md:block"
                 style={{
                   top: `${lineBounds.top}px`,
-                  height: `${Math.min(
-                    progress,
-                    lineBounds.height
-                  )}px`,
-                  opacity: revealed.some(Boolean) ? 1 : 0,
-                  transition:
-                    "height 450ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms ease-out",
+                  height: `${lineBounds.height}px`,
                 }}
               >
-                <div className="h-full w-full rounded-full bg-gradient-to-b from-blue-600 via-blue-500 to-cyan-400" />
+                <div
+                  className="w-full rounded-full bg-gradient-to-b from-blue-600 via-blue-500 to-cyan-400"
+                  style={{
+                    height: `${Math.min(progress, lineBounds.height)}px`,
+                    transition:
+                      "height 450ms cubic-bezier(0.22, 1, 0.36, 1)",
+                  }}
+                />
               </div>
 
               {timeline.map((item, index) => {
@@ -468,11 +469,7 @@ export default function About() {
                     ref={(element) => {
                       itemRefs.current[index] = element;
                     }}
-                    className={`group relative transition-[opacity,transform,filter] duration-1000 ease-out motion-reduce:transition-none md:pl-14 ${
-                      revealed[index]
-                        ? "translate-y-0 opacity-100 blur-0"
-                        : "translate-y-10 opacity-0 blur-[2px]"
-                    }`}
+                    className="group relative transition-[border-color,box-shadow,background-color,transform] duration-700 ease-out motion-reduce:transition-none md:pl-14"
                   >
                     {/* Desktop timeline marker */}
                     <div
@@ -511,11 +508,37 @@ export default function About() {
                           : "border-slate-200 shadow-sm"
                       }`}
                     >
-                      {/* Company and year */}
+                      {/* Company favicon and year */}
                       <div className="flex flex-wrap items-start justify-between gap-2">
-                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-blue-600 sm:text-sm">
-                          {item.company}
-                        </p>
+                        <div className="flex min-w-0 items-center gap-3">
+                          {item.year !== "2015" && (
+                            <Image
+                              src={
+                                item.company.startsWith("IBM")
+                                  ? "/assets/ibm.png"
+                                  : item.company.startsWith("SAP")
+                                    ? "/assets/SAP-Fevicon.webp"
+                                    : item.company.startsWith("TCS")
+                                      ? "/assets/tcs.png"
+                                      : item.company.startsWith("NTT DATA")
+                                        ? "/assets/ntt-data.png"
+                                        : "/icon.png"
+                              }
+                              alt=""
+                              width={32}
+                              height={32}
+                              className="h-8 w-8 shrink-0 object-contain"
+                            />
+                          )}
+
+                          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-blue-600 sm:text-sm">
+                            {item.year === "2015"
+                              ? item.company
+                              : item.company.includes("|")
+                                ? item.company.split("|")[1].trim()
+                                : item.company.replace(/^SAP\s+/, "")}
+                          </p>
+                        </div>
 
                         <span className="hidden shrink-0 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600 md:inline-flex">
                           {item.year}

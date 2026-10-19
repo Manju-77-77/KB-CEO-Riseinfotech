@@ -9,12 +9,11 @@ import {
   useMotionValue,
   animate,
 } from "framer-motion";
-import { Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const stats = [
   { value: 10, suffix: "+", label: "Years of Industry Experience" },
-  { value: 5, suffix: "+", label: "Years of SAP MM Training Experience" },
+  { value: 5, suffix: "+", label: "Years of SAP Training Experience" },
   { value: 12, suffix: "+", label: "SAP Enterprise Projects" },
   { value: 1000, suffix: "+", label: "Students Trained" },
 ];
@@ -129,66 +128,70 @@ export default function Hero() {
               Kumaresh Bidari
             </motion.h2>
 
-            {/* Animated professional titles */}
-            <motion.div
-              variants={fadeUp(0.06)}
-              initial="initial"
-              animate="animate"
-              className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium leading-6 tracking-wide text-slate-700 sm:text-sm md:text-base"
-            >
-              <span className="inline-flex items-center gap-1.5">
-                <motion.span
-                  animate={{ x: [0, 3, 0], opacity: [0.7, 1, 0.7] }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="inline-flex"
-                  aria-hidden="true"
-                >
-                  <Play className="h-3 w-3 fill-blue-600 text-blue-600" />
-                </motion.span>
-                SAP S/4HANA Expert
-              </span>
+            
+          {/* Animated professional titles */}
+          <motion.div
+            variants={fadeUp(0.06)}
+            initial="initial"
+            animate="animate"
+            className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium leading-6 tracking-wide text-slate-700 sm:text-sm md:text-base"
+          >
+            <span className="inline-flex items-center gap-1.5">
+              <motion.span
+                animate={{ scale: [1, 1.25, 1], opacity: [0.7, 1, 0.7] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="inline-flex shrink-0 items-center justify-center text-base font-bold leading-none text-blue-600 sm:text-lg md:text-xl"
+                aria-hidden="true"
+              >
+                •
+              </motion.span>
+              SAP S/4HANA Expert
+            </span>
 
-              <span className="text-slate-300" aria-hidden="true">
-                |
-              </span>
+            <span className="text-slate-300" aria-hidden="true">
+              |
+            </span>
 
-              <span className="inline-flex items-center gap-1.5">
-                <motion.span
-                  animate={{ x: [0, 3, 0], opacity: [0.7, 1, 0.7] }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.3,
-                  }}
-                  className="inline-flex"
-                  aria-hidden="true"
-                >
-                  <Play className="h-3 w-3 fill-blue-600 text-blue-600" />
-                </motion.span>
-                Corporate Trainer
-              </span>
-            </motion.div>
+            <span className="inline-flex items-center gap-1.5">
+              <motion.span
+                animate={{ scale: [1, 1.25, 1], opacity: [0.7, 1, 0.7] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.3,
+                }}
+                className="inline-flex shrink-0 items-center justify-center text-base font-bold leading-none text-blue-600 sm:text-lg md:text-xl"
+                aria-hidden="true"
+              >
+                •
+              </motion.span>
+              Corporate Trainer
+            </span>
+          </motion.div>
 
-            {/* Main heading: consistent font size */}
+
+            {/* Main heading */}
             <motion.h1
               variants={fadeUp(0.12)}
               initial="initial"
               animate="animate"
-              className="mt-4 max-w-2xl text-[23.5px] font-bold leading-[1.25] tracking-tight text-[#0f1e3d] min-[390px]:text-[26.5px] sm:text-[29.4px] md:text-[31.4px] xl:text-[37.2px]"
+              className="mt-4 min-w-0 max-w-2xl text-[23.5px] font-bold leading-[1.25] tracking-tight text-[#0f1e3d] min-[390px]:text-[26.5px] sm:text-[29.4px] md:text-[31.4px] xl:text-[37.2px]"
             >
               Empowering Enterprises with SAP Solutions. Transforming SAP
               Careers.{" "}
-              <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
-                SAP S/4HANA Consulting | Corporate Training | Career Mentorship
-              </span>
+              
+              <span className="mt-2 block w-full whitespace-nowrap text-[clamp(6px,2.1vw,20px)] font-bold leading-tight bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 bg-clip-text text-transparent sm:text-[20px]">
+              SAP S/4HANA Consulting | Corporate Training | Career Mentorship
+            </span>
+
             </motion.h1>
 
-            {/* Original description */}
+            {/* Description */}
             <motion.div
               variants={fadeUp(0.18)}
               initial="initial"
@@ -204,14 +207,14 @@ export default function Hero() {
               </p>
 
               <p>
-                Additionally, with 5+ years of SAP MM training experience, I have
-                mentored aspiring SAP professionals through industry-oriented,
-                real-time project-based training, helping them build successful
-                careers as SAP S/4HANA MM Consultants.
+                Additionally, with 5+ years of SAP MM training experience, I
+                have mentored aspiring SAP professionals through
+                industry-oriented, real-time project-based training, helping
+                them build successful careers as SAP S/4HANA MM Consultants.
               </p>
             </motion.div>
 
-            {/* Four animated statistics in one row */}
+            {/* Four animated statistics */}
             <motion.div
               variants={fadeUp(0.24)}
               initial="initial"

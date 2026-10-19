@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Menu, X } from "lucide-react";
@@ -6,11 +7,10 @@ import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
   { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
+  { name: "Services", href: "/services" },
   { name: "Achievements", href: "#achievements" },
   { name: "Rise Infotech", href: "#rise-infotech" },
 ];
-
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -18,34 +18,39 @@ export default function Navbar() {
   const router = useRouter();
 
   const scrollToSection = (sectionId: string) => {
-  const section = document.getElementById(sectionId);
-  if (!section) return;
+    const section = document.getElementById(sectionId);
+    if (!section) return;
 
-  const header = document.querySelector("body > main > header");
-  const headerHeight = header?.getBoundingClientRect().height ?? 88;
-  const extraGap = 16;
+    const header = document.querySelector("body > main > header");
+    const headerHeight = header?.getBoundingClientRect().height ?? 88;
+    const extraGap = 16;
 
-  const targetPosition =
-    section.getBoundingClientRect().top +
-    window.scrollY -
-    headerHeight +
-    extraGap;
+    const targetPosition =
+      section.getBoundingClientRect().top +
+      window.scrollY -
+      headerHeight +
+      extraGap;
 
-  window.scrollTo({
-    top: Math.max(0, targetPosition),
-    behavior: "smooth",
-  });
-};
-
-
-
+    window.scrollTo({
+      top: Math.max(0, targetPosition),
+      behavior: "smooth",
+    });
+  };
 
   const handleNavClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
-    sectionId: string
+    href: string
   ) => {
     event.preventDefault();
     setOpen(false);
+
+    // Services navigates directly to the booking/services page.
+    if (href === "/services") {
+      router.push("/services");
+      return;
+    }
+
+    const sectionId = href.slice(1);
 
     if (pathname === "/") {
       window.history.replaceState(
@@ -79,10 +84,22 @@ export default function Navbar() {
     }
   };
 
+  const handleConnectClick = (
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    setOpen(false);
+
+    if (pathname === "/") {
+      scrollToSection("consultation-form");
+    } else {
+      router.push("/#consultation-form");
+    }
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 w-full border-b border-slate-200/70 bg-white/90 shadow-[0_3px_14px_rgba(15,23,42,0.04)] backdrop-blur-xl">
       <div className="mx-auto flex min-h-[76px] w-full max-w-[1700px] items-center justify-between gap-4 px-5 sm:px-8 lg:min-h-[88px] lg:px-10 xl:px-14">
-
         {/* Logo */}
         <a
           href="/#hero"
@@ -109,9 +126,7 @@ export default function Navbar() {
             <a
               key={item.name}
               href={item.href}
-              onClick={(event) =>
-                handleNavClick(event, item.href.slice(1))
-              }
+              onClick={(event) => handleNavClick(event, item.href)}
               className="relative whitespace-nowrap py-2 text-sm font-medium text-slate-700 transition-colors duration-300 hover:text-blue-600 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-cyan-500 after:transition-all after:duration-300 hover:after:w-full xl:text-base"
             >
               {item.name}
@@ -119,17 +134,16 @@ export default function Navbar() {
           ))}
         </nav>
 
-        
         {/* Desktop CTA */}
         <div className="hidden shrink-0 lg:block">
           <a
-            href="#consultation-form"
+            href="/#consultation-form"
+            onClick={handleConnectClick}
             className="inline-flex min-h-12 items-center justify-center whitespace-nowrap rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/20 xl:px-7"
           >
             Connect with me
           </a>
         </div>
-
 
         {/* Mobile Toggle */}
         <button
@@ -150,14 +164,15 @@ export default function Navbar() {
           id="mobile-navigation"
           className="border-t border-slate-200/70 bg-white/95 px-5 py-4 shadow-lg backdrop-blur-xl sm:px-8 lg:hidden"
         >
-          <nav aria-label="Mobile navigation" className="flex flex-col gap-1">
+          <nav
+            aria-label="Mobile navigation"
+            className="flex flex-col gap-1"
+          >
             {navLinks.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                onClick={(event) =>
-                  handleNavClick(event, item.href.slice(1))
-                }
+                onClick={(event) => handleNavClick(event, item.href)}
                 className="rounded-lg px-3 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-blue-50 hover:text-blue-600"
               >
                 {item.name}
@@ -165,17 +180,13 @@ export default function Navbar() {
             ))}
           </nav>
 
-          
-            <a
-              href="#consultation-form"
-              onClick={(event) =>
-                handleNavClick(event, "consultation-form")
-              }
-              className="mt-3 flex min-h-11 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-center text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-blue-200"
-            >
-              Connect with me
-            </a>
-
+          <a
+            href="/#consultation-form"
+            onClick={handleConnectClick}
+            className="mt-3 flex min-h-11 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-3 text-center text-sm font-semibold text-white transition-all hover:shadow-lg hover:shadow-blue-200"
+          >
+            Connect with me
+          </a>
         </div>
       )}
     </header>
