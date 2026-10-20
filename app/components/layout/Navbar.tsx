@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Menu, X } from "lucide-react";
@@ -6,9 +5,9 @@ import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 const navLinks = [
+  { name: "Home", href: "#hero" },
   { name: "About", href: "#about" },
   { name: "Services", href: "/services" },
-  { name: "Achievements", href: "#achievements" },
   { name: "Rise Infotech", href: "#rise-infotech" },
 ];
 
@@ -21,8 +20,9 @@ export default function Navbar() {
     const section = document.getElementById(sectionId);
     if (!section) return;
 
-    const header = document.querySelector("body > main > header");
-    const headerHeight = header?.getBoundingClientRect().height ?? 88;
+    const navbar = document.getElementById("main-navbar");
+    const headerHeight =
+      navbar?.getBoundingClientRect().height ?? 88;
     const extraGap = 16;
 
     const targetPosition =
@@ -44,9 +44,11 @@ export default function Navbar() {
     event.preventDefault();
     setOpen(false);
 
-    // Services navigates directly to the booking/services page.
+    // Services page
     if (href === "/services") {
-      router.push("/services");
+      if (pathname !== "/services") {
+        router.push("/services");
+      }
       return;
     }
 
@@ -98,7 +100,10 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 w-full border-b border-slate-200/70 bg-white/90 shadow-[0_3px_14px_rgba(15,23,42,0.04)] backdrop-blur-xl">
+    <header
+      id="main-navbar"
+      className="fixed inset-x-0 top-0 z-50 w-full border-b border-slate-200/70 bg-white/90 shadow-[0_3px_14px_rgba(15,23,42,0.04)] backdrop-blur-xl"
+    >
       <div className="mx-auto flex min-h-[76px] w-full max-w-[1700px] items-center justify-between gap-4 px-5 sm:px-8 lg:min-h-[88px] lg:px-10 xl:px-14">
         {/* Logo */}
         <a
@@ -126,7 +131,9 @@ export default function Navbar() {
             <a
               key={item.name}
               href={item.href}
-              onClick={(event) => handleNavClick(event, item.href)}
+              onClick={(event) =>
+                handleNavClick(event, item.href)
+              }
               className="relative whitespace-nowrap py-2 text-sm font-medium text-slate-700 transition-colors duration-300 hover:text-blue-600 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-gradient-to-r after:from-blue-600 after:to-cyan-500 after:transition-all after:duration-300 hover:after:w-full xl:text-base"
             >
               {item.name}
@@ -150,7 +157,11 @@ export default function Navbar() {
           type="button"
           onClick={() => setOpen((previous) => !previous)}
           className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-800 transition-colors hover:bg-blue-50 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 lg:hidden"
-          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={
+            open
+              ? "Close navigation menu"
+              : "Open navigation menu"
+          }
           aria-expanded={open}
           aria-controls="mobile-navigation"
         >
@@ -172,7 +183,9 @@ export default function Navbar() {
               <a
                 key={item.name}
                 href={item.href}
-                onClick={(event) => handleNavClick(event, item.href)}
+                onClick={(event) =>
+                  handleNavClick(event, item.href)
+                }
                 className="rounded-lg px-3 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-blue-50 hover:text-blue-600"
               >
                 {item.name}

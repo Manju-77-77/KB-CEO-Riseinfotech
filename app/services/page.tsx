@@ -1,9 +1,7 @@
-
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
-
+import Navbar from "../components/layout/Navbar";
 import { services } from "./servicesData";
 import ServiceCard from "./ServiceCard";
 import BookingForm from "./BookingForm";
@@ -34,62 +32,114 @@ export default function ServicesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white text-slate-900">
-      {/* Header */}
-      <header className="border-b border-slate-200 px-6 py-5">
-        <div className="mx-auto flex max-w-6xl items-center gap-4">
-          <Image
-            src="/assets/riseinfo.jpeg"
-            alt="Rise Infotech"
-            width={170}
-            height={65}
-            priority
-            className="h-auto w-32 object-contain sm:w-40"
-          />
+    <main className="min-h-screen bg-white pt-[76px] text-slate-900 lg:pt-[88px]">
+      {/* Shared Navbar */}
+      <Navbar />
 
-          <div className="border-l border-slate-200 pl-4">
-            <h1 className="text-xl font-bold sm:text-2xl">
-              Services &amp; Booking
-            </h1>
+      {/* Banner with vertical blue colour divisions */}
+      <header className="relative isolate flex min-h-[150px] items-center justify-center overflow-hidden px-5 py-8 text-center sm:min-h-[175px] sm:px-8 sm:py-10">
+        {/* Divided gradient background */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 grid grid-cols-4 sm:grid-cols-6"
+        >
+          <div className="bg-[#8CC5F0] transition-colors duration-300 hover:bg-[#79B8E9]" />
+          <div className="bg-[#62A2DE] transition-colors duration-300 hover:bg-[#5597D5]" />
+          <div className="bg-[#4389D0] transition-colors duration-300 hover:bg-[#367BC3]" />
+          <div className="bg-[#3169B0] transition-colors duration-300 hover:bg-[#285CA2]" />
+          <div className="hidden bg-[#244F91] transition-colors duration-300 hover:bg-[#1D447F] sm:block" />
+          <div className="hidden bg-[#193B78] transition-colors duration-300 hover:bg-[#153366] sm:block" />
+        </div>
 
-            <p className="mt-1 text-sm text-slate-600">
-              Explore our services and schedule a session.
-            </p>
-          </div>
+        {/* Centred banner content */}
+        <div className="mx-auto w-full max-w-6xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/90 sm:text-sm">
+            Rise Infotech
+          </p>
+
+          <h1 className="mt-2 text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-4xl">
+            Services &amp; Booking
+          </h1>
+
+          <p className="mx-auto mt-2 max-w-2xl text-sm leading-6 text-white/95 sm:text-base">
+            Book personalized SAP guidance, training, and consulting sessions.
+          </p>
         </div>
       </header>
 
-      {/* Services list */}
-      <section className="mx-auto max-w-6xl px-6 py-10 sm:py-14">
-        {/* Heading with CSS animation */}
-        <div className="mb-4 animate-[fadeInUp_700ms_ease-out_both] motion-reduce:animate-none">
-          <h2 className="text-2xl font-bold sm:text-3xl">
-            Explore Our Services
+      {/* Consultant Introduction */}
+      <section className="mx-auto max-w-6xl px-5 pt-9 sm:px-8 sm:pt-12">
+        <div className="mb-9 max-w-4xl sm:mb-12">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700 sm:text-sm">
+            Personalised SAP Support
+          </p>
+
+          <h2 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+            Book a 1:1 Session with{" "}
+            <span className="text-[#2855D9]">
+              Kumaresh Bidari
+            </span>
           </h2>
 
-          <p className="mt-3 max-w-3xl leading-7 text-slate-600">
-            Explore SAP career guidance, interview preparation,
-            training, and consulting services to find the right
-            support for your goals.
+          <p className="mt-3 text-sm font-semibold leading-7 text-[#2855D9] sm:text-base">
+            SAP S/4HANA Consultant
+            <span className="mx-2 text-slate-400">|</span>
+            Corporate Trainer
+            <span className="mx-2 text-slate-400">|</span>
+            Career Mentor
+            <span className="mx-2 text-slate-400">|</span>
+            Founder – Rise Infotech
+          </p>
+
+          <div className="mt-6 max-w-3xl">
+            <h3 className="text-lg font-bold text-slate-900 sm:text-xl">
+              Your SAP Career Deserves the Right Guidance.
+            </h3>
+
+            <p className="mt-3 text-base leading-7 text-slate-600 sm:text-lg">
+              Whether you're starting your SAP journey, preparing for
+              interviews, improving your resume, or exploring new career
+              opportunities, book a personalized session to get practical
+              guidance based on industry experience.
+            </p>
+          </div>
+        </div>
+
+        {/* Services Heading */}
+        <div className="mb-5 border-b border-slate-200 pb-5 sm:mb-7">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700 sm:text-sm">
+            Explore Your Options
+          </p>
+
+          <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+            Services &amp; Booking Options
+          </h2>
+
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+            Choose a service that matches your career goals and book your session.
           </p>
         </div>
 
-        {/* Service cards */}
-        <div>
+        {/* Service Cards */}
+        <div className="divide-y divide-slate-200">
           {services.map((service) => (
-            <ServiceCard
+            <div
               key={service.id}
-              service={service}
-              onBook={handleBook}
-            />
+              className="transition-colors duration-200 hover:bg-blue-50/30"
+            >
+              <ServiceCard
+                service={service}
+                onBook={handleBook}
+              />
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Booking form */}
+      {/* Booking Form */}
       <section
         ref={bookingRef}
-        className="mx-auto max-w-6xl scroll-mt-6 px-6 pb-16 sm:pb-24"
+        className="mx-auto max-w-6xl scroll-mt-24 px-5 pb-16 pt-10 sm:px-8 sm:pb-24 sm:pt-14"
       >
         <BookingForm />
       </section>

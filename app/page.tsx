@@ -3,7 +3,6 @@ import Footer from "./components/layout/Footer";
 import Hero from "./components/sections/Hero";
 import About from "./components/sections/About";
 import Services from "./components/sections/Services";
-import ImpactMetrics from "./components/sections/ImpactMetrics";
 import Showcase from "./components/sections/Showcase";
 import Credentials from "./components/sections/Credentials";
 import Reels from "./components/sections/reels";
@@ -17,7 +16,6 @@ export default function Home() {
       <About />
       <Reels />
       <Services />
-      <ImpactMetrics />
       <Showcase />
       <Credentials />
       <ConsultationForm />

@@ -7,7 +7,6 @@ import Experience from "./Experience";
 import Expertise from "./Expertise";
 import Industries from "./Industries";
 
-
 type TimelineItem = {
   year: string;
   company: string;
@@ -35,7 +34,7 @@ const timeline: TimelineItem[] = [
   },
   {
     year: "2017",
-    company: "SAP Functional Consultant",
+    company: "SAP | Functional Consultant",
     title: "SAP MM Functional Consultant",
     desc: "Specialized in SAP MM configuration, procurement processes, testing, and business process optimization.",
     projects: "SAP S/4HANA Implementation, Testing & Support.",
@@ -79,7 +78,6 @@ const timeline: TimelineItem[] = [
     mission: "We don't just teach SAP — we transform careers.",
   },
 ];
-
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -405,7 +403,6 @@ export default function About() {
                     sizes="(min-width: 1024px) 45vw, 100vw"
                     className="object-cover object-bottom transition-transform duration-1000 ease-in-out group-hover:scale-105 motion-reduce:transition-none"
                   />
-  
 
                   <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
 
@@ -436,7 +433,7 @@ export default function About() {
 
             {/* PROFESSIONAL JOURNEY TIMELINE */}
             <div ref={listRef} className="relative space-y-5">
-              {/* Timeline track stays visible; blue progress moves over it */}
+              {/* Grey timeline track with animated blue progress */}
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute left-4 top-0 hidden w-[3px] -translate-x-1/2 overflow-hidden rounded-full bg-slate-200 md:block"
@@ -469,7 +466,8 @@ export default function About() {
                     ref={(element) => {
                       itemRefs.current[index] = element;
                     }}
-                    className="group relative transition-[border-color,box-shadow,background-color,transform] duration-700 ease-out motion-reduce:transition-none md:pl-14"
+                    className="group relative animate-[timelineCardIn_700ms_cubic-bezier(0.22,1,0.36,1)_both] transition-transform duration-500 ease-out hover:-translate-y-1 motion-reduce:animate-none motion-reduce:transition-none md:pl-14"
+                    style={{ animationDelay: `${index * 90}ms` }}
                   >
                     {/* Desktop timeline marker */}
                     <div
@@ -500,45 +498,25 @@ export default function About() {
                       {item.year}
                     </span>
 
-                    {/* Journey card */}
+                    {/* Animated journey card */}
                     <div
-                      className={`rounded-2xl border bg-white p-5 transition-[border-color,box-shadow,background-color] duration-700 ease-out sm:p-6 ${
+                      className={`relative overflow-hidden rounded-2xl border bg-white p-5 transition-[border-color,box-shadow,background-color,transform] duration-500 ease-out group-hover:border-blue-300 group-hover:shadow-[0_18px_38px_-20px_rgba(37,99,235,0.45)] sm:p-6 ${
                         isActive
                           ? "border-blue-200 bg-blue-50/[0.12] shadow-[0_12px_32px_-18px_rgba(37,99,235,0.35)]"
                           : "border-slate-200 shadow-sm"
                       }`}
                     >
-                      {/* Company favicon and year */}
-                      <div className="flex flex-wrap items-start justify-between gap-2">
-                        <div className="flex min-w-0 items-center gap-3">
-                          {item.year !== "2015" && (
-                            <Image
-                              src={
-                                item.company.startsWith("IBM")
-                                  ? "/assets/ibm.png"
-                                  : item.company.startsWith("SAP")
-                                    ? "/assets/SAP-Fevicon.webp"
-                                    : item.company.startsWith("TCS")
-                                      ? "/assets/tcs.png"
-                                      : item.company.startsWith("NTT DATA")
-                                        ? "/assets/ntt-data.png"
-                                        : "/icon.png"
-                              }
-                              alt=""
-                              width={32}
-                              height={32}
-                              className="h-8 w-8 shrink-0 object-contain"
-                            />
-                          )}
+                      {/* Animated gradient border */}
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 transition-transform duration-500 ease-out group-hover:scale-x-100"
+                      />
 
-                          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-blue-600 sm:text-sm">
-                            {item.year === "2015"
-                              ? item.company
-                              : item.company.includes("|")
-                                ? item.company.split("|")[1].trim()
-                                : item.company.replace(/^SAP\s+/, "")}
-                          </p>
-                        </div>
+                      {/* Company and year */}
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-blue-600 sm:text-sm">
+                          {item.company}
+                        </p>
 
                         <span className="hidden shrink-0 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600 md:inline-flex">
                           {item.year}
@@ -546,7 +524,7 @@ export default function About() {
                       </div>
 
                       {/* Role or qualification */}
-                      <h3 className="mt-2 text-base font-bold leading-snug text-slate-900 sm:text-lg">
+                      <h3 className="mt-2 text-base font-bold leading-snug text-slate-900 transition-colors duration-300 group-hover:text-blue-800 sm:text-lg">
                         {item.title}
                       </h3>
 
@@ -593,7 +571,7 @@ export default function About() {
 
                       {/* Rise Infotech mission */}
                       {item.mission && (
-                        <div className="mt-4 rounded-xl border border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 p-4">
+                        <div className="mt-4 rounded-xl border border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 p-4 transition-colors duration-300 hover:border-blue-200">
                           <p className="text-xs font-semibold uppercase tracking-wider text-blue-600">
                             Our Mission
                           </p>
@@ -614,6 +592,27 @@ export default function About() {
       <Experience />
       <Expertise />
       <Industries />
+
+      <style jsx>{`
+        @keyframes timelineCardIn {
+          from {
+            opacity: 0;
+            transform: translateY(18px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          :global(*) {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            scroll-behavior: auto !important;
+          }
+        }
+      `}</style>
     </>
   );
 }
