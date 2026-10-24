@@ -1,5 +1,11 @@
 
-export type ServiceType = "free" | "paid" | "eligibility";
+export type ServiceType =
+  | "free"
+  | "paid"
+  | "eligibility"
+  | "enquiry";
+
+export type ServiceAudience = "individual" | "business";
 
 export interface Service {
   id: string;
@@ -8,6 +14,7 @@ export interface Service {
   category: string;
   duration: number;
   type: ServiceType;
+  audience: ServiceAudience;
   price: number;
   description: string;
   idealFor: string;
@@ -23,11 +30,11 @@ export const services: Service[] = [
     category: "Career Guidance",
     duration: 30,
     type: "free",
+    audience: "business",
     price: 0,
     description:
       "Get guidance on SAP career paths, required skills, certifications, and opportunities.",
-    idealFor:
-      "Students and professionals exploring SAP careers.",
+    idealFor: "Students and professionals exploring SAP careers.",
     image: "/Service-images/career-guidance.png",
     features: [
       "Career path discussion",
@@ -42,6 +49,7 @@ export const services: Service[] = [
     category: "Interview Preparation",
     duration: 60,
     type: "paid",
+    audience: "business",
     price: 1000,
     description:
       "Prepare for SAP MM interviews with a focused mock interview and personalized feedback.",
@@ -60,11 +68,11 @@ export const services: Service[] = [
     category: "Career Development",
     duration: 60,
     type: "paid",
+    audience: "business",
     price: 798,
     description:
       "Improve your resume and professional profile to present your SAP skills and experience effectively.",
-    idealFor:
-      "Freshers and experienced professionals.",
+    idealFor: "Freshers and experienced professionals.",
     image: "/Service-images/resume-preparation.png",
     features: [
       "Resume review",
@@ -79,11 +87,11 @@ export const services: Service[] = [
     category: "Placement Support",
     duration: 30,
     type: "eligibility",
+    audience: "business",
     price: 0,
     description:
       "Discuss your SAP career goals and understand the available placement assistance options.",
-    idealFor:
-      "Eligible candidates seeking placement support.",
+    idealFor: "Eligible candidates seeking placement support.",
     image: "/Service-images/placement-assistance.png",
     features: [
       "Profile assessment",
@@ -98,11 +106,11 @@ export const services: Service[] = [
     category: "Course Counselling",
     duration: 30,
     type: "free",
+    audience: "business",
     price: 0,
     description:
       "Understand SAP course options, learning requirements, and the admission process.",
-    idealFor:
-      "Learners planning to enrol in an SAP course.",
+    idealFor: "Learners planning to enrol in an SAP course.",
     image: "/Service-images/admission-counselling.png",
     features: [
       "Course information",
@@ -117,6 +125,7 @@ export const services: Service[] = [
     category: "Live Demonstration",
     duration: 60,
     type: "free",
+    audience: "business",
     price: 0,
     description:
       "Explore SAP MM concepts through a live demonstration and understand practical workflows.",
@@ -130,21 +139,11 @@ export const services: Service[] = [
   },
 ];
 
-/**
- * Find a service using its unique ID.
- */
-export function getService(
-  id: string
-): Service | undefined {
+export function getService(id: string): Service | undefined {
   return services.find((service) => service.id === id);
 }
 
-/**
- * Return a user-friendly price label.
- */
-export function getServicePrice(
-  service: Service
-): string {
+export function getServicePrice(service: Service): string {
   switch (service.type) {
     case "free":
       return "Free";
@@ -154,15 +153,18 @@ export function getServicePrice(
 
     case "eligibility":
       return "Eligibility-Based";
+
+    case "enquiry":
+      return "Contact for Pricing";
+
+    default: {
+      const exhaustiveCheck: never = service.type;
+      return exhaustiveCheck;
+    }
   }
 }
 
-/**
- * Return the service availability/pricing category.
- */
-export function getServiceTypeLabel(
-  service: Service
-): string {
+export function getServiceTypeLabel(service: Service): string {
   switch (service.type) {
     case "free":
       return "Free Consultation";
@@ -172,5 +174,13 @@ export function getServiceTypeLabel(
 
     case "eligibility":
       return "Eligibility Required";
+
+    case "enquiry":
+      return "Corporate Service";
+
+    default: {
+      const exhaustiveCheck: never = service.type;
+      return exhaustiveCheck;
+    }
   }
 }

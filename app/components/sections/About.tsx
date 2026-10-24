@@ -3,9 +3,6 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Experience from "./Experience";
-import Expertise from "./Expertise";
-import Industries from "./Industries";
 
 type TimelineItem = {
   year: string;
@@ -588,10 +585,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
-      <Experience />
-      <Expertise />
-      <Industries />
 
       <style jsx>{`
         @keyframes timelineCardIn {

@@ -16,70 +16,105 @@ export default function ServiceCard({
   service,
   onBook,
 }: ServiceCardProps) {
+  const isBusiness = service.audience === "business";
+
   return (
-    <article
-  className="group flex flex-col gap-5 border-b border-slate-200 py-8 sm:flex-row sm:gap-6"
->
-      {/* Service image */}
-      <div className="h-40 w-full shrink-0 overflow-hidden rounded-2xl bg-slate-100 sm:h-40 sm:w-44">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl motion-reduce:transform-none motion-reduce:transition-none">
+      {/* Image */}
+      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-blue-50 to-slate-100 sm:h-52">
         <img
           src={service.image}
           alt={service.title}
-          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
           onError={(event) => {
             event.currentTarget.style.display = "none";
           }}
         />
+
+        <span className="absolute left-4 top-4 rounded-full border border-white/70 bg-white/95 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
+          {service.category}
+        </span>
       </div>
 
-      {/* Service details */}
-      <div className="min-w-0 flex-1">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <h2 className="text-xl font-semibold text-slate-900">
-            {service.number}. {service.title}
-          </h2>
+      {/* Content */}
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-lg font-bold leading-snug text-slate-900 transition-colors group-hover:text-blue-800 sm:text-xl">
+            {service.title}
+          </h3>
 
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
-            {getServiceTypeLabel(service)}
+          <span className="shrink-0 rounded-lg bg-slate-100 px-2 py-1 text-xs font-bold text-slate-500">
+            {service.number}
           </span>
         </div>
 
-        <p className="mt-2 text-sm text-slate-500">
-          <span aria-hidden="true">◷</span>{" "}
-          {service.duration} Minutes
-          <span className="mx-3">•</span>
-          {getServicePrice(service)}
+        {/* Duration and price */}
+        <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500">
+          <span aria-hidden="true">◷</span>
+          <span>{service.duration} minutes</span>
+          <span aria-hidden="true">•</span>
+          <span className="font-semibold text-slate-800">
+            {getServicePrice(service)}
+          </span>
         </p>
 
-        <p className="mt-3 leading-7 text-slate-700">
+        {/* Description */}
+        <p className="mt-4 text-sm leading-6 text-slate-600">
           {service.description}
         </p>
 
-        <p className="mt-3 leading-7 text-slate-700">
-          <strong>Ideal for:</strong> {service.idealFor}
-        </p>
+        {/* Ideal for — fixed: idealFor is a string */}
+        <div className="mt-4 rounded-xl bg-slate-50 p-3.5">
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+            Ideal for
+          </p>
 
-        {/* Booking button */}
-        <button
-          type="button"
-          onClick={() => onBook(service.id)}
-          className="group/book relative mt-4 inline-flex cursor-pointer items-center gap-1 text-sm font-semibold text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700"
-        >
-          <span className="relative py-0.5">
-            Book this service
-            <span
-              aria-hidden="true"
-              className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-blue-700 transition-transform duration-300 ease-out group-hover/book:scale-x-100 group-focus-visible/book:scale-x-100 motion-reduce:transition-none"
-            />
-          </span>
+          <p className="mt-1.5 text-sm leading-6 text-slate-700">
+            {service.idealFor}
+          </p>
+        </div>
 
-          <span
-            aria-hidden="true"
-            className="inline-block transition-transform duration-300 ease-out group-hover/book:translate-x-1 group-focus-visible/book:translate-x-1 motion-reduce:transform-none motion-reduce:transition-none"
+        {/* Features */}
+        <ul className="mt-4 space-y-2">
+          {service.features.slice(0, 3).map((feature) => (
+            <li
+              key={feature}
+              className="flex items-start gap-2 text-sm leading-5 text-slate-600"
+            >
+              <span
+                aria-hidden="true"
+                className="mt-0.5 font-bold text-blue-700"
+              >
+                ✓
+              </span>
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Action */}
+        <div className="mt-auto pt-6">
+          <div className="mb-3">
+            <span className="text-xs font-medium text-slate-500">
+              {getServiceTypeLabel(service)}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onBook(service.id)}
+            className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#2855D9] px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#1e43b5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 motion-reduce:transition-none"
           >
-            →
-          </span>
-        </button>
+            <span>
+              {isBusiness
+                ? "Enquire about this service"
+                : "Book this service"}
+            </span>
+
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
       </div>
     </article>
   );

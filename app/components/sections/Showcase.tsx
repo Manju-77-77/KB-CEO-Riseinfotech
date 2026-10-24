@@ -6,20 +6,24 @@ import { motion } from "framer-motion";
 
 const highlights = [
   {
-    title: "SAP Consulting",
+    title: "SAP Training & Consulting",
     subtitle: "S/4HANA Expertise",
+    link: "https://www.riseinfotech.in/",
   },
   {
     title: "Corporate Training",
     subtitle: "Industry Focused",
+    link: "https://www.riseinfotech.in/courses/corporate-training/",
   },
   {
     title: "Career Support",
     subtitle: "Professional Guidance",
+    link: "#consultation-form",
   },
   {
     title: "ERP Solutions",
     subtitle: "Digital Transformation",
+    link: "https://kumareshbidari.com/services",
   },
 ];
 
@@ -34,6 +38,7 @@ export default function RiseInfotech() {
         className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-blue-50 blur-3xl"
         aria-hidden="true"
       />
+
       <div
         className="pointer-events-none absolute -bottom-32 left-0 h-72 w-72 rounded-full bg-cyan-50/80 blur-3xl"
         aria-hidden="true"
@@ -62,11 +67,20 @@ export default function RiseInfotech() {
               learning, real-world exposure, and industry guidance.
             </p>
 
-              {/* Company highlights */}
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                {highlights.map((item, index) => (
-                  <motion.div
+            {/* Clickable company highlights */}
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {highlights.map((item, index) => {
+                const isInternalLink = item.link.startsWith("#");
+
+                return (
+                  <motion.a
                     key={item.title}
+                    href={item.link}
+                    target={isInternalLink ? undefined : "_blank"}
+                    rel={
+                      isInternalLink ? undefined : "noopener noreferrer"
+                    }
+                    aria-label={`${item.title} - ${item.subtitle}`}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
@@ -75,7 +89,7 @@ export default function RiseInfotech() {
                       delay: index * 0.12,
                       ease: "easeOut",
                     }}
-                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_12px_35px_-10px_rgba(37,99,235,0.35)] hover:shadow-blue-500/20"
+                    className="group relative block overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-blue-300 hover:shadow-[0_12px_35px_-10px_rgba(37,99,235,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                   >
                     <h3 className="text-base font-semibold text-slate-900 transition-colors duration-300 group-hover:text-blue-700">
                       {item.title}
@@ -84,9 +98,18 @@ export default function RiseInfotech() {
                     <p className="mt-1.5 text-sm leading-6 text-slate-500">
                       {item.subtitle}
                     </p>
-                  </motion.div>
-                ))}
-              </div>
+
+                    {/* Redirect indicator */}
+                    <span
+                      aria-hidden="true"
+                      className="absolute right-4 top-4 text-slate-400 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-600"
+                    >
+                      ↗
+                    </span>
+                  </motion.a>
+                );
+              })}
+            </div>
 
             {/* Actions */}
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -96,7 +119,8 @@ export default function RiseInfotech() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-7 py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-200/70"
               >
-                Visit Website
+                Visit Rise Infotech Website
+
                 <svg
                   viewBox="0 0 20 20"
                   fill="none"
@@ -114,7 +138,7 @@ export default function RiseInfotech() {
               </a>
 
               <a
-                href="https://www.riseinfotech.in/contact"
+                href="https://www.riseinfotech.in/contact/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-7 py-3.5 text-sm font-semibold text-slate-800 transition-all duration-300 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
@@ -144,6 +168,7 @@ export default function RiseInfotech() {
               <p className="text-xs font-medium uppercase tracking-wider text-slate-500">
                 Consulting &amp; Training
               </p>
+
               <p className="mt-1 text-sm font-semibold text-slate-900">
                 Rise Infotech
               </p>

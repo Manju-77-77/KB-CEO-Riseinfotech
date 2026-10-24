@@ -11,11 +11,13 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import { COUNTRIES } from "../../../data/countries";
 
 type FormData = {
   name: string;
   email: string;
   phone: string;
+  countryCode: string;
   interest: string;
   course: string;
   preferredMode: string;
@@ -27,6 +29,7 @@ const INITIAL_FORM: FormData = {
   name: "",
   email: "",
   phone: "",
+  countryCode: "+91",
   interest: "",
   course: "",
   preferredMode: "",
@@ -82,6 +85,8 @@ const COURSES: Record<string, string[]> = {
   ],
   "General Inquiry": ["General Inquiry", "Other"],
 };
+
+
 
 const MODES = ["Online", "Classroom", "Need Guidance"];
 
@@ -179,6 +184,9 @@ export default function ConsultationForm() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [openDropdown, setOpenDropdown] = useState<"interest" | "course" | null>(null);
+  const [countryOpen, setCountryOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
+  const countryRef = useRef<HTMLDivElement>(null);
 
   const interestRef = useRef<HTMLDivElement>(null);
   const courseRef = useRef<HTMLDivElement>(null);
@@ -196,10 +204,16 @@ export default function ConsultationForm() {
       ) {
         setOpenDropdown(null);
       }
+      if (!countryRef.current?.contains(target)) {
+        setCountryOpen(false);
+      }
     };
 
     const handleKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpenDropdown(null);
+      if (event.key === "Escape") {
+        setOpenDropdown(null);
+        setCountryOpen(false);
+      }
     };
 
     document.addEventListener("pointerdown", handlePointer);
@@ -233,7 +247,8 @@ export default function ConsultationForm() {
       !name ||
       name.length > 100 ||
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-      !/^\d{10}$/.test(phone) ||
+      !/^\d{10,15}$/.test(phone) ||
+      !COUNTRIES.some((country) => country.code === form.countryCode) ||
       !INTERESTS.includes(form.interest) ||
       !courses.includes(form.course) ||
       message.length > 2000 ||
@@ -271,7 +286,9 @@ export default function ConsultationForm() {
         {
           name,
           email,
-          phone,
+          phone: `${form.countryCode}${phone}`,
+          country_code: form.countryCode,
+          phone_number: phone,
           interest: form.interest,
           course: form.course,
           preferred_mode: form.preferredMode || "Need Guidance",
@@ -285,7 +302,9 @@ export default function ConsultationForm() {
       );
 
       setForm({ ...INITIAL_FORM });
+      setSelectedCountry(COUNTRIES[0]);
       setOpenDropdown(null);
+      setCountryOpen(false);
       setStatus("success");
     } catch (error) {
       console.error("EmailJS submission failed:", error);
@@ -409,22 +428,81 @@ export default function ConsultationForm() {
                 <label htmlFor="consultation-phone" className={labelClass}>
                   Phone Number <span className="text-blue-600">*</span>
                 </label>
-                <input
-                  id="consultation-phone"
-                  name="phone"
-                  type="tel"
-                  inputMode="numeric"
-                  autoComplete="tel-national"
-                  value={form.phone}
-                  onChange={(e) =>
-                    updateField("phone", e.target.value.replace(/\D/g, "").slice(0, 10))
-                  }
-                  placeholder="10-digit mobile number"
-                  pattern="[0-9]{10}"
-                  required
-                  disabled={loading}
-                  className={inputClass}
-                />
+                <div className="relative" ref={countryRef}>
+                  <div className="flex h-[42px] w-full items-stretch overflow-hidden rounded-xl border border-slate-200 bg-white transition-colors duration-200 hover:border-slate-300 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-500/10">
+                    <button
+                      id="consultation-country-code"
+                      type="button"
+                      aria-label="Select country calling code"
+                      aria-haspopup="listbox"
+                      aria-expanded={countryOpen}
+                      disabled={loading}
+                      onClick={() => setCountryOpen((open) => !open)}
+                      className="inline-flex w-[82px] shrink-0 items-center justify-center gap-1.5 border-r border-slate-200 bg-slate-50 px-2 text-sm font-medium text-slate-800 transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-60 sm:w-[88px]"
+                    >
+                      <img
+                        src={`https://flagcdn.com/w40/${selectedCountry.iso.toLowerCase()}.png`}
+                        alt={`${selectedCountry.name} flag`}
+                        width={24}
+                        height={16}
+                        className="h-4 w-6 shrink-0 rounded-[2px] object-cover"
+                      />
+                      <span>
+                        {selectedCountry.iso}
+                      </span>
+                      <svg className={`h-3.5 w-3.5 shrink-0 text-slate-500 transition-transform ${countryOpen ? "rotate-180" : ""}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.09 1.032l-4.255 4.516a.75.75 0 01-1.09 0L5.21 8.26a.75.75 0 01.02-1.05z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                    <input
+                      id="consultation-phone"
+                      name="phone"
+                      type="tel"
+                      inputMode="numeric"
+                      autoComplete="tel-national"
+                      value={form.phone}
+                      onChange={(e) =>
+                        updateField("phone", e.target.value.replace(/\D/g, "").slice(0, 15))
+                      }
+                      placeholder="Enter phone number"
+                      minLength={10}
+                      maxLength={15}
+                      pattern="[0-9]{10,15}"
+                      required
+                      disabled={loading}
+                      className="h-full min-w-0 flex-1 border-0 bg-transparent px-3.5 text-sm text-slate-900 outline-none placeholder:text-slate-400 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-60"
+                    />
+                  </div>
+                  {countryOpen && (
+                    <div role="listbox" aria-label="Select country" className="absolute left-0 top-full z-50 mt-2 max-h-60 w-64 overflow-y-auto rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl">
+                      {COUNTRIES.map((country) => (
+                        <button
+                          key={`${country.name}-${country.code}`}
+                          type="button"
+                          role="option"
+                          aria-selected={form.countryCode === country.code && country.name === (COUNTRIES.find((item) => item.code === form.countryCode)?.name)}
+                          onClick={() => {
+                            updateField("countryCode", country.code);
+                            setSelectedCountry(country);
+                            setCountryOpen(false);
+                          }}
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors hover:bg-blue-50 ${form.countryCode === country.code ? "bg-blue-50 text-blue-700" : "text-slate-700"}`}
+                        >
+                          <img
+                            src={`https://flagcdn.com/w40/${country.iso.toLowerCase()}.png`}
+                            alt={`${country.name} flag`}
+                            width={24}
+                            height={16}
+                            loading="lazy"
+                            className="h-4 w-6 shrink-0 rounded-[2px] object-cover"
+                          />
+                          <span className="min-w-0 flex-1">{country.name}</span>
+                          <span className="shrink-0 font-medium text-slate-500">{country.code}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div ref={interestRef} className="relative">
@@ -603,7 +681,7 @@ export default function ConsultationForm() {
                 className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm leading-5 text-red-700"
               >
                 Please complete all required fields, select an area of interest
-                and a course, enter a valid 10-digit phone number, and agree to
+                and a course, enter a valid phone number (10–15 digits), and agree to
                 the consent statement. If submission still fails, please try
                 again later.
               </p>
