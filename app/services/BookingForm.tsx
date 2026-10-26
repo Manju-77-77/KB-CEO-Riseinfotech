@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { services } from "./servicesData";
 import { COUNTRIES } from "../../data/countries";
 
@@ -14,19 +15,35 @@ export default function BookingForm() {
   const [countryOpen, setCountryOpen] = useState(false);
 
   const countryDropdownRef = useRef<HTMLDivElement>(null);
-  const timeInputRef = useRef<HTMLInputElement>(null);
-  const pendingTimeCaret = useRef<number | null>(null);
 
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
-  const [timeDigits, setTimeDigits] = useState("");
-  const [meetingMode, setMeetingMode] = useState("Online – Google Meet");
+  const [timeValue, setTimeValue] = useState("");
+  const [timePeriod, setTimePeriod] = useState<"AM" | "PM">("AM");
+  const [meetingMode, setMeetingMode] = useState(
+    "Online – Google Meet"
+  );
   const [discussion, setDiscussion] = useState("");
 
-  const time = `${timeDigits.slice(0, 2).padEnd(2, "H")}:${timeDigits
-    .slice(2, 4)
-    .padEnd(2, "M")}`;
+  const [formMessage, setFormMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
+  const inputClass =
+    "w-full min-w-0 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100";
+
+  const labelClass =
+    "mb-1 block text-sm font-medium text-slate-700";
+
+  const today = new Date();
+
+  const minDate = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
 
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent | TouchEvent) {
@@ -39,7 +56,9 @@ export default function BookingForm() {
     }
 
     function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") setCountryOpen(false);
+      if (event.key === "Escape") {
+        setCountryOpen(false);
+      }
     }
 
     document.addEventListener("mousedown", handleOutsideClick);
@@ -52,14 +71,6 @@ export default function BookingForm() {
       document.removeEventListener("keydown", handleEscape);
     };
   }, []);
-
-  useEffect(() => {
-    if (pendingTimeCaret.current !== null && timeInputRef.current) {
-      const caret = pendingTimeCaret.current;
-      timeInputRef.current.setSelectionRange(caret, caret);
-      pendingTimeCaret.current = null;
-    }
-  }, [timeDigits]);
 
   const selectedService = services.find(
     (service) => service.id === serviceId
@@ -77,6 +88,8 @@ export default function BookingForm() {
     if (service) {
       setDuration(String(service.duration));
     }
+
+    setFormMessage(null);
   }
 
   function handleMobileChange(value: string) {
@@ -85,115 +98,212 @@ export default function BookingForm() {
     }
   }
 
-  function handleTimeKeyDown(
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) {
-    if (/^[0-9]$/.test(event.key)) {
-      event.preventDefault();
+  function handleTimeChange(value: string) {
+    // Keep only digits and allow HHMM to be entered as HH:MM.
+    const digits = value.replace(/\D/g, "").slice(0, 4);
 
-      setTimeDigits((current) => {
-        if (current.length >= 4) return current;
+    let formatted = digits;
 
-        const next = `${current}${event.key}`;
-
-        pendingTimeCaret.current =
-          next.length < 2
-            ? next.length
-            : next.length === 2
-              ? 3
-              : next.length + 1;
-
-        return next;
-      });
-
-      return;
+    if (digits.length > 2) {
+      formatted = `${digits.slice(0, 2)}:${digits.slice(2)}`;
     }
 
-    if (event.key === "Backspace" || event.key === "Delete") {
-      event.preventDefault();
-
-      setTimeDigits((current) => {
-        const next = current.slice(0, -1);
-
-        pendingTimeCaret.current =
-          next.length < 2
-            ? next.length
-            : next.length === 2
-              ? 3
-              : next.length + 1;
-
-        return next;
-      });
-
-      return;
-    }
-
-    if (
-      event.key === "Tab" ||
-      event.key === "ArrowLeft" ||
-      event.key === "ArrowRight" ||
-      event.key === "Home" ||
-      event.key === "End" ||
-      event.ctrlKey ||
-      event.metaKey
-    ) {
-      return;
-    }
-
-    if (event.key.length === 1) {
-      event.preventDefault();
-    }
-  }
-
-  function handleTimePaste(
-    event: React.ClipboardEvent<HTMLInputElement>
-  ) {
-    event.preventDefault();
-
-    const pastedDigits = event.clipboardData
-      .getData("text")
-      .replace(/\D/g, "")
-      .slice(0, 4);
-
-    setTimeDigits(pastedDigits);
-
-    pendingTimeCaret.current =
-      pastedDigits.length < 2
-        ? pastedDigits.length
-        : pastedDigits.length === 2
-          ? 3
-          : pastedDigits.length + 1;
+    setTimeValue(formatted);
+    setFormMessage(null);
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // Submissions remain disabled until the Zoho CRM integration is configured.
+    setFormMessage(null);
+
+    if (name.trim().length < 2) {
+      setFormMessage({
+        type: "error",
+        text: "Please enter your full name (at least 2 characters).",
+      });
+      return;
+    }
+
+    if (!/^\d{10}$/.test(mobile)) {
+      setFormMessage({
+        type: "error",
+        text: "Please enter a valid 10-digit mobile number.",
+      });
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setFormMessage({
+        type: "error",
+        text: "Please enter a valid email address.",
+      });
+      return;
+    }
+
+    if (!selectedService) {
+      setFormMessage({
+        type: "error",
+        text: "Please select a service.",
+      });
+      return;
+    }
+
+    if (!date || date < minDate) {
+      setFormMessage({
+        type: "error",
+        text: "Please choose today or a future date.",
+      });
+      return;
+    }
+
+    const timeMatch = timeValue.match(/^(\d{2}):(\d{2})$/);
+
+    if (!timeMatch) {
+      setFormMessage({
+        type: "error",
+        text: "Please enter the time in HH:MM format.",
+      });
+      return;
+    }
+
+    const hours = Number(timeMatch[1]);
+    const minutes = Number(timeMatch[2]);
+
+    if (
+      hours < 1 ||
+      hours > 12 ||
+      minutes < 0 ||
+      minutes > 59
+    ) {
+      setFormMessage({
+        type: "error",
+        text: "Enter a valid time, such as 09:30 AM or 06:45 PM.",
+      });
+      return;
+    }
+
+    const formattedTime = `${timeValue} ${timePeriod} IST`;
+
+    // Test mode only. Nothing is sent or saved.
+    setFormMessage({
+      type: "success",
+      text: `Form validation passed for ${formattedTime}. This is a test only—your request has not been sent or saved.`,
+    });
   }
 
-  const inputClass =
-    "w-full min-w-0 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100";
-
-  const labelClass = "mb-1 block text-sm font-medium text-slate-700";
-
-  const today = new Date();
-
-  const minDate = [
-    today.getFullYear(),
-    String(today.getMonth() + 1).padStart(2, "0"),
-    String(today.getDate()).padStart(2, "0"),
-  ].join("-");
-
   return (
-    <section
-      id="booking-form"
-      className="scroll-mt-5 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 lg:p-6"
-    >
-      <div className="mb-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-blue-700">
-          Consultation Request
-        </p>
+    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:gap-12 lg:px-8 lg:py-12">
+      {/* LEFT: Supporting content based on the existing booking form */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="min-w-0 space-y-5 lg:py-6"
+      >
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl"
+        >
+          <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-medium uppercase tracking-wider text-blue-600">
+            Consultation Request
+          </span>
+        </motion.p>
 
-        <h2 className="mt-1 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+        <motion.h1
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.08, ease: "easeOut" }}
+          className="text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl"
+        >
+          Let&apos;s Connect –{" "}
+          <span className="bg-gradient-to-r from-blue-700 to-cyan-500 bg-clip-text text-transparent">
+            Your Goals, My Expertise.
+          </span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.16, ease: "easeOut" }}
+          className="max-w-xl text-base leading-7 text-slate-600"
+        >
+          Select a service, provide your details, and share your preferred
+          schedule and business requirements.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.24, ease: "easeOut" }}
+          className="space-y-4 pt-2"
+        >
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-[#2855D9]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                className="h-5 w-5"
+                aria-hidden="true"
+              >
+                <path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.64 5.64l2.12 2.12m8.48 8.48 2.12 2.12m0-12.72-2.12 2.12m-8.48 8.48-2.12 2.12" />
+                <circle cx="12" cy="12" r="4" />
+              </svg>
+            </span>
+            <div>
+              <h3 className="font-semibold text-slate-800">
+                Guidance That Fits Your Goals
+              </h3>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                Tell us what you want to achieve so we can understand your
+                needs and direct your enquiry to the right service.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-[#2855D9]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                className="h-5 w-5"
+                aria-hidden="true"
+              >
+                <rect x="3.5" y="5" width="17" height="15" rx="2" />
+                <path d="M7.5 3v4M16.5 3v4M3.5 10h17M8 14h3m2 0h3" />
+              </svg>
+            </span>
+            <div>
+              <h3 className="font-semibold text-slate-800">
+                A Schedule That Works for You
+              </h3>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                Share your preferred date, time, and meeting mode. Your
+                requested slot can be confirmed after availability is checked.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* RIGHT: Existing booking form. Its fields and internal layout are preserved. */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.08, ease: "easeOut" }}
+        className="min-w-0 w-full"
+      >
+        <section
+          id="booking-form"
+          className="w-full min-w-0 scroll-mt-5 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-[0_10px_30px_-8px_rgba(15,23,42,0.12),0_4px_10px_-5px_rgba(15,23,42,0.08)] sm:p-5 lg:p-6"
+        >
+      <div className="mb-4">
+        <h2 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
           Schedule Your Session
         </h2>
 
@@ -226,7 +336,7 @@ export default function BookingForm() {
             </select>
           </div>
 
-          <fieldset>
+          <fieldset className="min-w-0">
             <legend className={labelClass}>Session Duration</legend>
 
             <div className="flex min-h-9 flex-wrap items-center gap-x-4 gap-y-1">
@@ -241,7 +351,9 @@ export default function BookingForm() {
                     value={minutes}
                     checked={duration === minutes}
                     onChange={() =>
-                      setDuration(String(selectedService?.duration ?? minutes))
+                      setDuration(
+                        String(selectedService?.duration ?? minutes)
+                      )
                     }
                     disabled
                     className="h-4 w-4 accent-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
@@ -255,7 +367,7 @@ export default function BookingForm() {
 
         {/* Name and mobile */}
         <div className="grid gap-3 sm:grid-cols-2">
-          <div>
+          <div className="min-w-0">
             <label htmlFor="fullName" className={labelClass}>
               Full Name
             </label>
@@ -264,7 +376,10 @@ export default function BookingForm() {
               id="fullName"
               type="text"
               value={name}
-              onChange={(event) => setName(event.target.value)}
+              onChange={(event) => {
+                setName(event.target.value);
+                setFormMessage(null);
+              }}
               placeholder="Enter your full name"
               autoComplete="name"
               required
@@ -272,7 +387,7 @@ export default function BookingForm() {
             />
           </div>
 
-          <div>
+          <div className="min-w-0">
             <label htmlFor="mobile" className={labelClass}>
               Mobile Number
             </label>
@@ -280,28 +395,28 @@ export default function BookingForm() {
             <div className="flex min-w-0 gap-2">
               <div
                 ref={countryDropdownRef}
-                className="relative w-[112px] shrink-0"
+                className="relative w-[96px] shrink-0"
               >
                 <button
                   type="button"
                   aria-haspopup="listbox"
                   aria-expanded={countryOpen}
                   onClick={() => setCountryOpen((open) => !open)}
-                  className={`${inputClass} flex h-full items-center justify-between gap-1 px-2`}
+                  className={`${inputClass} flex h-full items-center justify-between gap-1 !px-1.5`}
                 >
-                  <span className="flex min-w-0 items-center gap-1.5">
+                  <span className="flex min-w-0 items-center gap-1">
                     <img
                       src={`https://flagcdn.com/w40/${selectedCountry.iso.toLowerCase()}.png`}
                       alt=""
                       className="h-auto w-5 shrink-0"
                     />
 
-                    <span className="text-xs font-medium">
+                    <span className="text-[11px] font-medium">
                       {selectedCountry.iso}
                     </span>
                   </span>
 
-                  <span className="truncate text-xs">{countryCode}</span>
+                  <span className="truncate text-[11px]">{countryCode}</span>
                 </button>
 
                 {countryOpen && (
@@ -347,16 +462,17 @@ export default function BookingForm() {
                 id="mobile"
                 type="tel"
                 value={mobile}
-                onChange={(event) =>
-                  handleMobileChange(event.target.value)
-                }
-                placeholder="10-digit number"
+                onChange={(event) => {
+                  handleMobileChange(event.target.value);
+                  setFormMessage(null);
+                }}
+                placeholder="Enter mobile number"
                 autoComplete="tel-national"
                 inputMode="numeric"
-                minLength={10}
-                maxLength={10}
-                pattern="[0-9]{10}"
-                title="Enter exactly 10 digits."
+                minLength={4}
+                maxLength={15}
+                pattern="[0-9]{4,15}"
+                title="Enter a phone number containing 4 to 15 digits."
                 required
                 className={inputClass}
               />
@@ -374,7 +490,10 @@ export default function BookingForm() {
             id="email"
             type="email"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              setFormMessage(null);
+            }}
             placeholder="you@example.com"
             autoComplete="email"
             required
@@ -384,7 +503,7 @@ export default function BookingForm() {
 
         {/* Preferred date and time */}
         <div className="grid gap-3 sm:grid-cols-2">
-          <div>
+          <div className="min-w-0">
             <label htmlFor="date" className={labelClass}>
               Preferred Date
             </label>
@@ -393,38 +512,56 @@ export default function BookingForm() {
               id="date"
               type="date"
               value={date}
-              onChange={(event) => setDate(event.target.value)}
+              onChange={(event) => {
+                setDate(event.target.value);
+                setFormMessage(null);
+              }}
               min={minDate}
               required
               className={inputClass}
             />
           </div>
 
-          <div>
+          {/* Fixed two-column layout prevents the time input collapsing */}
+          <div className="min-w-0">
             <label htmlFor="time" className={labelClass}>
-              Preferred Time
+              Preferred Time (IST)
             </label>
 
-            <input
-              ref={timeInputRef}
-              id="time"
-              type="text"
-              value={time}
-              onKeyDown={handleTimeKeyDown}
-              onPaste={handleTimePaste}
-              onChange={() => {
-                // Input is controlled by the time mask.
-              }}
-              placeholder="HH:MM"
-              inputMode="numeric"
-              autoComplete="off"
-              aria-describedby="time-help"
-              required
-              className={inputClass}
-            />
+            <div className="grid w-full min-w-0 grid-cols-[minmax(0,1fr)_5rem] items-stretch gap-2">
+              <input
+                id="time"
+                type="text"
+                inputMode="numeric"
+                value={timeValue}
+                onChange={(event) => handleTimeChange(event.target.value)}
+                placeholder="HH:MM"
+                maxLength={5}
+                required
+                className={`${inputClass} !w-full`}
+                aria-describedby="time-help"
+                autoComplete="off"
+              />
 
-            <p id="time-help" className="mt-1 text-xs text-slate-500">
-              Enter four digits (24-hour time), e.g. 0930 for 09:30.
+              <select
+                aria-label="AM or PM"
+                value={timePeriod}
+                onChange={(event) => {
+                  setTimePeriod(event.target.value as "AM" | "PM");
+                  setFormMessage(null);
+                }}
+                className={`${inputClass} !w-full !px-2`}
+              >
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+            </div>
+
+            <p
+              id="time-help"
+              className="mt-1 text-xs leading-4 text-slate-500"
+            >
+              Indian Standard Time (UTC+05:30)
             </p>
           </div>
         </div>
@@ -447,7 +584,10 @@ export default function BookingForm() {
                   name="meetingMode"
                   value={mode}
                   checked={meetingMode === mode}
-                  onChange={() => setMeetingMode(mode)}
+                  onChange={() => {
+                    setMeetingMode(mode);
+                    setFormMessage(null);
+                  }}
                   className="mt-0.5 h-4 w-4 shrink-0 accent-blue-700"
                 />
 
@@ -467,7 +607,10 @@ export default function BookingForm() {
           <textarea
             id="discussion"
             value={discussion}
-            onChange={(event) => setDiscussion(event.target.value)}
+            onChange={(event) => {
+              setDiscussion(event.target.value);
+              setFormMessage(null);
+            }}
             placeholder="Briefly describe your requirements..."
             rows={2}
             className={`${inputClass} resize-y`}
@@ -478,28 +621,40 @@ export default function BookingForm() {
         <div className="border-t border-slate-100 pt-3">
           <button
             type="submit"
-            disabled
-            aria-disabled="true"
-            className="w-full cursor-not-allowed rounded-lg bg-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-600"
+            className="w-full rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
-            Booking Temporarily Unavailable
+            Validate Form (Test Only)
           </button>
 
-          <div
-            role="status"
-            aria-live="polite"
-            className="mt-4 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 px-4 py-4 text-center"
-          >
-            <p className="text-lg font-bold leading-snug text-blue-800 sm:text-xl">
-              Online booking is temporarily unavailable.
+          {formMessage && (
+            <p
+              role="status"
+              aria-live="polite"
+              className={`mt-3 rounded-lg border px-3 py-2 text-sm ${
+                formMessage.type === "success"
+                  ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+                  : "border-red-200 bg-red-50 text-red-700"
+              }`}
+            >
+              {formMessage.text}
+            </p>
+          )}
+
+          <div className="mt-3 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 to-cyan-50 px-4 py-3 text-center">
+            <p className="text-sm font-semibold text-blue-800">
+              Test mode — booking is not connected yet.
             </p>
 
-            <p className="mt-1 text-sm leading-relaxed text-slate-700 sm:text-base">
-              We’re preparing the booking system. Please check back soon.
+            <p className="mt-1 text-xs leading-relaxed text-slate-700">
+              This button checks the form locally only. No request is sent,
+              stored, or copied. Zoho CRM integration is required before live
+              bookings can be enabled.
             </p>
           </div>
         </div>
       </form>
-    </section>
+        </section>
+      </motion.div>
+    </div>
   );
 }

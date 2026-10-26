@@ -1,4 +1,3 @@
-
 export type ServiceType =
   | "free"
   | "paid"
@@ -177,6 +176,46 @@ export function getServiceTypeLabel(service: Service): string {
 
     case "enquiry":
       return "Corporate Service";
+
+    default: {
+      const exhaustiveCheck: never = service.type;
+      return exhaustiveCheck;
+    }
+  }
+}
+
+/**
+ * Design-only helper (no content): colour styling for the
+ * price pill and the consultation-type dot on each card.
+ */
+export function getServiceTypeStyles(service: Service): {
+  pill: string;
+  dot: string;
+} {
+  switch (service.type) {
+    case "free":
+      return {
+        pill: "bg-emerald-50 text-emerald-700 ring-emerald-200",
+        dot: "bg-emerald-500",
+      };
+
+    case "paid":
+      return {
+        pill: "bg-blue-50 text-[#2855D9] ring-blue-200",
+        dot: "bg-[#2855D9]",
+      };
+
+    case "eligibility":
+      return {
+        pill: "bg-amber-50 text-amber-700 ring-amber-200",
+        dot: "bg-amber-500",
+      };
+
+    case "enquiry":
+      return {
+        pill: "bg-violet-50 text-violet-700 ring-violet-200",
+        dot: "bg-violet-500",
+      };
 
     default: {
       const exhaustiveCheck: never = service.type;

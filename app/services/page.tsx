@@ -114,25 +114,7 @@ export default function ServicesPage() {
         ref={bookingRef}
         className="scroll-mt-24 border-t border-slate-100 bg-slate-50/70"
       >
-        <div className="mx-auto max-w-7xl px-5 py-9 sm:px-8 sm:py-12 lg:px-10">
-          
-            <div className="mb-5 max-w-3xl">
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-                Let&apos;s Connect –{" "}
-                <span className="text-[#2855D9]">
-                  Your Goals, My Expertise.
-                </span>
-              </h2>
-
-              <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">
-                Select a service, provide your details, and share your
-                preferred schedule and business requirements.
-              </p>
-            </div>
-
-
           <BookingForm />
-        </div>
       </section>
     </main>
   );
