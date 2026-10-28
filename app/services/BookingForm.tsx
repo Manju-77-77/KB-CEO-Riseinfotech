@@ -377,7 +377,18 @@ export default function BookingForm() {
       await emailjs.send(
         serviceIdEnv,
         templateIdEnv,
-        booking,
+        {
+          name: booking.name,
+          email: booking.email,
+          country_code: booking.country_code,
+          mobile: booking.mobile,
+          service_name: booking.service_name,
+          duration: booking.duration,
+          preferred_date: booking.preferred_date,
+          preferred_time: booking.preferred_time,
+          meeting_mode: booking.meeting_mode,
+          discussion: booking.discussion,
+        },
         { publicKey: publicKeyEnv }
       );
 
