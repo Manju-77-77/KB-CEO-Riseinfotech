@@ -46,7 +46,7 @@ const INTERESTS = [
 ];
 
 const COURSES: Record<string, string[]> = {
-  "SAP / IT Training": [
+  "SAP S/4HANA Training": [
     "SAP MM",
     "SAP SD",
     "SAP FICO",

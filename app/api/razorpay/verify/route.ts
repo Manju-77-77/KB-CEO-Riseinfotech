@@ -1,3 +1,4 @@
+
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import Razorpay from "razorpay";
@@ -9,11 +10,11 @@ const PAID_SERVICES: Record<
   { amount: number; title: string }
 > = {
   "sap-mm-mock-interview": {
-    amount: 100,
+    amount: 100, // ₹1,000 in paise
     title: "SAP MM Mock Interview",
   },
   "resume-job-profile": {
-    amount: 100,
+    amount: 100, // ₹798 in paise
     title: "Resume & Job Profile Preparation",
   },
 };
@@ -62,9 +63,11 @@ async function sendBookingEmail(
     process.env.EMAILJS_PUBLIC_KEY ||
     process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-  if (!serviceId || !templateId || !publicKey) {
+  const privateKey = process.env.EMAILJS_PRIVATE_KEY;
+
+  if (!serviceId || !templateId || !publicKey || !privateKey) {
     throw new Error(
-      "EmailJS booking environment variables are not configured."
+      "EmailJS booking configuration is incomplete. Check the server environment variables."
     );
   }
 
@@ -79,6 +82,7 @@ async function sendBookingEmail(
         service_id: serviceId,
         template_id: templateId,
         user_id: publicKey,
+        accessToken: privateKey,
         template_params: templateParams,
       }),
     }
@@ -110,8 +114,7 @@ export async function POST(request: Request) {
     ) {
       return NextResponse.json(
         {
-          error:
-            "Payment verification details are incomplete.",
+          error: "Payment verification details are incomplete.",
         },
         { status: 400 }
       );
@@ -129,6 +132,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // Verify the Razorpay payment signature.
     const expectedSignature = createHmac("sha256", keySecret)
       .update(
         `${razorpay_order_id}|${razorpay_payment_id}`
@@ -146,6 +150,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // Fetch the order and payment from Razorpay.
     const [order, payment] = await Promise.all([
       razorpay.orders.fetch(razorpay_order_id),
       razorpay.payments.fetch(razorpay_payment_id),
@@ -154,6 +159,7 @@ export async function POST(request: Request) {
     const notes = (order.notes || {}) as Record<string, string>;
     const service = PAID_SERVICES[notes.service_id];
 
+    // Confirm the order matches the expected service and amount.
     if (
       !service ||
       order.currency !== "INR" ||
@@ -168,6 +174,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // Confirm the payment belongs to this order.
     if (
       payment.order_id !== order.id ||
       payment.amount !== service.amount ||
@@ -181,7 +188,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Only send a paid booking email after Razorpay confirms capture.
+    // Only send the booking email after payment is captured.
     if (payment.status !== "captured") {
       return NextResponse.json(
         {
@@ -204,7 +211,9 @@ export async function POST(request: Request) {
       meeting_mode: notes.meeting_mode || "",
       discussion:
         notes.discussion || "No additional details provided.",
-      payment_status: payment.status,
+
+      // Payment details for paid services only
+      payment_status: "Paid",
       payment_id: payment.id,
       payment_amount: `₹${(
         payment.amount / 100

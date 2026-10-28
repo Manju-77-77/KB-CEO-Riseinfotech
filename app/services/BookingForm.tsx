@@ -72,6 +72,24 @@ function loadRazorpayScript(): Promise<boolean> {
   });
 }
 
+function getAvailableTimeSlots(serviceId: string): string[] {
+  const isMockInterview = serviceId === "sap-mm-mock-interview";
+  const startMinutes = (isMockInterview ? 11 : 9) * 60;
+  const endMinutes = (isMockInterview ? 18 : 19) * 60;
+  const slots: string[] = [];
+
+  for (let totalMinutes = startMinutes; totalMinutes <= endMinutes; totalMinutes += 30) {
+    const hour24 = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    const period = hour24 >= 12 ? "PM" : "AM";
+    const hour12 = hour24 % 12 || 12;
+    const time = `${String(hour12).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
+    slots.push(time);
+  }
+
+  return slots;
+}
+
 export default function BookingForm() {
   const [serviceId, setServiceId] = useState(services[0]?.id ?? "");
   const [duration, setDuration] = useState("30");
@@ -91,6 +109,7 @@ export default function BookingForm() {
   );
   const [discussion, setDiscussion] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const [formMessage, setFormMessage] = useState<{
     type: "success" | "error";
@@ -146,6 +165,7 @@ export default function BookingForm() {
 
   function selectService(id: string) {
     setServiceId(id);
+    setTimeValue("");
 
     const service = services.find((item) => item.id === id);
 
@@ -158,6 +178,24 @@ export default function BookingForm() {
     if (/^\d*$/.test(value) && value.length <= 10) {
       setMobile(value);
     }
+  }
+
+  function resetBookingForm() {
+    const defaultService = services[0];
+
+    setServiceId(defaultService?.id ?? "");
+    setDuration(String(defaultService?.duration ?? 30));
+    setName("");
+    setCountryCode("+91");
+    setCountryIso("IN");
+    setCountryOpen(false);
+    setMobile("");
+    setEmail("");
+    setDate("");
+    setTimeValue("");
+    setMeetingMode("Online – Google Meet");
+    setDiscussion("");
+    setFormMessage(null);
   }
 
   async function handleSubmit(
@@ -209,10 +247,10 @@ export default function BookingForm() {
       return;
     }
 
-    if (!timeValue) {
+    if (!timeValue || !getAvailableTimeSlots(selectedService.id).includes(timeValue)) {
       setFormMessage({
         type: "error",
-        text: "Please select a preferred time.",
+        text: "Please select a preferred time within the available hours for this service.",
       });
       return;
     }
@@ -313,11 +351,8 @@ export default function BookingForm() {
                 );
               }
 
-              setFormMessage({
-                type: "success",
-                text:
-                  "Payment verified successfully. Your booking request has been emailed to Rise Infotech. The team will contact you to confirm your appointment.",
-              });
+              resetBookingForm();
+              setSuccessModalOpen(true);
             } catch (verificationError) {
               console.error(
                 "Razorpay verification failed:",
@@ -375,28 +410,30 @@ export default function BookingForm() {
       }
 
       await emailjs.send(
-        serviceIdEnv,
-        templateIdEnv,
-        {
-          name: booking.name,
-          email: booking.email,
-          country_code: booking.country_code,
-          mobile: booking.mobile,
-          service_name: booking.service_name,
-          duration: booking.duration,
-          preferred_date: booking.preferred_date,
-          preferred_time: booking.preferred_time,
-          meeting_mode: booking.meeting_mode,
-          discussion: booking.discussion,
-        },
-        { publicKey: publicKeyEnv }
-      );
+      serviceIdEnv,
+      templateIdEnv,
+      {
+        name: booking.name,
+        email: booking.email,
+        country_code: booking.country_code,
+        mobile: booking.mobile,
+        service_name: booking.service_name,
+        duration: booking.duration,
+        preferred_date: booking.preferred_date,
+        preferred_time: booking.preferred_time,
+        meeting_mode: booking.meeting_mode,
+        discussion: booking.discussion,
 
-      setFormMessage({
-        type: "success",
-        text:
-          "Your booking request has been submitted successfully. Rise Infotech will contact you to confirm availability.",
-      });
+        // Free services do not have payment details
+        payment_status: "Free Service",
+        payment_id: "",
+        payment_amount: "",
+      },
+      { publicKey: publicKeyEnv }
+    );
+
+      resetBookingForm();
+      setSuccessModalOpen(true);
     } catch (error) {
       console.error("Booking submission failed:", error);
 
@@ -767,20 +804,11 @@ export default function BookingForm() {
                   <option value="" disabled>
                     Select a time
                   </option>
-                  {Array.from({ length: 30 }, (_, index) => {
-                    const totalMinutes = 9 * 60 + index * 30;
-                    const hour24 = Math.floor(totalMinutes / 60);
-                    const minutes = totalMinutes % 60;
-                    const period = hour24 >= 12 ? "PM" : "AM";
-                    const hour12 = hour24 % 12 || 12;
-                    const time = `${String(hour12).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
-
-                    return (
-                      <option key={time} value={time}>
-                        {time}
-                      </option>
-                    );
-                  })}
+                  {getAvailableTimeSlots(serviceId).map((time) => (
+                    <option key={time} value={time}>
+                      {time}
+                    </option>
+                  ))}
                 </select>
                 <p
                   id="time-help"
@@ -880,6 +908,72 @@ export default function BookingForm() {
           </form>
         </section>
       </motion.div>
+      {successModalOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/35 px-4 py-6 backdrop-blur-sm"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setSuccessModalOpen(false);
+            }
+          }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="booking-success-title"
+            aria-describedby="booking-success-description"
+            className="w-full max-w-md overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_24px_80px_-20px_rgba(15,23,42,0.4)]"
+          >
+            <div className="border-b border-blue-100 px-6 py-3 text-center">
+              <p className="text-xs font-medium tracking-wide text-[#2855D9]">
+                Alert for Confirmation
+              </p>
+            </div>
+
+            <div className="px-6 py-6 text-center sm:px-8">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  className="h-6 w-6 text-[#2855D9]"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="m5 12 4 4L19 6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+
+              <h2
+                id="booking-success-title"
+                className="text-base font-bold text-[#2855D9] sm:text-lg"
+              >
+                Consultation Request Submitted Successfully!
+              </h2>
+              <p
+                id="booking-success-description"
+                className="mt-2 text-sm leading-6 text-slate-600"
+              >
+                Our team will contact you soon to confirm your consultation.
+              </p>
+
+              <button
+                type="button"
+                autoFocus
+                onClick={() => setSuccessModalOpen(false)}
+                className="mt-5 min-w-28 rounded-md bg-gradient-to-r from-[#2855D9] to-cyan-500 px-6 py-2 text-sm font-semibold text-white shadow-sm transition hover:from-blue-800 hover:to-cyan-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
