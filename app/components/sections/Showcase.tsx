@@ -3,12 +3,17 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import {
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+} from "react-icons/fa";
 
 const highlights = [
   {
     title: "SAP Training & Consulting",
     subtitle: "S/4HANA Expertise",
-    link: "https://www.riseinfotech.in/",
+    link: "https://www.riseinfotech.in/courses/sap-mm/",
   },
   {
     title: "Corporate Training",
@@ -24,6 +29,30 @@ const highlights = [
     title: "ERP Solutions",
     subtitle: "Digital Transformation",
     link: "https://kumareshbidari.com/services",
+  },
+];
+
+const socialLinks = [
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/rise_infotech/",
+    Icon: FaInstagram,
+    brandColor: "text-[#E4405F]",
+    hoverColor: "hover:border-pink-300 hover:bg-pink-50",
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/company/rise-infotech/",
+    Icon: FaLinkedin,
+    brandColor: "text-[#0A66C2]",
+    hoverColor: "hover:border-blue-300 hover:bg-blue-50",
+  },
+  {
+    name: "YouTube",
+    href: "https://www.youtube.com/@rise_infotech",
+    Icon: FaYoutube,
+    brandColor: "text-[#FF0000]",
+    hoverColor: "hover:border-red-300 hover:bg-red-50",
   },
 ];
 
@@ -112,7 +141,7 @@ export default function RiseInfotech() {
             </div>
 
             {/* Actions */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <a
                 href="https://www.riseinfotech.in/"
                 target="_blank"
@@ -145,6 +174,28 @@ export default function RiseInfotech() {
               >
                 Contact Us
               </a>
+
+              {/* Social media icons */}
+              <div
+                className="flex items-center justify-center gap-2.5 sm:ml-2"
+                aria-label="Follow Rise Infotech on social media"
+              >
+                {socialLinks.map(
+                  ({ name, href, Icon, brandColor, hoverColor }) => (
+                    <a
+                      key={name}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Rise Infotech on ${name}`}
+                      title={name}
+                      className={`inline-flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${brandColor} ${hoverColor}`}
+                    >
+                      <Icon size={23} aria-hidden="true" />
+                    </a>
+                  )
+                )}
+              </div>
             </div>
           </div>
 

@@ -38,7 +38,7 @@ const INITIAL_FORM: FormData = {
 };
 
 const INTERESTS = [
-  "SAP / IT Training",
+  "SAP S/4HANA Training",
   "Career Mentorship",
   "Corporate & Enterprise Solutions",
   "SAP Consulting",

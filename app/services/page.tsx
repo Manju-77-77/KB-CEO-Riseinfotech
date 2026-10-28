@@ -36,39 +36,38 @@ export default function ServicesPage() {
     <main className="min-h-screen bg-white pt-[76px] text-slate-900 lg:pt-[88px]">
       <Navbar />
 
-      
-    {/* Hero banner */}
-    <header className="relative isolate flex min-h-[175px] items-center justify-center overflow-hidden px-5 py-8 text-center sm:min-h-[205px] sm:px-8">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 grid grid-cols-4 sm:grid-cols-6"
-      >
-        <div className="bg-[#8CC5F0]" />
-        <div className="bg-[#62A2DE]" />
-        <div className="bg-[#4389D0]" />
-        <div className="bg-[#3169B0]" />
-        <div className="hidden bg-[#244F91] sm:block" />
-        <div className="hidden bg-[#193B78] sm:block" />
-      </div>
+      {/* Compact Hero Banner */}
+      <header className="relative isolate flex min-h-[145px] items-center justify-center overflow-hidden px-4 py-5 text-center sm:min-h-[165px] sm:px-6 sm:py-6 lg:min-h-[175px]">
+        {/* Existing blue color blocks */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 grid grid-cols-4 sm:grid-cols-6"
+        >
+          <div className="bg-[#8CC5F0]" />
+          <div className="bg-[#62A2DE]" />
+          <div className="bg-[#4389D0]" />
+          <div className="bg-[#3169B0]" />
+          <div className="hidden bg-[#244F91] sm:block" />
+          <div className="hidden bg-[#193B78] sm:block" />
+        </div>
 
-      <div className="mx-auto w-full max-w-6xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/90 sm:text-sm">
-          Rise Infotech
-        </p>
+        <div className="mx-auto w-full max-w-6xl">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/90 sm:text-xs">
+            Rise Infotech
+          </p>
 
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-          Services &amp; Consulting
-        </h1>
+          <h1 className="mt-1.5 text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl">
+            SERVICES &amp; CONSULTING          
+            </h1>
 
-        <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-white/95 sm:text-base">
-          SAP training, career development, and consulting services
-          for businesses and organizations.
-        </p>
-      </div>
-    </header>
+          <p className="mx-auto mt-2 max-w-3xl text-sm leading-5 text-white/95 sm:text-base sm:leading-6">
+            SAP Training, Career Development &amp; Business Consulting
+          </p>
+        </div>
+      </header>
 
-      {/* Consultant introduction */}
-      <section className="mx-auto max-w-7xl px-5 pb-2 pt-8 sm:px-8 sm:pt-10 lg:px-10">
+      {/* Consultant Introduction */}
+      <section className="mx-auto max-w-7xl px-5 pb-2 pt-6 sm:px-8 sm:pt-8 lg:px-10">
         <div className="max-w-5xl border-l-4 border-[#2855D9] pl-4 sm:pl-6">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#2855D9] sm:text-sm">
             Business SAP Solutions
@@ -78,6 +77,7 @@ export default function ServicesPage() {
             SAP Training &amp; Consulting with{" "}
             <span className="text-[#2855D9]">Kumaresh Bidari</span>
           </h2>
+
           <p className="mt-3 text-sm font-semibold leading-6 text-[#2855D9] sm:text-base">
             SAP S/4HANA Consultant
             <span className="mx-2 text-slate-400">|</span>
@@ -87,14 +87,13 @@ export default function ServicesPage() {
             <span className="mx-2 text-slate-400">|</span>
             Founder – Rise Infotech
           </p>
-
         </div>
       </section>
 
-      {/* Six existing services */}
+      {/* Six Existing Services */}
       <section
         id="services"
-        className="bg-white pb-10 pt-6 sm:pb-14 sm:pt-8"
+        className="bg-white pb-10 pt-5 sm:pb-14 sm:pt-7"
       >
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-7">
@@ -109,12 +108,12 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Booking section */}
+      {/* Booking Section */}
       <section
         ref={bookingRef}
         className="scroll-mt-24 border-t border-slate-100 bg-slate-50/70"
       >
-          <BookingForm />
+        <BookingForm />
       </section>
     </main>
   );
